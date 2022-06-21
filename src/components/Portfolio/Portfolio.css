@@ -1,0 +1,40 @@
+.portfolio__title {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 20px;
+    color: #A0A0A0;
+    mix-blend-mode: normal;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.portfolio__projects_list {
+    list-style-type: none;
+    padding: 0 0;
+}
+
+.portfolio__project {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 50px;
+    letter-spacing: -0.04em;
+    color: #000000;
+    border-bottom: 1px solid #E8E8E8;;
+    padding: 0 0 19px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.portfolio__item {
+    margin-bottom: 0;
+    margin-top: 10px;
+}
+
+.portfolio__project:last-of-type {
+    margin-bottom: 125px;
+}
