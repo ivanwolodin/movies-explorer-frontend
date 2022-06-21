@@ -1,12 +1,11 @@
 import React from "react";
-import Header from "../Header/Header";
+import Main from "../Main/Main";
+import './App.css'
 
 function App() {
     return (
-        <div className="root">
-            <div className="page">
-                <Header/>
-            </div>
+        <div className="app">
+            <Main/>
         </div>
     );
 }

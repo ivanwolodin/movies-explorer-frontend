@@ -11,6 +11,11 @@
     border: none;
     background: none;
     cursor: pointer;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
 }
 
 .login__button {
@@ -22,4 +27,9 @@
     height: 32px;
     align-self: center;
     cursor: pointer;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
 }
