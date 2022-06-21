@@ -24,6 +24,10 @@
     text-align: center;
 }
 
+.project__timeline:last-of-type{
+    margin-bottom: 110px;
+}
+
 .project__timeline_short {
     margin-top: 0;
     margin-bottom: 0;
@@ -58,19 +62,6 @@
     color: black;
 }
 
-.project__title {
-    margin-bottom: 0;
-    margin-top: 0;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 22px;
-    line-height: 27px;
-    letter-spacing: -0.04em;
-    border-bottom: 1px solid #000;
-    padding: 0 0 23px;
-    color: #000000;
-}
 
 .project__second_title {
     margin-bottom: 26px;
