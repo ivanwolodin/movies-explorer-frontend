@@ -17,3 +17,19 @@
     padding: 0 0 23px;
     color: #000000;
 }
+
+@media screen and (max-width: 1017px) {
+    .content_info {
+        padding-left: 50px;
+        padding-right: 50px;
+    }
+}
+
+
+@media screen and (max-width: 613px) {
+    .content_info {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
+

@@ -14,14 +14,14 @@ function App() {
 
             {/*<Switch>*/}
                 {/*<Route path='/' exact>*/}
-                <Movies/>
+                {/*<Movies/>*/}
                 {/*</Route>*/}
 
                 {/*<Route path='/signup'>*/}
                 {/*    <Main />*/}
                 {/*</Route>*/}
                 {/*<Route path='/signin' exact>*/}
-                {/*    <Main />*/}
+                    <Main />
                 {/*</Route>*/}
                 {/*<Route path="*">*/}
                 {/*    <Main />*/}

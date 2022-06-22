@@ -4,8 +4,9 @@
     align-items: center;
     align-self: center;
     justify-content: center;
-    margin-left: auto;
+    /*margin-left: auto;*/
     gap: 14px;
+    margin-left: 41px;
 }
 
 .filtercheckbox__keyword {
@@ -15,6 +16,8 @@
     font-size: 13px;
     line-height: 18px;
     color: #000000;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .filtercheckbox__checkbox[type=checkbox] {
@@ -60,3 +63,8 @@
     width: 36px;
 }
 
+@media screen and (max-width: 968px) {
+    .filtercheckbox {
+        margin-top: 38px;
+    }
+}

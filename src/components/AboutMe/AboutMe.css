@@ -62,3 +62,54 @@
 .about_me__photo{
     margin-left: auto;
 }
+
+@media screen and (max-width: 990px) {
+    .about_me__photo {
+        width: 255px;
+    }
+    .about_me__short_info{
+        font-size: 12px;
+        width: 364px;
+    }
+    .about_me__position{
+        font-size: 12px;
+    }
+    .about_me__name {
+        margin-bottom: 16px;
+    }
+}
+
+@media screen and (max-width: 730px) {
+    .about_me__personal_info {
+        flex-direction: column-reverse;
+        align-items: center;
+    }
+    .about_me__photo{
+        margin-left: 0;
+    }
+    .about_me__text{
+        text-align: center;
+    }
+    .about_me__social_networks{
+        justify-content: center;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .about_me__text{
+        text-align: left;
+    }
+    .about_me__social_networks{
+        justify-content: left;
+    }
+    .about_me__photo{
+        margin-right: auto;
+    }
+}
+
+@media screen and (max-width: 380px) {
+    .about_me__short_info{
+        font-size: 11px;
+        width: 292px;
+    }
+}

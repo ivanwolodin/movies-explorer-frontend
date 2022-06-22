@@ -71,3 +71,19 @@
 .project__additional_info {
     margin-bottom: 110px;
 }
+
+@media screen and (max-width: 350px) {
+    .project__info {
+        flex-direction: column;
+    }
+    .project__timeline {
+        font-size: 11px;
+        line-height: 13px;
+    }
+    .project__timeline_long {
+        width: 184px;
+    }
+    .project__timeline_short {
+        width: 100px;
+    }
+}

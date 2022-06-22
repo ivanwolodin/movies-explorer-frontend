@@ -1,8 +1,7 @@
 .promo {
-
     padding-bottom: 0;
     margin-top: 0;
-    margin-left: 0px;
+    margin-left: 0;
     margin-bottom: 0;
     background-color: #DDDEE3;
 }
@@ -62,4 +61,42 @@
     width: 310px;
     height: 304px;
     margin-right: 70px;
+}
+
+@media screen and (max-width: 1035px) {
+    .promo__intro{
+        flex-direction: column-reverse;
+        align-items: center;
+        margin-left: 0;
+        padding-top: 140px;
+    }
+    .promo__info {
+        align-items: center;
+        text-align: center;
+    }
+    .intro__image{
+        margin-right: 0;
+
+    }
+    .promo__title{
+        margin-top: 48px;
+        margin-bottom: 9px;
+        font-size: 40px;
+        line-height: 50px;
+    }
+    .promo__teaser{
+        margin-bottom: 92px;
+    }
+}
+@media screen and (max-width: 650px) {
+    .promo__title{
+        width: 440px;
+    }
+}
+
+
+@media screen and (max-width: 450px) {
+    .promo__title{
+        width: 300px;
+    }
 }

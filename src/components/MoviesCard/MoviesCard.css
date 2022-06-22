@@ -44,3 +44,17 @@
 .moviescard__likebutton {
     cursor: pointer;
 }
+
+@media screen and (max-width: 656px) {
+    .moviescard {
+        width: 511px;
+    }
+}
+
+@media screen and (max-width: 613px) {
+    .moviescard {
+        width: 300px;
+    }
+}
+
+

@@ -32,3 +32,26 @@
     margin-top: 50px;
     margin-bottom: 80px;
 }
+
+@media screen and (max-width: 1278px) {
+    .moviescardlist__films {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 968px) {
+    .moviescardlist__films {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media screen and (max-width: 656px) {
+    .moviescardlist__films {
+        grid-template-columns: 1fr;
+        justify-items: center;
+    }
+    .moviescardlist__button{
+        width: 240px;
+    }
+}
+
