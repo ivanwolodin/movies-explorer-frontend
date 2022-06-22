@@ -1,14 +1,14 @@
 .header {
-    background-color: #DDDEE3;
-    /*width: 1280px;*/
-    display: flex;
-    justify-content: space-between;
+  background-color: #dddee3;
+  /*width: 1280px;*/
+  display: flex;
+  justify-content: space-between;
 }
 
 .header__logo {
-    width: 142px;
-    height: 33px;
-    margin-left: 16px;
-    margin-top: 18px;
-    margin-bottom: 18px;
+  width: 142px;
+  height: 33px;
+  margin-left: 16px;
+  margin-top: 18px;
+  margin-bottom: 18px;
 }

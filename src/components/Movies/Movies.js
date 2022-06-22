@@ -1,14 +1,14 @@
-import "./Movies.css"
+import "./Movies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function Movies() {
-    return (
-        <div className="movies">
-            <SearchForm/>
-            <MoviesCardList/>
-        </div>
-    );
+  return (
+    <div className="movies">
+      <SearchForm />
+      <MoviesCardList />
+    </div>
+  );
 }
 
 export default Movies;

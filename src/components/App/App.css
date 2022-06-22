@@ -1,23 +1,23 @@
 .app {
-    /*background-color: #000000;*/
-    margin: 0 auto;
-    max-width: 1280px;
+  /*background-color: #000000;*/
+  margin: 0 auto;
+  max-width: 1280px;
 }
 
 @media screen and (max-width: 1024px) {
-    .app {
-        max-width: 1024px;
-    }
+  .app {
+    max-width: 1024px;
+  }
 }
 
 @media screen and (max-width: 768px) {
-    .app {
-        max-width: 768px;
-    }
+  .app {
+    max-width: 768px;
+  }
 }
 
 @media screen and (max-width: 320px) {
-    .app {
-        max-width: 320px;
-    }
+  .app {
+    max-width: 320px;
+  }
 }

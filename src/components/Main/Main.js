@@ -5,17 +5,17 @@ import AboutMe from "../AboutMe/AboutMe";
 import Portfolio from "../Portfolio/Portfolio";
 
 function Main() {
-    return (
-        <div className="main">
-            <div className="page">
-                <Promo/>
-                <AboutProject/>
-                <Techs/>
-                <AboutMe/>
-                <Portfolio/>
-            </div>
-        </div>
-    );
+  return (
+    <div className="main">
+      <div className="page">
+        <Promo />
+        <AboutProject />
+        <Techs />
+        <AboutMe />
+        <Portfolio />
+      </div>
+    </div>
+  );
 }
 
 export default Main;
