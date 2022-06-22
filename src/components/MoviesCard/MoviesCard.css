@@ -40,3 +40,7 @@
     margin-top: 29px;
     margin-bottom: 0;
 }
+
+.moviescard__likebutton {
+    cursor: pointer;
+}

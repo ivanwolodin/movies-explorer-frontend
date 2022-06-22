@@ -1,7 +1,6 @@
 .searchform {
     display: flex;
     flex-direction: row;
-    margin-bottom: 94px;
 }
 
 .searchform__text_input {
