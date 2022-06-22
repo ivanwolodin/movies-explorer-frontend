@@ -5,6 +5,8 @@ import "./App.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
+import NotFound from "../NotFound/NotFound";
 
 function App() {
   return (
@@ -17,6 +19,9 @@ function App() {
           </Route>
           <Route path="/movies" exact>
             <Movies />
+          </Route>
+          <Route path="/saved-movies" exact>
+            <SavedMovies />
           </Route>
         </Switch>
         <Footer />
