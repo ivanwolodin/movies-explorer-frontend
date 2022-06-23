@@ -11,10 +11,11 @@ import Login from "../Login/Login";
 import Register from "../Register/Register";
 
 function App() {
+  const [loggedIn, setLoggedIn] = React.useState(true);
   return (
     <div className="app">
       <>
-        <Header />
+        <Header loggedIn={loggedIn} />
         <Switch>
           <Route path="/" exact>
             <Main />

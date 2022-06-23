@@ -1,11 +1,13 @@
-.login__buttons {
+.loginbuttons {
   display: flex;
   flex-direction: row;
   margin-right: 70px;
   gap: 30px;
+  cursor: pointer;
+  position: relative;
 }
 
-.registration__button {
+.loginbuttons__registration__button {
   padding: 0;
   border: none;
   background: none;
@@ -17,7 +19,7 @@
   line-height: 16px;
 }
 
-.login__button {
+.loginbuttons__button {
   background-color: #3456f3;
   color: white;
   border-radius: 3px;
@@ -31,4 +33,64 @@
   font-weight: 500;
   font-size: 12px;
   line-height: 16px;
+}
+
+.loginbuttons__icon {
+  align-self: center;
+  position: relative;
+}
+
+.loginbuttons__background_account_icon {
+  position: relative;
+}
+
+.loginbuttons__account_icon {
+  top: 8px;
+  left: 9px;
+  position: absolute;
+}
+
+.loginbuttons__account_text {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  color: #000000;
+}
+
+.loginbuttons__nav {
+  position: absolute;
+  background-image: url("../../images/header_budge.svg");
+  width: 44px;
+  height: 44px;
+  border: none;
+  visibility: hidden;
+  background-color: white;
+  margin-left: calc(100% - 60px);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .loginbuttons__nav {
+    visibility: visible;
+  }
+
+  .loginbuttons {
+    visibility: hidden;
+  }
+}
+@media screen and (max-width: 483px) {
+  .loginbuttons__nav {
+    margin-top: 10px;
+  }
+}
+@media screen and (max-width: 360px) {
+  .loginbuttons__nav {
+    width: 40px;
+    height: 43px;
+    margin-left: calc(100% - 80px);
+  }
 }

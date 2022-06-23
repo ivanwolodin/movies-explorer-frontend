@@ -4,4 +4,29 @@
   display: flex;
   justify-content: space-between;
   padding-left: 50px;
+  padding-top: 18px;
+}
+
+.header_loggedin {
+  background-color: white;
+}
+
+.header__navigation {
+  display: flex;
+  flex-direction: row;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: right;
+  color: #000000;
+  gap: 16px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+  .header__navigation {
+    visibility: hidden;
+  }
 }
