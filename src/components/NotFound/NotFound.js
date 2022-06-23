@@ -1,12 +1,19 @@
 import "./NotFound.css";
-import arrow from "../../images/arrow.svg";
+import { Link, useHistory } from "react-router-dom";
 
 function NotFound() {
+  const history = useHistory();
+  function handleClick() {
+    history.goBack();
+  }
+
   return (
-    <div className="notfound">
+    <div className="notfound popup">
       <h2 className="notfound__title">404</h2>
       <p className="notfound__description">Страница не найдена</p>
-      <button className="notfound__button">Назад</button>
+      <Link onClick={handleClick} className="notfound__button">
+        Назад
+      </Link>
     </div>
   );
 }
