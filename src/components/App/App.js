@@ -7,6 +7,7 @@ import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
 import NotFound from "../NotFound/NotFound";
+import Login from "../Login/Login";
 
 function App() {
   return (
@@ -22,6 +23,9 @@ function App() {
           </Route>
           <Route path="/saved-movies" exact>
             <SavedMovies />
+          </Route>
+          <Route path="/login" exact>
+            <Login />
           </Route>
           <Route path="*">
             <NotFound />

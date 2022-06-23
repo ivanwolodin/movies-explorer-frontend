@@ -1,12 +1,13 @@
 import logo from "../../images/logo.svg";
 import "./Header.css";
 import LoginButtons from "../LoginButtons/LoginButtons";
+import Logo from "../Logo/Logo";
 
 function Header() {
   return (
     <>
       <header className="header">
-        <img className="header__logo" src={logo} alt="лого" />
+        <Logo />
         <LoginButtons />
       </header>
     </>
