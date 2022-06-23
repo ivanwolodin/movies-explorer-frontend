@@ -9,6 +9,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import NotFound from "../NotFound/NotFound";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
+import Profile from "../Profile/Profile";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/register" exact>
             <Register />
+          </Route>
+          <Route path="/profile" exact>
+            <Profile />
           </Route>
           <Route path="*">
             <NotFound />
