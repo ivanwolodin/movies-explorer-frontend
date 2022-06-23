@@ -12,7 +12,10 @@ function Header(props) {
             <p>Фильмы</p>
             <p>Сохраненные фильмы</p>
           </nav>
-          <LoginButtons loggedIn={props.loggedIn} />
+          <LoginButtons
+            loggedIn={props.loggedIn}
+            handlePopup={props.onButtonClick}
+          />
         </header>
       ) : (
         <header className="header">

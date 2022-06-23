@@ -10,13 +10,24 @@ import NotFound from "../NotFound/NotFound";
 import Login from "../Login/Login";
 import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
+import NavTab from "../NavTab/NavTab";
 
 function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
+  const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
+
+  function handlePopupNav() {
+    setPopupNavOpen(true);
+  }
+
+  function closeAllPopups() {
+    setPopupNavOpen(false);
+  }
+
   return (
     <div className="app">
       <>
-        <Header loggedIn={loggedIn} />
+        <Header loggedIn={loggedIn} onButtonClick={handlePopupNav} />
         <Switch>
           <Route path="/" exact>
             <Main />
@@ -41,6 +52,7 @@ function App() {
           </Route>
         </Switch>
         <Footer />
+        <NavTab isPopupNavOpened={isPopupNavOpened} onClose={closeAllPopups} />
       </>
     </div>
   );

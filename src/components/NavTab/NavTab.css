@@ -1,0 +1,46 @@
+.navtab{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 248px;
+    right: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 1);
+    display: flex;
+    visibility: hidden;
+}
+
+.navtab_opened{
+    visibility: visible;
+}
+
+.navtab__close_button {
+    position: absolute;
+    cursor: pointer;
+    /*left: 714.44px;*/
+    right: 30px;
+    top: 38px;
+    width: 33px;
+    height: 33px;
+    background-image: url("../../images/close_popup_button.svg");
+    background-repeat: no-repeat;
+    border: none;
+    background-color: white;
+}
+
+.navtab__elements{
+    display: flex;
+    flex-direction: column;
+}
+
+.navtab__link{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: #000000;
+    margin-bottom: 28px;
+}

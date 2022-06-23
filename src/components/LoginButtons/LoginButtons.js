@@ -20,7 +20,10 @@ function LoginButtons(props) {
               alt="лого"
             />
           </div>
-          <button className="loginbuttons__nav"></button>
+          <button
+            onClick={props.handlePopup}
+            className="loginbuttons__nav"
+          ></button>
         </div>
       ) : (
         <>
