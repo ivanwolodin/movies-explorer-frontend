@@ -15,7 +15,7 @@
   border: none;
   background: none;
   cursor: pointer;
-  font-family: "Inter";
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -31,7 +31,7 @@
   height: 32px;
   align-self: center;
   cursor: pointer;
-  font-family: "Inter";
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 12px;
@@ -54,7 +54,7 @@
 }
 
 .loginbuttons__account_text {
-  font-family: "Inter";
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -104,6 +104,13 @@
   .loginbuttons {
     gap: 0;
     margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .loginbuttons {
+    gap: 14px;
+    margin-right: 14px;
   }
 }
 

@@ -16,7 +16,7 @@
 }
 
 .moviescard__name {
-  font-family: "Inter";
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
@@ -29,7 +29,7 @@
 .moviescard__duration {
   border-top: 1px solid #a0a0a0;
   padding-top: 6px;
-  font-family: "Inter";
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 11px;

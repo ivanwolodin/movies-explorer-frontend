@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 import "./Header.css";
 import LoginButtons from "../LoginButtons/LoginButtons";
@@ -12,12 +12,20 @@ function Header(props) {
         <header className="header header_loggedin">
           <Logo />
           <nav className="header__navigation">
-            <Link className="link" to="/movies">
+            <NavLink
+              className="link"
+              activeStyle={{ fontWeight: 500 }}
+              to="/movies"
+            >
               <p>Фильмы</p>
-            </Link>
-            <Link className="link" to="/saved-movies">
+            </NavLink>
+            <NavLink
+              className="link"
+              activeStyle={{ fontWeight: 500 }}
+              to="/saved-movies"
+            >
               <p>Сохраненные фильмы</p>
-            </Link>
+            </NavLink>
           </nav>
           <LoginButtons
             loggedIn={props.loggedIn}

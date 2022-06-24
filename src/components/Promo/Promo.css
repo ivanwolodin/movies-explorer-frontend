@@ -11,7 +11,7 @@
   padding-bottom: 0;
   margin-top: 0;
   margin-bottom: 36px;
-  font-family: "Inter";
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 50px;
@@ -21,7 +21,8 @@
 }
 
 .promo__teaser {
-  font-family: "Inter";
+  margin-top: 0;
+  font-family: "Inter", "Arial", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 13px;
