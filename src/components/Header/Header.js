@@ -5,6 +5,7 @@ import LoginButtons from "../LoginButtons/LoginButtons";
 import Logo from "../Logo/Logo";
 
 function Header(props) {
+  console.log(props.loggedIn);
   return (
     <>
       {props.loggedIn ? (

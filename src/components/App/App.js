@@ -24,6 +24,13 @@ function App() {
     setPopupNavOpen(false);
   }
 
+  function handleLogout() {
+    setLoggedIn(false);
+  }
+  function handleLogin() {
+    setLoggedIn(true);
+  }
+
   return (
     <div className="app">
       <>
@@ -39,13 +46,13 @@ function App() {
             <SavedMovies />
           </Route>
           <Route path="/login" exact>
-            <Login />
+            <Login handleLogin={handleLogin} />
           </Route>
           <Route path="/register" exact>
             <Register />
           </Route>
           <Route path="/profile" exact>
-            <Profile />
+            <Profile handleLogout={handleLogout} />
           </Route>
           <Route path="*">
             <NotFound />

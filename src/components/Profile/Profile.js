@@ -2,7 +2,11 @@ import { Link } from "react-router-dom";
 
 import "./Profile.css";
 
-function Profile(props) {
+function Profile({ handleLogout }) {
+  function handleExit() {
+    handleLogout();
+  }
+
   return (
     <div className="profile popup profile__popup">
       <h2 className="profile__name">Привет, Виталий!</h2>
@@ -23,9 +27,14 @@ function Profile(props) {
         <button className="profile__button profile__editbutton">
           Редактировать
         </button>
-        <button className="profile__button profile__exitbutton">
-          Выйти из аккаунта
-        </button>
+        <Link className="link profile__link" to="/">
+          <button
+            onClick={handleExit}
+            className="profile__button profile__exitbutton"
+          >
+            Выйти из аккаунта
+          </button>
+        </Link>
       </form>
     </div>
   );

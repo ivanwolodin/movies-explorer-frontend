@@ -1,5 +1,6 @@
 import "./Register.css";
 import Logo from "../Logo/Logo";
+import { Link } from "react-router-dom";
 
 function Register() {
   return (
@@ -23,7 +24,12 @@ function Register() {
         </label>
         <button className="popup__button">Зарегистрироваться</button>
       </form>
-      <p className="popup__text">Уже зарегистрированы? Войти</p>
+      <p className="popup__text">
+        Уже зарегистрированы?{" "}
+        <Link className="link popup__button_link" to="/login">
+          Войти
+        </Link>
+      </p>
     </div>
   );
 }

@@ -92,6 +92,16 @@
   color: black;
 }
 
+.popup__button_link {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #3456f3;
+}
+
 @media screen and (max-width: 1017px) {
   .content_info {
     padding-left: 50px;

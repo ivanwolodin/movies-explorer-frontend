@@ -1,7 +1,13 @@
+import { Link } from "react-router-dom";
+
 import "./Login.css";
 import Logo from "../Logo/Logo";
 
-function Login() {
+function Login({ handleLogin }) {
+  function handleClick() {
+    handleLogin();
+  }
+
   return (
     <div className="login popup">
       <div className="popup__cap">
@@ -17,9 +23,18 @@ function Login() {
           Пароль
           <input className="popup__input" />
         </label>
-        <button className="popup__button">Войти</button>
+        <Link className="link" to="/movies">
+          <button className="popup__button" onClick={handleClick}>
+            Войти
+          </button>
+        </Link>
       </form>
-      <p className="popup__text">Еще не зарегистрированы? Регистрация</p>
+      <p className="popup__text">
+        Еще не зарегистрированы?{" "}
+        <Link className="link login__link popup__button_link" to="/register">
+          Регистрация
+        </Link>
+      </p>
     </div>
   );
 }

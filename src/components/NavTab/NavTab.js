@@ -11,13 +11,21 @@ function NavTab(props) {
     <div className={`navtab ${isPopupOpen}`}>
       <button onClick={props.onClose} className="navtab__close_button"></button>
       <nav className="navtab__elements">
-        <Link to="/" className="navtab__link link">
+        <Link to="/" onClick={props.onClose} className="navtab__link link">
           Главная
         </Link>
-        <Link to="/movies" className="navtab__link link">
+        <Link
+          to="/movies"
+          onClick={props.onClose}
+          className="navtab__link link"
+        >
           Фильмы
         </Link>
-        <Link to="/saved-movies" className="navtab__link link">
+        <Link
+          to="/saved-movies"
+          onClick={props.onClose}
+          className="navtab__link link"
+        >
           Сохраненные фильмы
         </Link>
         <div className={`loginbuttons loginbuttons_center ${isPopupOpen}`}>
