@@ -21,7 +21,7 @@ function MoviesCard({ title, cardLikeexist }) {
         <p className="moviescard__name">{title}</p>
         {cardLikeexist ? (
           <img
-            className="moviescard__likebutton"
+            className="moviescard__button"
             src={isLiked ? liked_button : like_button}
             alt="кнопка лайка"
             onClick={handleLike}

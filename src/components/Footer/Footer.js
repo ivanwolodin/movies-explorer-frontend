@@ -12,17 +12,29 @@ function Footer() {
         <p className="footer__year">&copy; 2020</p>
         <ul className="footer__links">
           <li>
-            <a className="footer__link" href="#">
+            <a
+              className="footer__link"
+              target="_blank"
+              href="https://practicum.yandex.ru/"
+            >
               Яндекс.Практикум
             </a>
           </li>
           <li>
-            <a className="footer__link" href="#">
+            <a
+              className="footer__link"
+              target="_blank"
+              href="https://github.com/ivanwolodin"
+            >
               Github
             </a>
           </li>
           <li>
-            <a className="footer__link" href="#">
+            <a
+              className="footer__link"
+              target="_blank"
+              href="https://facebook.com"
+            >
               Facebook
             </a>
           </li>

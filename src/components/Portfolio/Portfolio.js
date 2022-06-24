@@ -8,19 +8,25 @@ function Portfolio() {
       <ul className="portfolio__projects_list">
         <li className="portfolio__project">
           <p className="portfolio__item">Статичный сайт</p>
-          <a href="#">
+          <a href="https://github.com/ivanwolodin/how-to-learn" target="_blank">
             <img src={arrow} alt="стрелочка" />
           </a>
         </li>
         <li className="portfolio__project">
           <p className="portfolio__item"> Адаптивный сайт</p>
-          <a href="#">
+          <a
+            href="https://github.com/ivanwolodin/russian-travel"
+            target="_blank"
+          >
             <img src={arrow} alt="стрелочка" />
           </a>
         </li>
         <li className="portfolio__project">
           <p className="portfolio__item">Одностраничное приложение</p>
-          <a href="#">
+          <a
+            href="https://github.com/ivanwolodin/react-mesto-api-full"
+            target="_blank"
+          >
             <img src={arrow} alt="стрелочка" />
           </a>
         </li>

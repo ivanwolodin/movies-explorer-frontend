@@ -4,3 +4,4 @@ src/vendor/normalize.css
 src/vendor/fonts/inter.css
 src/setupTests.js
 src/reportWebVitals.js
+package-lock.json

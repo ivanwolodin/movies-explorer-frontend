@@ -18,11 +18,18 @@ function AboutMe() {
             заниматься фриланс-заказами и ушёл с постоянной работы.
           </p>
           <p className="about_me__social_networks">
-            <a className="about_me__link" href="https://github.com/ivanwolodin">
+            <a
+              className="about_me__link"
+              target="_blank"
+              href="https://facebook.com"
+            >
               Facebook
             </a>
-            <a className="about_me__link" href="https://github.com/ivanwolodin">
-              {" "}
+            <a
+              className="about_me__link"
+              target="_blank"
+              href="https://github.com/ivanwolodin"
+            >
               Github
             </a>
           </p>

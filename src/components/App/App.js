@@ -1,5 +1,5 @@
 import React from "react";
-import { Redirect, Route, Switch, Router } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import Main from "../Main/Main";
 import "./App.css";
 import Header from "../Header/Header";
@@ -13,7 +13,7 @@ import Profile from "../Profile/Profile";
 import NavTab from "../NavTab/NavTab";
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
 
   function handlePopupNav() {
