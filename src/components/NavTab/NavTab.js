@@ -13,8 +13,8 @@ function NavTab(props) {
                 <a className="navtab__link">Главная</a>
                 <a className="navtab__link">Фильмы</a>
                 <a className="navtab__link">Сохраненные фильмы</a>
-                <p className="loginbuttons__account_text">Аккаунт</p>
-                <div className="loginbuttons">
+                <div className={`loginbuttons loginbuttons_center ${isPopupOpen}`}>
+                    <p className="loginbuttons__account_text">Аккаунт</p>
                     <div className="loginbuttons__icon">
                         <img
                             className="loginbuttons__background_account_icon"
@@ -28,7 +28,6 @@ function NavTab(props) {
                         />
                     </div>
                 </div>
-
             </nav>
         </div>
 
