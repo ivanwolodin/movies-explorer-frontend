@@ -5,9 +5,13 @@
   gap: 30px;
   cursor: pointer;
   position: relative;
+  align-self: center;
+  align-items: center;
+  text-align: center;
 }
 
 .loginbuttons__registration__button {
+  text-decoration: none;
   padding: 0;
   border: none;
   background: none;
