@@ -99,7 +99,7 @@
     margin-left: calc(100% - 80px);
   }
   .loginbuttons__icon {
-    right: 50px;
+    /*right: 50px;*/
   }
   .loginbuttons {
     gap: 0;
@@ -112,6 +112,9 @@
     gap: 14px;
     margin-right: 14px;
   }
+  .loginbuttons__nav {
+    margin-left: 60px;
+  }
 }
 
 .loginbuttons_center {
@@ -120,3 +123,4 @@
   margin-right: 0;
   margin-top: 902px;
 }
+

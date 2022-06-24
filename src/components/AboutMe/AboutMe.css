@@ -112,4 +112,8 @@
     font-size: 11px;
     width: 292px;
   }
+  .about_me__photo{
+    width: 292px;
+    margin-right: 0;
+  }
 }
