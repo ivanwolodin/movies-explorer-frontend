@@ -1,5 +1,6 @@
+import { Link } from "react-router-dom";
+
 import "../NavTab/NavTab.css";
-import LoginButtons from "../LoginButtons/LoginButtons";
 import background_account_icon from "../../images/background_account_icon.svg";
 import account_icon from "../../images/account_icon.svg";
 
@@ -10,9 +11,15 @@ function NavTab(props) {
     <div className={`navtab ${isPopupOpen}`}>
       <button onClick={props.onClose} className="navtab__close_button"></button>
       <nav className="navtab__elements">
-        <a className="navtab__link">Главная</a>
-        <a className="navtab__link">Фильмы</a>
-        <a className="navtab__link">Сохраненные фильмы</a>
+        <Link to="/" className="navtab__link link">
+          Главная
+        </Link>
+        <Link to="/movies" className="navtab__link link">
+          Фильмы
+        </Link>
+        <Link to="/saved-movies" className="navtab__link link">
+          Сохраненные фильмы
+        </Link>
         <div className={`loginbuttons loginbuttons_center ${isPopupOpen}`}>
           <p className="loginbuttons__account_text">Аккаунт</p>
           <div className="loginbuttons__icon">

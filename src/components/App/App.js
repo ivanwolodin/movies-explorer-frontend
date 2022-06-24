@@ -13,7 +13,7 @@ import Profile from "../Profile/Profile";
 import NavTab from "../NavTab/NavTab";
 
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(true);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
 
   function handlePopupNav() {

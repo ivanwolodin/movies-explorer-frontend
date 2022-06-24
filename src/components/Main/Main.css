@@ -87,6 +87,11 @@
   width: 396px;
 }
 
+.link {
+  text-decoration: none;
+  color: black;
+}
+
 @media screen and (max-width: 1017px) {
   .content_info {
     padding-left: 50px;

@@ -3,7 +3,6 @@
   flex-direction: row;
   margin-right: 70px;
   gap: 30px;
-  cursor: pointer;
   position: relative;
   align-self: center;
   align-items: center;
@@ -76,13 +75,15 @@
   margin-left: calc(100% - 60px);
   cursor: pointer;
 }
-
+.loginbuttons_hide {
+  visibility: visible;
+}
 @media screen and (max-width: 768px) {
   .loginbuttons__nav {
     visibility: visible;
   }
 
-  .loginbuttons {
+  .loginbuttons_hide {
     visibility: hidden;
   }
 }
