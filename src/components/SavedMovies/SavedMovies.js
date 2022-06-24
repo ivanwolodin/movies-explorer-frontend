@@ -6,7 +6,7 @@ function SavedMovies() {
   return (
     <div className="savedmovies">
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList savedMovies={true} />
     </div>
   );
 }

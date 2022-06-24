@@ -20,15 +20,28 @@ const filmsList = [
   "Зона",
 ];
 
-function MoviesCardList() {
+const savedFilmsList = ["Скейт — кухня", "Война искусств", "Зона"];
+
+function MoviesCardList(props) {
+  console.log(props.savedMovies);
   return (
     <div className="moviescardlist content_info">
       <div className="moviescardlist__films ">
-        {filmsList.map((card) => (
-          <MoviesCard title={card} />
-        ))}
+        {props.savedMovies
+          ? savedFilmsList.map((card, index) => (
+              <MoviesCard key={index} title={card} cardLikeexist={false} />
+            ))
+          : filmsList.map((card, index) => (
+              <MoviesCard key={index} title={card} cardLikeexist={true} />
+            ))}
       </div>
-      <button className="moviescardlist__button">Еще</button>
+      {props.savedMovies ? (
+        <button className="moviescardlist__button moviescardlist__button_hidden">
+          Еще
+        </button>
+      ) : (
+        <button className="moviescardlist__button">Еще</button>
+      )}
     </div>
   );
 }
