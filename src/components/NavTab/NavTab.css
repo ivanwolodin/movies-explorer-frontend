@@ -30,8 +30,12 @@
 }
 
 .navtab__elements {
+  position: relative;
   display: flex;
   flex-direction: column;
+  align-content: space-between;
+  /*flex-wrap: wrap;*/
+  /*overflow: hidden;*/
 }
 
 .navtab__link {
@@ -49,4 +53,8 @@
   .navtab {
     left: 0;
   }
+}
+
+.navtab__link_active{
+  border-bottom: 2px solid #000;
 }
