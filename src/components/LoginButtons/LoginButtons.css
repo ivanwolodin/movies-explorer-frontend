@@ -39,6 +39,7 @@
 }
 
 .loginbuttons__icon {
+  display: flex;
   align-self: center;
   position: relative;
 }
@@ -71,7 +72,8 @@
   height: 44px;
   border: none;
   visibility: hidden;
-  background-color: white;
+  background-color: transparent;
+  /*background-color: white;*/
   margin-left: calc(100% - 60px);
   cursor: pointer;
 }

@@ -90,6 +90,8 @@
 .link {
   text-decoration: none;
   color: black;
+  display: flex;
+  align-self: center;
 }
 
 .popup__button_link {
