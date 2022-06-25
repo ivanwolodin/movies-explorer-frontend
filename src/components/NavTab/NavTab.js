@@ -8,7 +8,7 @@ function NavTab(props) {
 
   return (
     <div className={`navtab ${isPopupOpen}`}>
-      <button onClick={props.onClose} className="navtab__close_button"></button>
+      <button onClick={props.onClose} className="navtab__close_button" />
       <nav className="navtab__elements">
         <NavLink to="/" onClick={props.onClose} className="navtab__link link">
           Главная
@@ -38,7 +38,7 @@ function NavTab(props) {
             loggedIn={true}
             isNavTab={true}
             isPopupOpen={isPopupOpen}
-          ></LoginButtons>
+          />
         </Link>
       </nav>
     </div>
