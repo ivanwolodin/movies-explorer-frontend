@@ -5,10 +5,13 @@ import account_icon from "../../images/account_icon.svg";
 import background_account_icon from "../../images/background_account_icon.svg";
 
 function LoginButtons(props) {
+  const loginButtonsClass = props.isNavTab ? "loginbuttons_center" : "loginbuttons_hide"
   return (
     <>
       {props.loggedIn ? (
-        <div className="loginbuttons loginbuttons_hide">
+        <div
+          className={`loginbuttons ${loginButtonsClass} ${props.isPopupOpen}`}
+        >
           <p className="loginbuttons__account_text">Аккаунт</p>
           <Link to="/profile">
             <div className="loginbuttons__icon">
@@ -24,12 +27,14 @@ function LoginButtons(props) {
               />
             </div>
           </Link>
+          {
+            props.isNavTab ? "" : <button onClick={props.handlePopup} className="loginbuttons__nav" />
+          }
 
-          <button onClick={props.handlePopup} className="loginbuttons__nav" />
         </div>
       ) : (
         <>
-          <div className="loginbuttons">
+          <div className={`loginbuttons ${props.isPopupOpen}`}>
             <Link to="/register">
               <button className="loginbuttons__registration__button">
                 Регистрация

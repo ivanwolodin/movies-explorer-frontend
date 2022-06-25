@@ -85,13 +85,13 @@
     padding-left: 10px;
     padding-right: 10px;
   }
-  .footer__year{
+  .footer__year {
     font-weight: 400;
     font-size: 12px;
     line-height: 15px;
-    color: #A0A0A0;
+    color: #a0a0a0;
   }
-  .footer__info{
+  .footer__info {
     flex-direction: column-reverse;
   }
 }

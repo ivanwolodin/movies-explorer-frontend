@@ -23,7 +23,6 @@ const filmsList = [
 const savedFilmsList = ["Скейт — кухня", "Война искусств", "Зона"];
 
 function MoviesCardList(props) {
-  console.log(props.savedMovies);
   return (
     <div className="moviescardlist content_info">
       <div className="moviescardlist__films ">
