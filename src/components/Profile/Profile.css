@@ -4,7 +4,7 @@
 }
 
 .profile__popup {
-  top: 60px;
+  top: 90px;
 }
 
 .profile__input {
@@ -95,8 +95,5 @@
   }
   .profile__name {
     margin-top: 70px;
-  }
-  .profile__popup {
-    top: 70px;
   }
 }

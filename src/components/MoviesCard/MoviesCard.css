@@ -42,7 +42,25 @@
 }
 
 .moviescard__button {
+  border: none;
   cursor: pointer;
+  /*background-color: white;*/
+  background-position: center;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+}
+
+.moviescard__button_like {
+  background-image: url("../../images/like_button.svg");
+}
+
+.moviescard__button_liked {
+  background-image: url("../../images/like_button_liked.svg");
+}
+
+.moviescard__button_delete {
+  background-image: url("../../images/delete_movie_button.svg");
 }
 
 @media screen and (max-width: 656px) {

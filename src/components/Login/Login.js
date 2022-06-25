@@ -30,7 +30,7 @@ function Login({ handleLogin }) {
         </Link>
       </form>
       <p className="popup__text">
-        Еще не зарегистрированы?{" "}
+        <p>Еще не зарегистрированы?</p>
         <Link className="link login__link popup__button_link" to="/register">
           Регистрация
         </Link>

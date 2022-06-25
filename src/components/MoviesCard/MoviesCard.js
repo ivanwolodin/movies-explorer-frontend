@@ -10,6 +10,9 @@ function MoviesCard({ title, cardLikeexist }) {
   function handleLike() {
     setLike(!isLiked);
   }
+  const classButtonLike = !isLiked
+    ? "moviescard__button_like"
+    : "moviescard__button_liked";
   return (
     <div className="moviescard">
       <img
@@ -20,17 +23,17 @@ function MoviesCard({ title, cardLikeexist }) {
       <div className="moviescard__info">
         <p className="moviescard__name">{title}</p>
         {cardLikeexist ? (
-          <img
-            className="moviescard__button"
-            src={isLiked ? liked_button : like_button}
-            alt="кнопка лайка"
+          <button
+            className={`moviescard__button ${classButtonLike} `}
+            // src={isLiked ? liked_button : like_button}
+            // alt="кнопка лайка"
             onClick={handleLike}
           />
         ) : (
-          <img
-            className="moviescard__button"
-            src={delete_button}
-            alt="кнопка удаления"
+          <button
+            className="moviescard__button moviescard__button_delete"
+            // src={delete_button}
+            // alt="кнопка удаления"
           />
         )}
       </div>

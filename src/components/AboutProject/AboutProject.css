@@ -65,6 +65,14 @@
 .project__second_title {
   margin-bottom: 26px;
   margin-top: 70px;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: -0.04em;
+
+  color: #000000;
 }
 
 .project__additional_info {
@@ -74,6 +82,7 @@
 @media screen and (max-width: 350px) {
   .project__info {
     flex-direction: column;
+    gap: 0;
   }
   .project__timeline {
     font-size: 11px;
@@ -84,5 +93,14 @@
   }
   .project__timeline_short {
     width: 100px;
+  }
+  .project__additional_info {
+    margin-bottom: 60px;
+  }
+  .project__second_title {
+    margin-top: 60px;
+  }
+  .project__text {
+    margin-top: 0;
   }
 }

@@ -22,10 +22,12 @@ function Register() {
           Пароль
           <input className="popup__input" />
         </label>
-        <button className="popup__button">Зарегистрироваться</button>
+        <button className="popup__button register__button">
+          Зарегистрироваться
+        </button>
       </form>
       <p className="popup__text">
-        Уже зарегистрированы?{" "}
+        <p>Уже зарегистрированы?</p>
         <Link className="link popup__button_link" to="/login">
           Войти
         </Link>

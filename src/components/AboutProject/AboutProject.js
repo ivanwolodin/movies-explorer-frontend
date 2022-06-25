@@ -16,7 +16,7 @@ function AboutProject() {
           </p>
         </div>
         <div>
-          <p className="project__second_title">
+          <p className="project__second_title project__text">
             На выполнение диплома ушло 5 недель
           </p>
           <p className="project__additional_info">
