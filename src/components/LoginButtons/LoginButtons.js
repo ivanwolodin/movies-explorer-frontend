@@ -5,7 +5,9 @@ import account_icon from "../../images/account_icon.svg";
 import background_account_icon from "../../images/background_account_icon.svg";
 
 function LoginButtons(props) {
-  const loginButtonsClass = props.isNavTab ? "loginbuttons_center" : "loginbuttons_hide"
+  const loginButtonsClass = props.isNavTab
+    ? "loginbuttons_center"
+    : "loginbuttons_hide";
   return (
     <>
       {props.loggedIn ? (
@@ -27,10 +29,11 @@ function LoginButtons(props) {
               />
             </div>
           </Link>
-          {
-            props.isNavTab ? "" : <button onClick={props.handlePopup} className="loginbuttons__nav" />
-          }
-
+          {props.isNavTab ? (
+            ""
+          ) : (
+            <button onClick={props.handlePopup} className="loginbuttons__nav" />
+          )}
         </div>
       ) : (
         <>

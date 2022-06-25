@@ -1,4 +1,4 @@
-import {Link, NavLink} from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import "../NavTab/NavTab.css";
 import LoginButtons from "../LoginButtons/LoginButtons";
@@ -10,11 +10,11 @@ function NavTab(props) {
     <div className={`navtab ${isPopupOpen}`}>
       <button onClick={props.onClose} className="navtab__close_button"></button>
       <nav className="navtab__elements">
-        <NavLink to="/" onClick={props.onClose} className="navtab__link link" >
+        <NavLink to="/" onClick={props.onClose} className="navtab__link link">
           Главная
         </NavLink>
         <NavLink
-            activeClassName='navtab__link_active'
+          activeClassName="navtab__link_active"
           to="/movies"
           onClick={props.onClose}
           className="navtab__link link"
@@ -22,7 +22,7 @@ function NavTab(props) {
           Фильмы
         </NavLink>
         <NavLink
-            activeClassName='navtab__link_active'
+          activeClassName="navtab__link_active"
           to="/saved-movies"
           onClick={props.onClose}
           className="navtab__link link"
@@ -34,7 +34,11 @@ function NavTab(props) {
           onClick={props.onClose}
           className="navtab__link link"
         >
-          <LoginButtons loggedIn={true} isNavTab={true} isPopupOpen={isPopupOpen}></LoginButtons>
+          <LoginButtons
+            loggedIn={true}
+            isNavTab={true}
+            isPopupOpen={isPopupOpen}
+          ></LoginButtons>
         </Link>
       </nav>
     </div>
