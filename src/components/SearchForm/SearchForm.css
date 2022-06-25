@@ -9,6 +9,7 @@
 }
 
 .searchform__text_input {
+  background: transparent;
   opacity: 0.2;
   border: 1.5px solid #aaaaaa;
   border-radius: 50px;
