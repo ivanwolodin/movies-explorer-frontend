@@ -1,0 +1,119 @@
+.about_me__personal_info {
+  display: flex;
+  flex-direction: row;
+  margin-top: 66px;
+}
+
+.about_me__name {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 50px;
+  line-height: 58px;
+  letter-spacing: -0.04em;
+  color: #000000;
+  margin-top: 0;
+  margin-bottom: 18px;
+}
+
+.about_me__position {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 20px;
+  color: #000000;
+  mix-blend-mode: normal;
+  margin-top: 0;
+  margin-bottom: 26px;
+}
+
+.about_me__short_info {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 22px;
+  color: #000000;
+  mix-blend-mode: normal;
+  width: 600px;
+  margin-top: 0;
+  margin-bottom: 99px;
+}
+
+.about_me__social_networks {
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+
+  display: flex;
+  gap: 20px;
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.about_me__link {
+  color: #000000;
+  text-decoration: none;
+}
+
+.about_me__photo {
+  margin-left: auto;
+}
+
+@media screen and (max-width: 990px) {
+  .about_me__photo {
+    width: 255px;
+  }
+  .about_me__short_info {
+    font-size: 12px;
+    width: 364px;
+  }
+  .about_me__position {
+    font-size: 12px;
+  }
+  .about_me__name {
+    margin-bottom: 16px;
+  }
+}
+
+@media screen and (max-width: 730px) {
+  .about_me__personal_info {
+    flex-direction: column-reverse;
+    align-items: center;
+  }
+  .about_me__photo {
+    margin-left: 0;
+  }
+  .about_me__text {
+    text-align: center;
+  }
+  .about_me__social_networks {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .about_me__text {
+    text-align: left;
+  }
+  .about_me__social_networks {
+    justify-content: left;
+  }
+  .about_me__photo {
+    margin-right: auto;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .about_me__short_info {
+    font-size: 11px;
+    width: 292px;
+  }
+  .about_me__photo {
+    width: 292px;
+    margin-right: 0;
+  }
+}

@@ -1,0 +1,40 @@
+.header {
+  /*background-color: #dddee3;*/
+  /*width: 1280px;*/
+  display: flex;
+  justify-content: space-between;
+  padding-left: 70px;
+  padding-top: 18px;
+}
+
+.header_loggedin {
+  background-color: white;
+}
+
+.header__navigation {
+  display: flex;
+  flex-direction: row;
+  font-family: "Inter", "Arial", sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: right;
+  color: #000000;
+  gap: 16px;
+  cursor: pointer;
+  align-content: center;
+  align-self: center;
+}
+
+@media screen and (max-width: 768px) {
+  .header__navigation {
+    visibility: hidden;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .header {
+    padding-left: 14px;
+  }
+}
