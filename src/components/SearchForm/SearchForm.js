@@ -4,8 +4,6 @@ import "./SearchForm.css";
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
 import button_icon from "../../images/button_icon.svg";
 
-import { MoviesApi } from "../../utils/MoviesApi";
-
 function SearchForm(props) {
   // const regex = /^[A-Za-z0-9 -]*$/;
   const regex = "[A-Za-z0-9 -]+";
@@ -18,12 +16,7 @@ function SearchForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    // if(regex.test(moviesNameToSeacrh) && moviesNameToSeacrh!=="") {
-    //   console.log("Sending")
-    //   props.onClick();
-    // } else {
-    //   console.log("Нужно ввести ключевое слово");
-    // }
+    props.onClick();
   }
 
   return (
@@ -44,7 +37,7 @@ function SearchForm(props) {
         <button
           type="submit"
           className="searchform__button"
-          // onClick={handleSubmit}
+          onClick={handleSubmit}
         >
           <img src={button_icon} alt="Arrow Icon" />
         </button>

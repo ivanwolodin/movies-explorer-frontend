@@ -18,10 +18,11 @@ export class MoviesApi {
     };
   }
 
-  getInitialCards() {
+  getAllMovies() {
     console.log("Sending API request!");
-    // return fetch(`${this._url}/cards`, {
-    //     headers: this.headers,
-    // }).then(this._checkResponse);
+    return fetch(`${this._url}`, {
+      method: "GET",
+      body: JSON.stringify(),
+    }).then(this._checkResponse);
   }
 }
