@@ -10,9 +10,9 @@ function SearchForm() {
           className="searchform__text_input"
           placeholder="Фильм"
           required={true}
-        ></input>
+        />
         <button type="submit" className="searchform__button">
-          <img src={button_icon} alt="Arrow Icon"></img>
+          <img src={button_icon} alt="Arrow Icon" />
         </button>
       </form>
       <FilterCheckbox />
