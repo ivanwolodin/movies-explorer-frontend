@@ -38,9 +38,11 @@ function MoviesCardList(props) {
   const [width, height] = useWindowDimension();
   const [moviesToRender, setMoviesToRender] = useState([]);
 
+  const [startWith, setStartWith] = useState(0);
+
   useEffect(() => {
     if (width > 1278) {
-      setCardsNumberTOShow({ numberToShow: 12, numberToUpload: 4 });
+      setCardsNumberTOShow({ numberToShow: 4, numberToUpload: 4 });
     } else if (width <= 1278 && width > 968) {
       setCardsNumberTOShow({ numberToShow: 9, numberToUpload: 3 });
     } else if (width <= 968 && width > 613) {
@@ -48,35 +50,30 @@ function MoviesCardList(props) {
     } else if (width <= 613) {
       setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 5 });
     }
+    setStartWith(cardsNumberToShow["numberToShow"] + 1);
   }, [width]);
 
-  function showMore() {
-    //  handler of "More" button
+  function showMoreHandler() {
+    setMoviesToRender([
+      ...moviesToRender,
+      ...JSON.parse(localStorage.getItem("allMovies")).slice(
+        startWith,
+        startWith + cardsNumberToShow["numberToShow"]
+      ),
+    ]);
+    setStartWith(startWith + cardsNumberToShow["numberToShow"]);
+    console.log(moviesToRender);
   }
-  // console.log(typeof (localStorage.getItem("allMovies")))
 
   useEffect(() => {
-    // console.log(cardsNumberToShow["numberToShow"])
-    // console.log(JSON.parse(localStorage.getItem("allMovies"))[7])
-    // console.log(localStorage.getItem("allMovies").slice(0, cardsNumberToShow["numberToShow"]))
     setMoviesToRender(
       JSON.parse(localStorage.getItem("allMovies")).slice(
         0,
         cardsNumberToShow["numberToShow"]
       )
     );
-    moviesToRender.map((item) => {
-      console.log(
-        item.id,
-        item.trailerLink,
-        item.duration,
-        item.nameRU,
-        item.image.url,
-      );
-    });
   }, [width]);
 
-  // console.log(moviesToRender);
   return (
     <div className="moviescardlist content_info">
       {
@@ -105,7 +102,9 @@ function MoviesCardList(props) {
           Еще
         </button>
       ) : (
-        <button className="moviescardlist__button">Еще</button>
+        <button className="moviescardlist__button" onClick={showMoreHandler}>
+          Еще
+        </button>
       )}
     </div>
   );

@@ -12,11 +12,11 @@ function MoviesCard({ title, cardLikeexist, urlImage, duration, trailerLink }) {
     setLike(!isLiked);
   }
 
-  function calcDuration(){
+  function calcDuration() {
     const hour = Math.floor(duration / 60);
-    const minutes = duration - (hour * 60);
+    const minutes = duration - hour * 60;
 
-    return `${hour}ч${minutes}м`
+    return `${hour}ч${minutes}м`;
   }
 
   const classButtonLike = !isLiked
@@ -24,13 +24,19 @@ function MoviesCard({ title, cardLikeexist, urlImage, duration, trailerLink }) {
     : "moviescard__button_liked";
   return (
     <div className="moviescard">
-        <img
-          className="moviescard__image"
-          src={`https://api.nomoreparties.co/${urlImage}`}
-          alt="превью фильма"
-        />
+      <img
+        className="moviescard__image"
+        src={`https://api.nomoreparties.co/${urlImage}`}
+        alt="превью фильма"
+      />
       <div className="moviescard__info">
-        <a className="moviescard__trailerlink" href={trailerLink} target="_blank"><p className="moviescard__name">{title}</p></a>
+        <a
+          className="moviescard__trailerlink"
+          href={trailerLink}
+          target="_blank"
+        >
+          <p className="moviescard__name">{title}</p>
+        </a>
         {cardLikeexist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
