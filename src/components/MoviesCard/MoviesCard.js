@@ -5,8 +5,10 @@ import like_button from "../../images/like_button.svg";
 import liked_button from "../../images/like_button_liked.svg";
 import delete_button from "../../images/delete_movie_button.svg";
 
-function MoviesCard({ title, cardLikeexist, urlImage, duration, trailerLink }) {
+function MoviesCard({ title, cardLikeExist, urlImage, duration, trailerLink }) {
   const [isLiked, setLike] = React.useState(false);
+
+  const url = urlImage ? urlImage.url : "";
 
   function handleLike() {
     setLike(!isLiked);
@@ -26,7 +28,7 @@ function MoviesCard({ title, cardLikeexist, urlImage, duration, trailerLink }) {
     <div className="moviescard">
       <img
         className="moviescard__image"
-        src={`https://api.nomoreparties.co/${urlImage}`}
+        src={`https://api.nomoreparties.co/${url}`}
         alt="превью фильма"
       />
       <div className="moviescard__info">
@@ -37,7 +39,7 @@ function MoviesCard({ title, cardLikeexist, urlImage, duration, trailerLink }) {
         >
           <p className="moviescard__name">{title}</p>
         </a>
-        {cardLikeexist ? (
+        {cardLikeExist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
             // src={isLiked ? liked_button : like_button}

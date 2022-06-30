@@ -23,8 +23,8 @@ const filmsList = [
   "Война искусств",
   "Зона",
 ];
-
 const savedFilmsList = [
+  { id: 3, nameRU: "ds", image: { url: "" }, duration: 43, trailerLink: "" },
   // "Скейт — кухня",
   // "Война искусств",
   // "Зона"
@@ -36,11 +36,52 @@ function MoviesCardList(props) {
     numberToUpload: 0,
   });
   const [width, height] = useWindowDimension();
-  const [moviesToRender, setMoviesToRender] = useState([]);
-
-  const [startWith, setStartWith] = useState(0);
+  const [moviesToRender, setMoviesToRender] = useState([{}]);
 
   useEffect(() => {
+    adjustCardsNumberToWindowSize();
+    setMoviesToRender(
+      props.filmList.slice(0, cardsNumberToShow["numberToShow"])
+    );
+    if (props.filmList.length !== 0) {
+      localStorage.setItem("searchedMovies", JSON.stringify(props.filmList));
+      localStorage.setItem("uploadedNumber", props.filmList.length);
+    }
+  }, [props.filmList]);
+
+  useEffect(() => {
+    adjustCardsNumberToWindowSize();
+    setMoviesToRender(
+      moviesToRender.slice(0, cardsNumberToShow["numberToShow"])
+    );
+  }, [width]);
+
+  useEffect(() => {
+    adjustCardsNumberToWindowSize();
+    if (null !== JSON.parse(localStorage.getItem("searchedMovies"))) {
+      adjustCardsNumberToWindowSize();
+      const arr = JSON.parse(localStorage.getItem("searchedMovies"));
+      setMoviesToRender(
+        arr.slice(0, parseInt(localStorage.getItem("uploadedNumber")))
+      );
+    }
+  }, []);
+
+  function showMoreHandler() {
+    setMoviesToRender([
+      ...moviesToRender,
+      ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
+        moviesToRender.length,
+        moviesToRender.length + cardsNumberToShow["numberToUpload"]
+      ),
+    ]);
+    localStorage.setItem(
+      "uploadedNumber",
+      moviesToRender.length + cardsNumberToShow["numberToUpload"]
+    );
+  }
+
+  function adjustCardsNumberToWindowSize() {
     if (width > 1278) {
       setCardsNumberTOShow({ numberToShow: 4, numberToUpload: 4 });
     } else if (width <= 1278 && width > 968) {
@@ -48,55 +89,28 @@ function MoviesCardList(props) {
     } else if (width <= 968 && width > 613) {
       setCardsNumberTOShow({ numberToShow: 8, numberToUpload: 2 });
     } else if (width <= 613) {
-      setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 5 });
+      setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
     }
-    setStartWith(cardsNumberToShow["numberToShow"] + 1);
-  }, [width]);
-
-  function showMoreHandler() {
-    setMoviesToRender([
-      ...moviesToRender,
-      ...JSON.parse(localStorage.getItem("allMovies")).slice(
-        startWith,
-        startWith + cardsNumberToShow["numberToShow"]
-      ),
-    ]);
-    setStartWith(startWith + cardsNumberToShow["numberToShow"]);
-    console.log(moviesToRender);
   }
-
-  useEffect(() => {
-    setMoviesToRender(
-      JSON.parse(localStorage.getItem("allMovies")).slice(
-        0,
-        cardsNumberToShow["numberToShow"]
-      )
-    );
-  }, [width]);
 
   return (
     <div className="moviescardlist content_info">
-      {
-        //   !props.isContentLoaded ? (
-        //   <Preloader />
-        // ) :
+      {!props.isContentLoaded ? (
+        <Preloader />
+      ) : (
         <div className="moviescardlist__films ">
-          {props.savedMovies
-            ? savedFilmsList.map((card, index) => (
-                <MoviesCard key={index} title={card} cardLikeexist={false} />
-              ))
-            : moviesToRender.map((item) => (
-                <MoviesCard
-                  key={item.id}
-                  title={item.nameRU}
-                  cardLikeexist={true}
-                  urlImage={item.image.url}
-                  duration={item.duration}
-                  trailerLink={item.trailerLink}
-                />
-              ))}
+          {moviesToRender.map((item) => (
+            <MoviesCard
+              key={item.id}
+              title={item.nameRU}
+              cardLikeexist={true}
+              urlImage={item.image}
+              duration={item.duration}
+              trailerLink={item.trailerLink}
+            />
+          ))}
         </div>
-      }
+      )}
       {props.savedMovies ? (
         <button className="moviescardlist__button moviescardlist__button_hidden">
           Еще

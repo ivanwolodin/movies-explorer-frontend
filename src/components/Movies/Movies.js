@@ -11,19 +11,10 @@ const moviesApi = new MoviesApi({
 });
 
 function Movies(props) {
-  const [allMovies, setAllMovies] = useState([]);
+  const [searchedMovies, setSearchedMovies] = useState([]);
   const [isContentLoaded, setContentLoaded] = useState(false);
 
   const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(false);
-
-  // useEffect(() => {
-  //   setContentLoaded(!isContentLoaded);
-  // }, [allMovies]);
-  // console.log(width, height);
-
-  function sayHi() {
-    console.log("Привет");
-  }
 
   function handleCheckbox() {
     setShortMoviesCheckbox(!isShortMoviesCheckboxSet);
@@ -31,22 +22,20 @@ function Movies(props) {
 
   function handleSearch() {
     setContentLoaded(false);
-    setTimeout(sayHi, 3000);
-    if (!allMovies.length) {
-      moviesApi
-        .getAllMovies()
-        .then((response) => {
-          setAllMovies(response);
-          localStorage.setItem("allMovies", JSON.stringify(response));
-        })
-        .catch((err) => {
-          console.log("Cannot get movies");
-          console.log(err);
-        })
-        .finally(setContentLoaded(true));
-    } else {
-      setContentLoaded(true);
-    }
+
+    moviesApi
+      .getAllMovies()
+      .then((response) => {
+        localStorage.setItem("allMovies", JSON.stringify(response));
+
+        // TODO: search function
+        setSearchedMovies(response.slice(0, 12));
+      })
+      .catch((err) => {
+        console.log("Cannot get movies");
+        console.log(err);
+      })
+      .finally(setContentLoaded(true));
   }
 
   return (
@@ -57,7 +46,7 @@ function Movies(props) {
         handleCheckbox={handleCheckbox}
       />
       <MoviesCardList
-        filmList={allMovies}
+        filmList={searchedMovies}
         isContentLoaded={isContentLoaded}
         isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
       />
