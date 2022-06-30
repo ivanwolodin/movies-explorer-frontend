@@ -16,6 +16,7 @@ function SearchForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    localStorage.setItem("searchQuery", moviesNameToSeacrh);
     props.onClick();
   }
 
@@ -42,7 +43,10 @@ function SearchForm(props) {
           <img src={button_icon} alt="Arrow Icon" />
         </button>
       </form>
-      <FilterCheckbox />
+      <FilterCheckbox
+        isShortMoviesCheckboxSet={props.isShortMoviesCheckboxSet}
+        handleCheckbox={props.handleCheckbox}
+      />
     </div>
   );
 }

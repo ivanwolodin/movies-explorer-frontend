@@ -1,5 +1,6 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
+import Preloader from "../Preloader/Preloader";
 
 const filmsList = [
   "33 слова о дизайне",
@@ -25,15 +26,20 @@ const savedFilmsList = ["Скейт — кухня", "Война искусст�
 function MoviesCardList(props) {
   return (
     <div className="moviescardlist content_info">
-      <div className="moviescardlist__films ">
-        {props.savedMovies
-          ? savedFilmsList.map((card, index) => (
-              <MoviesCard key={index} title={card} cardLikeexist={false} />
-            ))
-          : filmsList.map((card, index) => (
-              <MoviesCard key={index} title={card} cardLikeexist={true} />
-            ))}
-      </div>
+      {!props.isContentLoaded ? (
+        <Preloader />
+      ) : (
+        <div className="moviescardlist__films ">
+          {props.savedMovies
+            ? savedFilmsList.map((card, index) => (
+                <MoviesCard key={index} title={card} cardLikeexist={false} />
+              ))
+            : filmsList.map((card, index) => (
+                <MoviesCard key={index} title={card} cardLikeexist={true} />
+              ))
+          }
+        </div>
+      )}
       {props.savedMovies ? (
         <button className="moviescardlist__button moviescardlist__button_hidden">
           Еще

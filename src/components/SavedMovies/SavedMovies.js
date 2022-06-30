@@ -6,7 +6,7 @@ function SavedMovies() {
   return (
     <div className="savedmovies">
       <SearchForm />
-      <MoviesCardList savedMovies={true} />
+      <MoviesCardList savedMovies={true} isContentLoaded={true} />
     </div>
   );
 }
