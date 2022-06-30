@@ -31,75 +31,30 @@ const savedFilmsList = [
 ];
 
 function MoviesCardList(props) {
-  const [cardsNumberToShow, setCardsNumberTOShow] = useState({
-    numberToShow: 0,
-    numberToUpload: 0,
-  });
-  const [width, height] = useWindowDimension();
-  const [moviesToRender, setMoviesToRender] = useState([{}]);
-
-  useEffect(() => {
-    adjustCardsNumberToWindowSize();
-    setMoviesToRender(
-      props.filmList.slice(0, cardsNumberToShow["numberToShow"])
-    );
-    if (props.filmList.length !== 0) {
-      localStorage.setItem("searchedMovies", JSON.stringify(props.filmList));
-      localStorage.setItem("uploadedNumber", props.filmList.length);
-    }
-  }, [props.filmList]);
-
-  useEffect(() => {
-    adjustCardsNumberToWindowSize();
-    setMoviesToRender(
-      moviesToRender.slice(0, cardsNumberToShow["numberToShow"])
-    );
-  }, [width]);
-
-  useEffect(() => {
-    adjustCardsNumberToWindowSize();
-    if (null !== JSON.parse(localStorage.getItem("searchedMovies"))) {
-      adjustCardsNumberToWindowSize();
-      const arr = JSON.parse(localStorage.getItem("searchedMovies"));
-      setMoviesToRender(
-        arr.slice(0, parseInt(localStorage.getItem("uploadedNumber")))
-      );
-    }
-  }, []);
-
-  function showMoreHandler() {
-    setMoviesToRender([
-      ...moviesToRender,
-      ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
-        moviesToRender.length,
-        moviesToRender.length + cardsNumberToShow["numberToUpload"]
-      ),
-    ]);
-    localStorage.setItem(
-      "uploadedNumber",
-      moviesToRender.length + cardsNumberToShow["numberToUpload"]
-    );
-  }
-
-  function adjustCardsNumberToWindowSize() {
-    if (width > 1278) {
-      setCardsNumberTOShow({ numberToShow: 4, numberToUpload: 4 });
-    } else if (width <= 1278 && width > 968) {
-      setCardsNumberTOShow({ numberToShow: 9, numberToUpload: 3 });
-    } else if (width <= 968 && width > 613) {
-      setCardsNumberTOShow({ numberToShow: 8, numberToUpload: 2 });
-    } else if (width <= 613) {
-      setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
-    }
-  }
-
   return (
     <div className="moviescardlist content_info">
       {!props.isContentLoaded ? (
         <Preloader />
+      ) : props.isLoadingError ? (
+        <div>
+          Во время запроса произошла ошибка. Возможно, проблема с соединением
+          или сервер недоступен. Подождите немного и попробуйте ещё раз
+        </div>
       ) : (
         <div className="moviescardlist__films ">
-          {moviesToRender.map((item) => (
+          {
+            props.savedMovies
+              ? savedFilmsList.map((item) => (
+                <MoviesCard
+                  key={item.id}
+                  title={item.nameRU}
+                  cardLikeexist={true}
+                  urlImage={item.image}
+                  duration={item.duration}
+                  trailerLink={item.trailerLink}
+                />
+              )) :
+            props.moviesToRender.map((item) => (
             <MoviesCard
               key={item.id}
               title={item.nameRU}
@@ -116,7 +71,7 @@ function MoviesCardList(props) {
           Еще
         </button>
       ) : (
-        <button className="moviescardlist__button" onClick={showMoreHandler}>
+        <button className="moviescardlist__button" onClick={props.showMoreHandler}>
           Еще
         </button>
       )}
