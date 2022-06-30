@@ -16,10 +16,10 @@ function Movies(props) {
 
   const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(false);
 
-  useEffect(() => {
-    setContentLoaded(!isContentLoaded);
-    // console.log("sdfsdfvsds")
-  }, [allMovies]);
+  // useEffect(() => {
+  //   setContentLoaded(!isContentLoaded);
+  // }, [allMovies]);
+  // console.log(width, height);
 
   function sayHi() {
     console.log("Привет");
@@ -29,32 +29,30 @@ function Movies(props) {
     setShortMoviesCheckbox(!isShortMoviesCheckboxSet);
   }
 
-  function handleSeacrh() {
+  function handleSearch() {
     setContentLoaded(false);
-    setTimeout(sayHi, 1000);
+    setTimeout(sayHi, 3000);
     if (!allMovies.length) {
       moviesApi
         .getAllMovies()
         .then((response) => {
           setAllMovies(response);
-          localStorage.setItem("allMovies", allMovies);
+          localStorage.setItem("allMovies", JSON.stringify(response));
         })
         .catch((err) => {
-          console.log("Cannot get cards");
+          console.log("Cannot get movies");
           console.log(err);
         })
         .finally(setContentLoaded(true));
     } else {
       setContentLoaded(true);
     }
-
-    console.log(allMovies);
   }
 
   return (
     <div className="movies">
       <SearchForm
-        onClick={handleSeacrh}
+        onClick={handleSearch}
         isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
         handleCheckbox={handleCheckbox}
       />

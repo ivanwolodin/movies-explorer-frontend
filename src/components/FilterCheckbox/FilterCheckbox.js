@@ -1,7 +1,6 @@
 import "./FilterCheckbox.css";
 
 function FilterCheckbox(props) {
-
   return (
     <div className="filtercheckbox">
       <p className="filtercheckbox__keyword">Короткометражки</p>
@@ -12,8 +11,7 @@ function FilterCheckbox(props) {
         checked={props.isShortMoviesCheckboxSet}
         onChange={props.handleCheckbox}
       />
-      <label
-        className="filtercheckbox__label" htmlFor="switch"/>
+      <label className="filtercheckbox__label" htmlFor="switch" />
     </div>
   );
 }
