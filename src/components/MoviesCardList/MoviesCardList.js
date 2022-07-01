@@ -31,6 +31,9 @@ const savedFilmsList = [
 ];
 
 function MoviesCardList(props) {
+  const savedMoviesToRender = JSON.parse(localStorage.getItem("savedMovies"))
+    ? JSON.parse(localStorage.getItem("savedMovies"))
+    : {};
   return (
     <div className="moviescardlist content_info">
       {!props.isContentLoaded ? (
@@ -43,7 +46,7 @@ function MoviesCardList(props) {
       ) : (
         <div className="moviescardlist__films ">
           {props.savedMovies
-            ? savedFilmsList.map((item) => (
+            ? savedMoviesToRender.map((item) => (
                 <MoviesCard
                   key={item.id}
                   movieId={item.id}
@@ -52,6 +55,8 @@ function MoviesCardList(props) {
                   urlImage={item.image}
                   duration={item.duration}
                   trailerLink={item.trailerLink}
+                  cardLikeExist={false}
+                  handleMovieLike={props.handleMovieLike}
                   titleEng={item.nameEN}
                   director={item.director}
                   year={item.year}

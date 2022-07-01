@@ -6,29 +6,37 @@ import liked_button from "../../images/like_button_liked.svg";
 import delete_button from "../../images/delete_movie_button.svg";
 
 function MoviesCard({
-                      title,
-                      cardLikeExist,
-                      urlImage,
-                      duration,
-                      trailerLink,
-                      handleMovieLike,
-                      movieId,
-                      cardLikeexist,
-                      titleEng,
-                      director,
-                      year,
-                      country,
-                      description
-                    }) {
+  title,
+  cardLikeExist,
+  urlImage,
+  duration,
+  trailerLink,
+  handleMovieLike,
+  movieId,
+  titleEng,
+  director,
+  year,
+  country,
+  description,
+}) {
+
   const [isLiked, setLike] = React.useState(false);
 
-  const url = urlImage ? urlImage.url : "";
+  let url;
+  let srcUrl;
+  if (cardLikeExist){
+    url = urlImage ? urlImage.url : "";
+    srcUrl = `https://api.nomoreparties.co/${url}`;
+  }
+  else {
+    url = urlImage;
+    srcUrl = url;
+  }
 
   const [movieInfo, setMovieInfo] = React.useState({
     movieId,
     nameRU: title,
-    cardLikeexist,
-    image: `https://api.nomoreparties.co/${url}`,
+    image: `https://api.nomoreparties.co${url}`,
     duration,
     trailerLink,
     nameEN: titleEng,
@@ -36,9 +44,8 @@ function MoviesCard({
     year,
     country,
     description,
-    thumbnail: `https://api.nomoreparties.co/${url}`,
+    thumbnail: `https://api.nomoreparties.co${url}`,
   });
-
 
   function handleLike() {
     setLike(!isLiked);
@@ -59,7 +66,7 @@ function MoviesCard({
     <div className="moviescard">
       <img
         className="moviescard__image"
-        src={`https://api.nomoreparties.co/${url}`}
+        src={srcUrl}
         alt="превью фильма"
       />
       <div className="moviescard__info">

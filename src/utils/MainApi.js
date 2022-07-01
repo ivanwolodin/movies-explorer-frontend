@@ -18,6 +18,13 @@ export class MainApi {
     };
   }
 
+  getLikedMovies() {
+    return fetch(`${this._url}/movies`, {
+      method: "GET",
+      headers: this.headers,
+    }).then(this._checkResponse);
+  }
+
   likeMovie(
     country,
     director,
@@ -31,19 +38,6 @@ export class MainApi {
     thumbnail,
     movieId
   ) {
-    console.log(
-      country,
-      director,
-      duration,
-      year,
-      description,
-      image,
-      trailerLink,
-      nameRU,
-      nameEN,
-      thumbnail,
-      movieId
-    )
     return fetch(`${this._url}/movies`, {
       method: "POST",
       headers: this.headers,

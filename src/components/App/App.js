@@ -96,6 +96,19 @@ function App() {
   useEffect(() => {
     if (loggedIn) {
       mainApi.setAuthHeaders();
+      mainApi
+        .getLikedMovies()
+        .then((res) => {
+          if (res) {
+            localStorage.setItem("savedMovies", JSON.stringify(res.movies));
+            console.log(res);
+          }
+        })
+        .catch((err) => {
+          console.log("Cannot get liked movies");
+          console.log(err);
+        });
+      // request to movies to get saved movies and then sotre them in localStorage
 
       // api
       //   .getInitialCards()
