@@ -114,6 +114,7 @@ function Movies(props) {
         isContentLoaded={isContentLoaded}
         moviesToRender={moviesToRender}
         showMoreHandler={showMoreHandler}
+        handleMovieLike={props.handleLikeMovie}
       />
     </div>
   );

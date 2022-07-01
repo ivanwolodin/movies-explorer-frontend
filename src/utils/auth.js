@@ -1,5 +1,5 @@
 export const register = (email, password, name) =>
-  fetch("http://localhost:3000/signup", {
+  fetch("https://api.diploma.iwol.nomoredomains.xyz/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -8,7 +8,7 @@ export const register = (email, password, name) =>
   }).then((response) => response);
 
 export const authorize = (email, password) =>
-  fetch("http://localhost:3000/signin", {
+  fetch("https://api.diploma.iwol.nomoredomains.xyz/signin", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -17,7 +17,7 @@ export const authorize = (email, password) =>
   }).then((response) => response.json());
 
 export const checkToken = (token) =>
-  fetch("http://localhost:3000/users/me", {
+  fetch("https://api.diploma.iwol.nomoredomains.xyz/users/me", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",

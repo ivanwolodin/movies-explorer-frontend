@@ -5,13 +5,44 @@ import like_button from "../../images/like_button.svg";
 import liked_button from "../../images/like_button_liked.svg";
 import delete_button from "../../images/delete_movie_button.svg";
 
-function MoviesCard({ title, cardLikeExist, urlImage, duration, trailerLink }) {
+function MoviesCard({
+                      title,
+                      cardLikeExist,
+                      urlImage,
+                      duration,
+                      trailerLink,
+                      handleMovieLike,
+                      movieId,
+                      cardLikeexist,
+                      titleEng,
+                      director,
+                      year,
+                      country,
+                      description
+                    }) {
   const [isLiked, setLike] = React.useState(false);
 
   const url = urlImage ? urlImage.url : "";
 
+  const [movieInfo, setMovieInfo] = React.useState({
+    movieId,
+    nameRU: title,
+    cardLikeexist,
+    image: `https://api.nomoreparties.co/${url}`,
+    duration,
+    trailerLink,
+    nameEN: titleEng,
+    director,
+    year,
+    country,
+    description,
+    thumbnail: `https://api.nomoreparties.co/${url}`,
+  });
+
+
   function handleLike() {
     setLike(!isLiked);
+    handleMovieLike(movieInfo);
   }
 
   function calcDuration() {

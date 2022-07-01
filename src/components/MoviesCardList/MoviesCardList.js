@@ -46,21 +46,35 @@ function MoviesCardList(props) {
             ? savedFilmsList.map((item) => (
                 <MoviesCard
                   key={item.id}
+                  movieId={item.id}
                   title={item.nameRU}
                   cardLikeexist={true}
                   urlImage={item.image}
                   duration={item.duration}
                   trailerLink={item.trailerLink}
+                  titleEng={item.nameEN}
+                  director={item.director}
+                  year={item.year}
+                  country={item.country}
+                  description={item.description}
                 />
               ))
             : props.moviesToRender.map((item) => (
                 <MoviesCard
                   key={item.id}
+                  movieId={item.id}
                   title={item.nameRU}
                   cardLikeexist={true}
                   urlImage={item.image}
                   duration={item.duration}
                   trailerLink={item.trailerLink}
+                  cardLikeExist={true}
+                  handleMovieLike={props.handleMovieLike}
+                  titleEng={item.nameEN}
+                  director={item.director}
+                  year={item.year}
+                  country={item.country}
+                  description={item.description}
                 />
               ))}
         </div>

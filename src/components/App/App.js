@@ -18,6 +18,11 @@ import { authorize, checkToken, register } from "../../utils/auth";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { userContext } from "../../context/CurrentUserContext";
+import { MainApi } from "../../utils/MainApi";
+
+const mainApi = new MainApi({
+  url: "https://api.diploma.iwol.nomoredomains.xyz/",
+});
 
 // taken from web
 export function useWindowDimension() {
@@ -88,6 +93,37 @@ function App() {
     }
   }
 
+  useEffect(() => {
+    if (loggedIn) {
+      mainApi.setAuthHeaders();
+
+      // api
+      //   .getInitialCards()
+      //   .then((data) => {
+      //     setCards(data.cards);
+      //   })
+      //   .catch((err) => {
+      //     console.log("Cannot get data from server");
+      //     console.log(err);
+      //   });
+
+      // api
+      //   .getUserInfo()
+      //   .then((data) => {
+      //     setCurrentUser({
+      //       name: data.data.name,
+      //       about: data.data.about,
+      //       avatarUrl: data.data.avatar,
+      //       id: data.data._id,
+      //     });
+      //   })
+      //   .catch((err) => {
+      //     console.log("Cannot get data from server");
+      //     console.log(err);
+      // });
+    }
+  }, [loggedIn]);
+
   function handleLogin(data) {
     authorize(data.email, data.password)
       .then((res) => {
@@ -121,6 +157,30 @@ function App() {
       });
   }
 
+  function handleLikeMovie(data) {
+    mainApi
+      .likeMovie(
+        data.country,
+        data.director,
+        data.duration,
+        data.year,
+        data.description,
+        data.image,
+        data.trailerLink,
+        data.nameRU,
+        data.nameEN,
+        data.thumbnail,
+        data.movieId
+      )
+      .then((res) => {
+        // console.log("Liked!");
+      })
+      .catch((err) => {
+        console.log("Cannot like movie");
+        console.log(err);
+      });
+  }
+
   function handleLogout() {
     localStorage.removeItem("token");
     setLoggedIn(false);
@@ -136,8 +196,9 @@ function App() {
             <ProtectedRoute
               exact
               path="/movies"
-              loggedIn={loggedIn}
               component={Movies}
+              loggedIn={loggedIn}
+              handleLikeMovie={handleLikeMovie}
             />
             <ProtectedRoute
               path="/saved-movies"

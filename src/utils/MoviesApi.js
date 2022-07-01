@@ -11,7 +11,6 @@ export class MoviesApi {
   }
 
   getAllMovies() {
-    console.log("Sending API request!");
     return fetch(`${this._url}`, {
       method: "GET",
       body: JSON.stringify(),
