@@ -97,11 +97,19 @@ function App() {
     if (loggedIn) {
       mainApi.setAuthHeaders();
       mainApi
-        .getLikedMovies()
+        .getSavedMovies()
         .then((res) => {
           if (res) {
             localStorage.setItem("savedMovies", JSON.stringify(res.movies));
-            console.log(res);
+
+            let savedMoviesIds = [];
+            res.movies.forEach((movie) => {
+              savedMoviesIds.push(movie.movieId);
+            });
+            localStorage.setItem(
+              "savedMoviesIds",
+              JSON.stringify(savedMoviesIds)
+            );
           }
         })
         .catch((err) => {

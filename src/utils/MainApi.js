@@ -18,7 +18,7 @@ export class MainApi {
     };
   }
 
-  getLikedMovies() {
+  getSavedMovies() {
     return fetch(`${this._url}/movies`, {
       method: "GET",
       headers: this.headers,

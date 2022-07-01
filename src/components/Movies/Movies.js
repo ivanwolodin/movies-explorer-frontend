@@ -94,7 +94,7 @@ function Movies(props) {
     moviesApi
       .getAllMovies()
       .then((response) => {
-        const res = response.filter(filterFunction)
+        const res = response.filter(filterFunction);
         setSearchedMovies(res);
         setLoadingError(false);
       })

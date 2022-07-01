@@ -18,17 +18,17 @@ function MoviesCard({
   year,
   country,
   description,
+  isMovieLiked,
 }) {
-
-  const [isLiked, setLike] = React.useState(false);
+  // console.log(isMovieLiked)
+  const [isLiked, setLike] = React.useState(isMovieLiked);
 
   let url;
   let srcUrl;
-  if (cardLikeExist){
+  if (cardLikeExist) {
     url = urlImage ? urlImage.url : "";
     srcUrl = `https://api.nomoreparties.co/${url}`;
-  }
-  else {
+  } else {
     url = urlImage;
     srcUrl = url;
   }
@@ -64,11 +64,7 @@ function MoviesCard({
     : "moviescard__button_liked";
   return (
     <div className="moviescard">
-      <img
-        className="moviescard__image"
-        src={srcUrl}
-        alt="превью фильма"
-      />
+      <img className="moviescard__image" src={srcUrl} alt="превью фильма" />
       <div className="moviescard__info">
         <a
           className="moviescard__trailerlink"
