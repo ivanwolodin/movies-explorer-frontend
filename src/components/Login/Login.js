@@ -2,10 +2,30 @@ import { Link } from "react-router-dom";
 
 import "./Login.css";
 import Logo from "../Logo/Logo";
+import { useState } from "react";
 
-function Login({ handleLogin }) {
-  function handleClick() {
-    handleLogin();
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const ErrorClass = props.loginError
+    ? "popup__errortext"
+    : "popup__errortext_hidden";
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.handleLogin({
+      email,
+      password,
+    });
+  }
+  function handleChangeEmail(e) {
+    const email = e.target.value;
+    setEmail(email);
+  }
+  function handleChangePassword(e) {
+    const password = e.target.value;
+    setPassword(password);
   }
 
   return (
@@ -14,20 +34,32 @@ function Login({ handleLogin }) {
         <Logo />
         <h2 className="login__title popup__title">Рады видеть!</h2>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label className="popup__textbox">
           Email
-          <input className="popup__input" />
+          <input
+            required
+            type="text"
+            minLength="2"
+            maxLength="40"
+            onChange={handleChangeEmail}
+            className="popup__input"
+          />
         </label>
         <label className="popup__textbox">
           Пароль
-          <input className="popup__input" />
+          <input
+            type="password"
+            required
+            minLength="2"
+            maxLength="200"
+            onChange={handleChangePassword}
+            className="popup__input"
+          />
         </label>
-        <Link className="link" to="/movies">
-          <button className="popup__button" onClick={handleClick}>
-            Войти
-          </button>
-        </Link>
+        <p className={ErrorClass}>Что-то пошло не так</p>
+
+        <button className="popup__button">Войти</button>
       </form>
       <p className="popup__text">
         <p>Еще не зарегистрированы?</p>

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router";
+
 import Main from "../Main/Main";
 import "./App.css";
 import Header from "../Header/Header";
@@ -12,9 +14,12 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import NavTab from "../NavTab/NavTab";
 
+import { authorize, checkToken, register } from "../../utils/auth";
+
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { userContext } from "../../context/CurrentUserContext";
 
+// taken from web
 export function useWindowDimension() {
   const [dimension, setDimension] = useState([
     window.innerWidth,
@@ -42,7 +47,10 @@ function debounce(fn, ms) {
   };
 }
 
+// ***************************************************************************
+
 function App() {
+  const history = useHistory();
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
 
@@ -59,12 +67,64 @@ function App() {
     setPopupNavOpen(false);
   }
 
-  function handleLogout() {
-    setLoggedIn(false);
+  useEffect(() => {
+    tokenCheck();
+  }, [history]);
+
+  function tokenCheck() {
+    const token = localStorage.getItem("token");
+    if (token) {
+      checkToken(token)
+        .then((res) => {
+          if (res) {
+            setLoggedIn(true);
+            history.push("/");
+          }
+        })
+        .catch((err) => {
+          console.log("Cannot check token");
+          console.log(err);
+        });
+    }
   }
 
-  function handleLogin() {
-    setLoggedIn(true);
+  function handleLogin(data) {
+    authorize(data.email, data.password)
+      .then((res) => {
+        if (res.token) {
+          localStorage.setItem("token", res.token);
+          setLoggedIn(true);
+          history.push("/movies");
+        } else {
+        }
+      })
+      .catch((err) => {
+        console.log("Cannot authorize user");
+        console.log(err);
+      });
+  }
+
+  function handleRegistration(data) {
+    register(data.email, data.password, data.name)
+      .then((res) => {
+        if (res.status !== 400 && res.status !== 401 && res.status !== 409) {
+          history.push("/login");
+        } else {
+        }
+      })
+      .catch((err) => {
+        console.log("Cannot register user");
+        console.log(err);
+      })
+      .finally(() => {
+        // setInfoToolTipPopupOpen(true);
+      });
+  }
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+    history.push("/register");
   }
 
   return (
@@ -97,7 +157,7 @@ function App() {
               <Login handleLogin={handleLogin} />
             </Route>
             <Route path="/register" exact>
-              <Register />
+              <Register handleRegister={handleRegistration} />
             </Route>
             <Route path="*">
               <NotFound />
