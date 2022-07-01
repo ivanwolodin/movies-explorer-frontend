@@ -58,6 +58,11 @@ function MoviesCard({
     setLike(!isLiked);
   }
 
+  function handleDelete(){
+    console.log(movieId, _id)
+    handleDislikeMovie(movieId, _id);
+  }
+
   function calcDuration() {
     const hour = Math.floor(duration / 60);
     const minutes = duration - hour * 60;
@@ -89,6 +94,7 @@ function MoviesCard({
         ) : (
           <button
             className="moviescard__button moviescard__button_delete"
+            onClick={handleDelete}
             // src={delete_button}
             // alt="кнопка удаления"
           />

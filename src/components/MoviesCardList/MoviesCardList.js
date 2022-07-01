@@ -35,7 +35,6 @@ function MoviesCardList(props) {
                   duration={item.duration}
                   trailerLink={item.trailerLink}
                   cardLikeExist={false}
-                  handleMovieLike={props.handleMovieLike}
                   titleEng={item.nameEN}
                   director={item.director}
                   year={item.year}

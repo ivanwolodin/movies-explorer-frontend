@@ -210,6 +210,7 @@ function App() {
     mainApi
       .dislikeMovie(_id)
       .then((res) => {
+
         let oldEntries =
           JSON.parse(localStorage.getItem("savedMovies")) || [];
         const index = oldEntries.indexOf(res.data.movieData);
@@ -218,11 +219,14 @@ function App() {
         }
         localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
 
-        let oldDict = JSON.parse(localStorage.getItem("savedMoviesIds"))
-          ? JSON.parse(localStorage.getItem("savedMoviesIds"))
-          : {};
-        delete oldDict["movieId"];
-        localStorage.setItem("savedMoviesIds", JSON.stringify(oldDict));
+        if (movieId!==null){
+          let oldDict = JSON.parse(localStorage.getItem("savedMoviesIds"))
+            ? JSON.parse(localStorage.getItem("savedMoviesIds"))
+            : {};
+          delete oldDict["movieId"];
+          localStorage.setItem("savedMoviesIds", JSON.stringify(oldDict));
+        }
+
 
       })
       .catch((err) => {
