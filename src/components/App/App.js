@@ -12,6 +12,9 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import NavTab from "../NavTab/NavTab";
 
+import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
+import { userContext } from "../../context/CurrentUserContext";
+
 export function useWindowDimension() {
   const [dimension, setDimension] = useState([
     window.innerWidth,
@@ -38,9 +41,15 @@ function debounce(fn, ms) {
     }, ms);
   };
 }
+
 function App() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = React.useState(false);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
+
+  const [currentUser, setCurrentUser] = useState({
+    name: "",
+    email: "",
+  });
 
   function handlePopupNav() {
     setPopupNavOpen(true);
@@ -53,41 +62,55 @@ function App() {
   function handleLogout() {
     setLoggedIn(false);
   }
+
   function handleLogin() {
     setLoggedIn(true);
   }
 
   return (
-    <div className="app">
-      <>
-        <Header loggedIn={loggedIn} onButtonClick={handlePopupNav} />
-        <Switch>
-          <Route path="/" exact>
-            <Main />
-          </Route>
-          <Route path="/movies" exact>
-            <Movies />
-          </Route>
-          <Route path="/saved-movies" exact>
-            <SavedMovies />
-          </Route>
-          <Route path="/login" exact>
-            <Login handleLogin={handleLogin} />
-          </Route>
-          <Route path="/register" exact>
-            <Register />
-          </Route>
-          <Route path="/profile" exact>
-            <Profile handleLogout={handleLogout} />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-        <Footer />
-        <NavTab isPopupNavOpened={isPopupNavOpened} onClose={closeAllPopups} />
-      </>
-    </div>
+    <userContext.Provider value={currentUser}>
+      <div className="app">
+        <>
+          <Header loggedIn={loggedIn} onButtonClick={handlePopupNav} />
+          <Switch>
+            <ProtectedRoute
+              exact
+              path="/movies"
+              loggedIn={loggedIn}
+              component={Movies}
+            />
+            <ProtectedRoute
+              path="/saved-movies"
+              loggedIn={loggedIn}
+              component={SavedMovies}
+            />
+            <ProtectedRoute
+              path="/profile"
+              loggedIn={loggedIn}
+              component={Profile}
+              handleLogout={handleLogout}
+            />
+            <Route path="/" exact>
+              <Main />
+            </Route>
+            <Route path="/login" exact>
+              <Login handleLogin={handleLogin} />
+            </Route>
+            <Route path="/register" exact>
+              <Register />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+          <Footer />
+          <NavTab
+            isPopupNavOpened={isPopupNavOpened}
+            onClose={closeAllPopups}
+          />
+        </>
+      </div>
+    </userContext.Provider>
   );
 }
 

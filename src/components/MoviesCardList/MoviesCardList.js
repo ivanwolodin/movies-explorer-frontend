@@ -42,9 +42,8 @@ function MoviesCardList(props) {
         </div>
       ) : (
         <div className="moviescardlist__films ">
-          {
-            props.savedMovies
-              ? savedFilmsList.map((item) => (
+          {props.savedMovies
+            ? savedFilmsList.map((item) => (
                 <MoviesCard
                   key={item.id}
                   title={item.nameRU}
@@ -53,17 +52,17 @@ function MoviesCardList(props) {
                   duration={item.duration}
                   trailerLink={item.trailerLink}
                 />
-              )) :
-            props.moviesToRender.map((item) => (
-            <MoviesCard
-              key={item.id}
-              title={item.nameRU}
-              cardLikeexist={true}
-              urlImage={item.image}
-              duration={item.duration}
-              trailerLink={item.trailerLink}
-            />
-          ))}
+              ))
+            : props.moviesToRender.map((item) => (
+                <MoviesCard
+                  key={item.id}
+                  title={item.nameRU}
+                  cardLikeexist={true}
+                  urlImage={item.image}
+                  duration={item.duration}
+                  trailerLink={item.trailerLink}
+                />
+              ))}
         </div>
       )}
       {props.savedMovies ? (
@@ -71,7 +70,10 @@ function MoviesCardList(props) {
           Еще
         </button>
       ) : (
-        <button className="moviescardlist__button" onClick={props.showMoreHandler}>
+        <button
+          className="moviescardlist__button"
+          onClick={props.showMoreHandler}
+        >
           Еще
         </button>
       )}

@@ -1,7 +1,6 @@
 export class MoviesApi {
   constructor(options) {
     this._url = options.url;
-    this.headers = {};
   }
 
   _checkResponse(res) {
@@ -9,13 +8,6 @@ export class MoviesApi {
       return res.json();
     }
     return Promise.reject(`Ошибка: ${res.status}`);
-  }
-
-  setAuthHeaders() {
-    this.headers = {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-      "Content-Type": "application/json",
-    };
   }
 
   getAllMovies() {

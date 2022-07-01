@@ -1,11 +1,11 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import "./Movies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
-import {MoviesApi} from "../../utils/MoviesApi";
-import {useWindowDimension} from "../App/App";
+import { MoviesApi } from "../../utils/MoviesApi";
+import { useWindowDimension } from "../App/App";
 
 const moviesApi = new MoviesApi({
   url: "https://api.nomoreparties.co/beatfilm-movies",
@@ -69,13 +69,13 @@ function Movies(props) {
 
   function adjustCardsNumberToWindowSize() {
     if (width > 1278) {
-      setCardsNumberTOShow({numberToShow: 4, numberToUpload: 4});
+      setCardsNumberTOShow({ numberToShow: 4, numberToUpload: 4 });
     } else if (width <= 1278 && width > 968) {
-      setCardsNumberTOShow({numberToShow: 9, numberToUpload: 3});
+      setCardsNumberTOShow({ numberToShow: 9, numberToUpload: 3 });
     } else if (width <= 968 && width > 613) {
-      setCardsNumberTOShow({numberToShow: 8, numberToUpload: 2});
+      setCardsNumberTOShow({ numberToShow: 8, numberToUpload: 2 });
     } else if (width <= 613) {
-      setCardsNumberTOShow({numberToShow: 5, numberToUpload: 2});
+      setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
     }
   }
 
