@@ -3,32 +3,6 @@ import { useEffect, useState } from "react";
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 import Preloader from "../Preloader/Preloader";
-import { useWindowDimension } from "../App/App";
-
-const filmsList = [
-  "33 слова о дизайне",
-  "Киноальманах «100 лет дизайна»",
-  "В погоне за Бенкси",
-  "Баския: Взрыв реальности",
-  "Бег это свобода",
-  "Книготорговцы",
-  "Когда я думаю о Германии ночью",
-  "Gimme Danger: История Игги и The Stooges",
-  "Дженис: Маленькая девочка грустит",
-  "Соберись перед прыжком",
-  "Пи Джей Харви: A dog called money",
-  "По волнам: Искусство звука в кино",
-  "Рудбой",
-  "Скейт — кухня",
-  "Война искусств",
-  "Зона",
-];
-const savedFilmsList = [
-  { id: 3, nameRU: "ds", image: { url: "" }, duration: 43, trailerLink: "" },
-  // "Скейт — кухня",
-  // "Война искусств",
-  // "Зона"
-];
 
 function MoviesCardList(props) {
   const savedMoviesToRender = JSON.parse(localStorage.getItem("savedMovies"))

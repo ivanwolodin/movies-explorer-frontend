@@ -83,15 +83,19 @@ function Movies(props) {
     setShortMoviesCheckbox(!isShortMoviesCheckboxSet);
   }
 
+  function filterFunction(item) {
+    const elem = JSON.parse(JSON.stringify(item));
+    const query = localStorage.getItem("searchQuery").toLowerCase();
+    return !!elem.nameRU.toLowerCase().includes(query);
+  }
+
   function handleSearch() {
     setContentLoaded(false);
     moviesApi
       .getAllMovies()
       .then((response) => {
-        localStorage.setItem("allMovies", JSON.stringify(response));
-
-        // TODO: search function
-        setSearchedMovies(response.slice(0, 12));
+        const res = response.filter(filterFunction)
+        setSearchedMovies(res);
         setLoadingError(false);
       })
       .catch((err) => {
