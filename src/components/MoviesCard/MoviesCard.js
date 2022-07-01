@@ -19,12 +19,14 @@ function MoviesCard({
   country,
   description,
   isMovieLiked,
+  handleDislikeMovie,
+  _id,
 }) {
-  // console.log(isMovieLiked)
   const [isLiked, setLike] = React.useState(isMovieLiked);
 
   let url;
   let srcUrl;
+
   if (cardLikeExist) {
     url = urlImage ? urlImage.url : "";
     srcUrl = `https://api.nomoreparties.co/${url}`;
@@ -48,8 +50,12 @@ function MoviesCard({
   });
 
   function handleLike() {
+    if (isLiked) {
+      handleDislikeMovie(movieId, _id);
+    } else {
+      handleMovieLike(movieInfo);
+    }
     setLike(!isLiked);
-    handleMovieLike(movieInfo);
   }
 
   function calcDuration() {

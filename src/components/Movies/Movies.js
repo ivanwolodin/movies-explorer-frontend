@@ -119,6 +119,7 @@ function Movies(props) {
         moviesToRender={moviesToRender}
         showMoreHandler={showMoreHandler}
         handleMovieLike={props.handleLikeMovie}
+        handleDislikeMovie={props.handleDislikeMovie}
       />
     </div>
   );

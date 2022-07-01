@@ -11,9 +11,7 @@ function MoviesCardList(props) {
 
   const savedMoviesIds = JSON.parse(localStorage.getItem("savedMoviesIds"))
     ? JSON.parse(localStorage.getItem("savedMoviesIds"))
-    : [];
-
-  console.log(savedMoviesIds)
+    : {};
 
   return (
     <div className="moviescardlist content_info">
@@ -43,6 +41,8 @@ function MoviesCardList(props) {
                   year={item.year}
                   country={item.country}
                   description={item.description}
+                  _id={item._id}
+                  handleDislikeMovie={props.handleDislikeMovie}
                 />
               ))
             : props.moviesToRender.map((item) => (
@@ -61,7 +61,11 @@ function MoviesCardList(props) {
                   year={item.year}
                   country={item.country}
                   description={item.description}
-                  isMovieLiked={savedMoviesIds.includes(item.id)}
+                  isMovieLiked={Object.keys(savedMoviesIds).includes(
+                    String(item.id)
+                  )}
+                  handleDislikeMovie={props.handleDislikeMovie}
+                  _id={savedMoviesIds[item.id]}
                 />
               ))}
         </div>

@@ -56,4 +56,14 @@ export class MainApi {
       }),
     }).then(this._checkResponse);
   }
+
+  dislikeMovie(_id) {
+    return fetch(`${this._url}/movies/${_id}`, {
+      method: "DELETE",
+      headers: this.headers,
+      body: JSON.stringify({
+        movieId: _id,
+      }),
+    }).then(this._checkResponse);
+  }
 }

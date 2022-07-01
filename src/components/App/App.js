@@ -83,6 +83,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
+            console.log(res)
             history.push("/");
           }
         })
@@ -102,9 +103,9 @@ function App() {
           if (res) {
             localStorage.setItem("savedMovies", JSON.stringify(res.movies));
 
-            let savedMoviesIds = [];
+            let savedMoviesIds = {};
             res.movies.forEach((movie) => {
-              savedMoviesIds.push(movie.movieId);
+              savedMoviesIds[movie.movieId] = movie._id;
             });
             localStorage.setItem(
               "savedMoviesIds",
@@ -194,7 +195,10 @@ function App() {
         data.movieId
       )
       .then((res) => {
-        // console.log("Liked!");
+        const oldEntries =
+          JSON.parse(localStorage.getItem("savedMovies")) || [];
+        oldEntries.push(res.movie);
+        localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
       })
       .catch((err) => {
         console.log("Cannot like movie");
@@ -202,8 +206,34 @@ function App() {
       });
   }
 
+  function handleDislikeMovie(movieId, _id) {
+    mainApi
+      .dislikeMovie(_id)
+      .then((res) => {
+        let oldEntries =
+          JSON.parse(localStorage.getItem("savedMovies")) || [];
+        const index = oldEntries.indexOf(res.data.movieData);
+        if (index > -1) {
+          oldEntries.splice(index, 1);
+        }
+        localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
+
+        let oldDict = JSON.parse(localStorage.getItem("savedMoviesIds"))
+          ? JSON.parse(localStorage.getItem("savedMoviesIds"))
+          : {};
+        delete oldDict["movieId"];
+        localStorage.setItem("savedMoviesIds", JSON.stringify(oldDict));
+
+      })
+      .catch((err) => {
+        console.log("Cannot dislike movie");
+        console.log(err);
+      });
+  }
+
   function handleLogout() {
     localStorage.removeItem("token");
+    localStorage.clear();
     setLoggedIn(false);
     history.push("/register");
   }
@@ -220,11 +250,13 @@ function App() {
               component={Movies}
               loggedIn={loggedIn}
               handleLikeMovie={handleLikeMovie}
+              handleDislikeMovie={handleDislikeMovie}
             />
             <ProtectedRoute
               path="/saved-movies"
               loggedIn={loggedIn}
               component={SavedMovies}
+              handleDislikeMovie={handleDislikeMovie}
             />
             <ProtectedRoute
               path="/profile"
