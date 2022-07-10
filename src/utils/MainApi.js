@@ -25,7 +25,7 @@ export class MainApi {
     }).then(this._checkResponse);
   }
 
-  likeMovie(
+  likeMovie({
     country,
     director,
     duration,
@@ -36,8 +36,8 @@ export class MainApi {
     nameRU,
     nameEN,
     thumbnail,
-    movieId
-  ) {
+    movieId,
+  }) {
     return fetch(`${this._url}/movies`, {
       method: "POST",
       headers: this.headers,

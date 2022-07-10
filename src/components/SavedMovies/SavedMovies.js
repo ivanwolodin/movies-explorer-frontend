@@ -9,6 +9,8 @@ function SavedMovies(props) {
       <MoviesCardList
         savedMovies={true}
         moviesToRender={props.moviesToRender}
+        handleLikeMovie={props.handleLikeMovie}
+        handleDislikeMovie={props.handleDislikeMovie}
       />
     </div>
   );

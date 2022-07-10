@@ -206,26 +206,29 @@ function App() {
   }
 
   function handleLikeMovie(data) {
+    const dd = {
+      country: data.country,
+      director: data.director,
+      duration: data.duration,
+      year: data.year,
+      description: data.description,
+      image: `https://api.nomoreparties.co/${data.image.url}`,
+      trailerLink: data.trailerLink,
+      nameRU: data.nameRU,
+      nameEN: data.nameEN,
+      thumbnail: `https://api.nomoreparties.co/${data.image.url}`,
+      movieId: data.id,
+    };
     mainApi
-      .likeMovie(
-        data.country,
-        data.director,
-        data.duration,
-        data.year,
-        data.description,
-        data.image,
-        data.trailerLink,
-        data.nameRU,
-        data.nameEN,
-        data.thumbnail,
-        data.movieId
-      )
+      .likeMovie(dd)
       .then((res) => {
         const oldEntries =
           JSON.parse(localStorage.getItem("savedMovies")) || [];
         oldEntries.push(res.movie);
         localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
+        setSavedMovies(oldEntries);
       })
+
       .catch((err) => {
         console.log("Cannot like movie");
         console.log(err);
@@ -295,12 +298,12 @@ function App() {
               path="/saved-movies"
               loggedIn={loggedIn}
               component={SavedMovies}
-              // handleDislikeMovie={handleDislikeMovie}
-
+              handleLikeMovie={handleLikeMovie}
+              handleDislikeMovie={handleDislikeMovie}
               handleSearch={handleSearch}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
-              moviesToRender={moviesToRender}
+              moviesToRender={savedMovies}
             />
             <ProtectedRoute
               path="/profile"

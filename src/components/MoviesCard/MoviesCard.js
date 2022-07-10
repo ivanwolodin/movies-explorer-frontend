@@ -1,11 +1,12 @@
 import React from "react";
 import "./MoviesCard.css";
 
-function MoviesCard({ item, cardLikeExist }) {
+function MoviesCard({ item, cardLikeExist, handleLikeMovie }) {
   const [isLiked, setLike] = React.useState(false);
 
   function handleLike() {
     setLike(!isLiked);
+    handleLikeMovie(item);
   }
 
   function calcDuration() {
@@ -14,9 +15,14 @@ function MoviesCard({ item, cardLikeExist }) {
 
     return `${hour}ч${minutes}м`;
   }
-  const url = item.image
-    ? `https://api.nomoreparties.co/${item.image.url}`
-    : "";
+
+  let url;
+  if (item.image.url) {
+    url = item.image ? `https://api.nomoreparties.co/${item.image.url}` : "";
+  } else {
+    url = item.image;
+  }
+
   const classButtonLike = !isLiked
     ? "moviescard__button_like"
     : "moviescard__button_liked";
