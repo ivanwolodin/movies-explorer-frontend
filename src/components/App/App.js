@@ -21,7 +21,10 @@ import { userContext } from "../../context/CurrentUserContext";
 import { MainApi } from "../../utils/MainApi.js";
 import { MoviesApi } from "../../utils/MoviesApi.js";
 
-import { filterFunction } from "../../utils/utilsFunctions.js";
+import {
+  filterFunction,
+  handleSearchedMoviesLocalStorage,
+} from "../../utils/utilsFunctions.js";
 
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
@@ -222,24 +225,21 @@ function App() {
     mainApi
       .likeMovie(dd)
       .then((res) => {
-        const oldEntries =
-          JSON.parse(localStorage.getItem("savedMovies")) || [];
-        oldEntries.push(res.movie);
-        localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
-        setSavedMovies(oldEntries);
+        const newEntries = handleSearchedMoviesLocalStorage(res, false);
+        setSavedMovies(newEntries);
       })
-
       .catch((err) => {
         console.log("Cannot like movie");
         console.log(err);
       });
   }
 
-  function handleDislikeMovie(movieId, _id) {
+  function handleDislikeMovie(data) {
     mainApi
-      .dislikeMovie(_id)
+      .dislikeMovie(data._id)
       .then((res) => {
-        // handleSaveMoviesInLocalStorage(res);
+        const newEntries = handleSearchedMoviesLocalStorage(res, true);
+        setSavedMovies(newEntries);
       })
       .catch((err) => {
         console.log("Cannot dislike movie");

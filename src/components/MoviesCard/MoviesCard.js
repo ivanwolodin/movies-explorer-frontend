@@ -1,12 +1,22 @@
 import React from "react";
 import "./MoviesCard.css";
 
-function MoviesCard({ item, cardLikeExist, handleLikeMovie }) {
+function MoviesCard({
+  item,
+  cardLikeExist,
+  handleLikeMovie,
+  handleDislikeMovie,
+}) {
   const [isLiked, setLike] = React.useState(false);
 
   function handleLike() {
     setLike(!isLiked);
     handleLikeMovie(item);
+  }
+
+  function handleDislike() {
+    setLike(!isLiked);
+    handleDislikeMovie(item);
   }
 
   function calcDuration() {
@@ -37,7 +47,10 @@ function MoviesCard({ item, cardLikeExist, handleLikeMovie }) {
             onClick={handleLike}
           />
         ) : (
-          <button className="moviescard__button moviescard__button_delete" />
+          <button
+            className="moviescard__button moviescard__button_delete"
+            onClick={handleDislike}
+          />
         )}
       </div>
       <p className="moviescard__duration">{calcDuration()}</p>
