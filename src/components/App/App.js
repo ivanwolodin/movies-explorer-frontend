@@ -18,15 +18,17 @@ import { authorize, checkToken, register } from "../../utils/auth";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
 import { userContext } from "../../context/CurrentUserContext";
-import { MainApi } from "../../utils/MainApi";
-import { MoviesApi } from "../../utils/MoviesApi";
+import { MainApi } from "../../utils/MainApi.js";
+import { MoviesApi } from "../../utils/MoviesApi.js";
 
-import { filterFunction } from "../../utils/utilsFunctions";
+import { filterFunction } from "../../utils/utilsFunctions.js";
 
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
 });
-
+const moviesApi = new MoviesApi({
+  url: "https://api.nomoreparties.co/beatfilm-movies",
+});
 // taken from web
 export function useWindowDimension() {
   const [dimension, setDimension] = useState([
@@ -70,13 +72,13 @@ function App() {
       : []
   );
 
-  const [isLoadingError, setLoadingError] = useState(false);
+  const [savedMovies, setSavedMovies] = useState(
+    JSON.parse(localStorage.getItem("savedMovies"))
+      ? JSON.parse(localStorage.getItem("savedMovies"))
+      : []
+  );
 
-  // const [savedMoviesToRender, setSavedMoviesToRender] = useState(
-  //   JSON.parse(localStorage.getItem("savedMovies"))
-  //     ? JSON.parse(localStorage.getItem("savedMovies"))
-  //     : {}
-  // );
+  const [isLoadingError, setLoadingError] = useState(false);
 
   // const [savedMoviesIds, setSavedMoviesIds] = useState(
   //   JSON.parse(localStorage.getItem("savedMoviesIds"))
@@ -230,6 +232,18 @@ function App() {
       });
   }
 
+  function handleDislikeMovie(movieId, _id) {
+    mainApi
+      .dislikeMovie(_id)
+      .then((res) => {
+        // handleSaveMoviesInLocalStorage(res);
+      })
+      .catch((err) => {
+        console.log("Cannot dislike movie");
+        console.log(err);
+      });
+  }
+
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.clear();
@@ -270,9 +284,8 @@ function App() {
               // savedMoviesToRender={savedMoviesToRender}
               // savedMoviesIds={savedMoviesIds}
 
-              // handleLikeMovie={handleLikeMovie}
-              // handleDislikeMovie={handleDislikeMovie}
-
+              handleLikeMovie={handleLikeMovie}
+              handleDislikeMovie={handleDislikeMovie}
               handleSearch={handleSearch}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
@@ -320,6 +333,3 @@ function App() {
 }
 
 export default App;
-const moviesApi = new MoviesApi({
-  url: "https://api.nomoreparties.co/beatfilm-movies",
-});

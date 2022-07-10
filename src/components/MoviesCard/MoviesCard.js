@@ -28,16 +28,10 @@ function MoviesCard({ item, cardLikeExist }) {
         {cardLikeExist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
-            // src={isLiked ? liked_button : like_button}
-            // alt="кнопка лайка"
             onClick={handleLike}
           />
         ) : (
-          <button
-            className="moviescard__button moviescard__button_delete"
-            // src={delete_button}
-            // alt="кнопка удаления"
-          />
+          <button className="moviescard__button moviescard__button_delete" />
         )}
       </div>
       <p className="moviescard__duration">{calcDuration()}</p>
