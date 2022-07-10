@@ -1,28 +1,31 @@
 import React from "react";
 import "./MoviesCard.css";
-import movie_image from "../../images/sample_movie.svg";
-import like_button from "../../images/like_button.svg";
-import liked_button from "../../images/like_button_liked.svg";
-import delete_button from "../../images/delete_movie_button.svg";
 
-function MoviesCard({ title, cardLikeexist }) {
+function MoviesCard({ item, cardLikeExist }) {
   const [isLiked, setLike] = React.useState(false);
+
   function handleLike() {
     setLike(!isLiked);
   }
+
+  function calcDuration() {
+    const hour = Math.floor(item.duration / 60);
+    const minutes = item.duration - hour * 60;
+
+    return `${hour}ч${minutes}м`;
+  }
+  const url = item.image
+    ? `https://api.nomoreparties.co/${item.image.url}`
+    : "";
   const classButtonLike = !isLiked
     ? "moviescard__button_like"
     : "moviescard__button_liked";
   return (
     <div className="moviescard">
-      <img
-        className="moviescard__image"
-        src={movie_image}
-        alt="превью фильма"
-      />
+      <img className="moviescard__image" src={url} alt="превью фильма" />
       <div className="moviescard__info">
-        <p className="moviescard__name">{title}</p>
-        {cardLikeexist ? (
+        <p className="moviescard__name">{item.nameRU}</p>
+        {cardLikeExist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
             // src={isLiked ? liked_button : like_button}
@@ -37,7 +40,7 @@ function MoviesCard({ title, cardLikeexist }) {
           />
         )}
       </div>
-      <p className="moviescard__duration">1ч42м</p>
+      <p className="moviescard__duration">{calcDuration()}</p>
     </div>
   );
 }

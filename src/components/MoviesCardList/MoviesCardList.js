@@ -21,21 +21,22 @@ const filmsList = [
 ];
 
 const savedFilmsList = [
-  // "Скейт — кухня", 
-  // "Война искусств", 
+  // "Скейт — кухня",
+  // "Война искусств",
   // "Зона"
 ];
 
 function MoviesCardList(props) {
+  console.log(props.moviesToRender[0]);
   return (
     <div className="moviescardlist content_info">
       <div className="moviescardlist__films ">
         {props.savedMovies
-          ? savedFilmsList.map((card, index) => (
-              <MoviesCard key={index} title={card} cardLikeexist={false} />
+          ? savedFilmsList.map((item) => (
+              <MoviesCard key={item.id} item={item} cardLikeExist={false} />
             ))
-          : filmsList.map((card, index) => (
-              <MoviesCard key={index} title={card} cardLikeexist={true} />
+          : props.moviesToRender.map((item) => (
+              <MoviesCard key={item.id} item={item} cardLikeExist={true} />
             ))}
       </div>
       {props.savedMovies ? (

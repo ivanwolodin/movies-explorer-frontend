@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {Route, Switch} from "react-router-dom";
-import {useHistory} from "react-router";
+import React, { useEffect, useState } from "react";
+import { Route, Switch } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import Main from "../Main/Main";
 import "./App.css";
@@ -14,14 +14,14 @@ import Register from "../Register/Register";
 import Profile from "../Profile/Profile";
 import NavTab from "../NavTab/NavTab";
 
-import {authorize, checkToken, register} from "../../utils/auth";
+import { authorize, checkToken, register } from "../../utils/auth";
 
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute";
-import {userContext} from "../../context/CurrentUserContext";
-import {MainApi} from "../../utils/MainApi";
-import {MoviesApi} from "../../utils/MoviesApi";
+import { userContext } from "../../context/CurrentUserContext";
+import { MainApi } from "../../utils/MainApi";
+import { MoviesApi } from "../../utils/MoviesApi";
 
-import {filterFunction} from "../../utils/utilsFunctions";
+import { filterFunction } from "../../utils/utilsFunctions";
 
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
@@ -64,21 +64,25 @@ function App() {
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
-  const [searchedMovies, setSearchedMovies] = useState([]);
+  const [moviesToRender, setMoviesToRender] = useState(
+    JSON.parse(localStorage.getItem("searchedMovies"))
+      ? JSON.parse(localStorage.getItem("searchedMovies"))
+      : []
+  );
 
   const [isLoadingError, setLoadingError] = useState(false);
 
-  const [savedMoviesToRender, setSavedMoviesToRender] = useState(
-    JSON.parse(localStorage.getItem("savedMovies"))
-      ? JSON.parse(localStorage.getItem("savedMovies"))
-      : {}
-  );
+  // const [savedMoviesToRender, setSavedMoviesToRender] = useState(
+  //   JSON.parse(localStorage.getItem("savedMovies"))
+  //     ? JSON.parse(localStorage.getItem("savedMovies"))
+  //     : {}
+  // );
 
-  const [savedMoviesIds, setSavedMoviesIds] = useState(
-    JSON.parse(localStorage.getItem("savedMoviesIds"))
-      ? JSON.parse(localStorage.getItem("savedMoviesIds"))
-      : {}
-  );
+  // const [savedMoviesIds, setSavedMoviesIds] = useState(
+  //   JSON.parse(localStorage.getItem("savedMoviesIds"))
+  //     ? JSON.parse(localStorage.getItem("savedMoviesIds"))
+  //     : {}
+  // );
   const [currentUser, setCurrentUser] = useState({
     name: "",
     email: "",
@@ -226,7 +230,6 @@ function App() {
       });
   }
 
-
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.clear();
@@ -240,7 +243,9 @@ function App() {
       .getAllMovies()
       .then((response) => {
         const res = response.filter(filterFunction);
-        setSearchedMovies(res);
+        console.log(res);
+        setMoviesToRender(res);
+        localStorage.setItem("searchedMovies", JSON.stringify(res));
         setLoadingError(false);
       })
       .catch((err) => {
@@ -262,8 +267,8 @@ function App() {
               path="/movies"
               component={Movies}
               loggedIn={loggedIn}
-              savedMoviesToRender={savedMoviesToRender}
-              savedMoviesIds={savedMoviesIds}
+              // savedMoviesToRender={savedMoviesToRender}
+              // savedMoviesIds={savedMoviesIds}
 
               // handleLikeMovie={handleLikeMovie}
               // handleDislikeMovie={handleDislikeMovie}
@@ -271,7 +276,7 @@ function App() {
               handleSearch={handleSearch}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
-              searchedMovies={searchedMovies}
+              moviesToRender={moviesToRender}
             />
             <ProtectedRoute
               path="/saved-movies"
@@ -282,7 +287,7 @@ function App() {
               handleSearch={handleSearch}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
-              searchedMovies={searchedMovies}
+              moviesToRender={moviesToRender}
             />
             <ProtectedRoute
               path="/profile"
