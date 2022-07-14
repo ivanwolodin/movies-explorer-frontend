@@ -7,8 +7,9 @@ function SavedMovies(props) {
     <div className="savedmovies">
       <SearchForm onClick={props.handleSearch} />
       <MoviesCardList
-        savedMovies={true}
-        moviesToRender={props.moviesToRender}
+        savedMoviesComponent={true}
+        savedMovies={props.savedMovies}
+        moviesToRender={props.savedMovies}
         handleLikeMovie={props.handleLikeMovie}
         handleDislikeMovie={props.handleDislikeMovie}
       />

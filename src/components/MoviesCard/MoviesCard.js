@@ -51,7 +51,7 @@ function MoviesCard({
         {cardLikeExist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
-            onClick={handleLike}
+            onClick={classButtonLike ==="moviescard__button_liked" ? handleDislike : handleLike}
           />
         ) : (
           <button

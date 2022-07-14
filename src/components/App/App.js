@@ -69,7 +69,7 @@ function App() {
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
-  const [moviesToRender, setMoviesToRender] = useState(
+  const [searchedMovies, setSearchedMovies] = useState(
     JSON.parse(localStorage.getItem("searchedMovies"))
       ? JSON.parse(localStorage.getItem("searchedMovies"))
       : []
@@ -239,6 +239,7 @@ function App() {
       .dislikeMovie(data._id)
       .then((res) => {
         const newEntries = handleSearchedMoviesLocalStorage(res, true);
+        console.log(newEntries);
         setSavedMovies(newEntries);
       })
       .catch((err) => {
@@ -260,7 +261,7 @@ function App() {
       .getAllMovies()
       .then((response) => {
         const res = response.filter(filterFunction);
-        setMoviesToRender(res);
+        setSearchedMovies(res);
         localStorage.setItem("searchedMovies", JSON.stringify(res));
         setLoadingError(false);
       })
@@ -288,7 +289,8 @@ function App() {
               handleSearch={handleSearch}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
-              moviesToRender={moviesToRender}
+              moviesToRender={searchedMovies}
+              savedMovies={savedMovies}
             />
             <ProtectedRoute
               path="/saved-movies"
@@ -300,6 +302,7 @@ function App() {
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
               moviesToRender={savedMovies}
+              savedMovies={savedMovies}
             />
             <ProtectedRoute
               path="/profile"

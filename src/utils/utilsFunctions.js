@@ -19,7 +19,7 @@ export function handleSearchedMoviesLocalStorage(res, removeItem) {
     localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
   } else {
     oldEntries.forEach((elem, index) => {
-      if (res.data.movieData === oldEntries["_id"]) {
+      if (res.data["_id"] === elem["_id"]) {
         oldEntries.splice(index, 1);
         localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
       }
