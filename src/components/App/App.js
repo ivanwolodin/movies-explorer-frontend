@@ -260,7 +260,6 @@ function App() {
       .getAllMovies()
       .then((response) => {
         const res = response.filter(filterFunction);
-        console.log(res);
         setMoviesToRender(res);
         localStorage.setItem("searchedMovies", JSON.stringify(res));
         setLoadingError(false);
@@ -284,9 +283,6 @@ function App() {
               path="/movies"
               component={Movies}
               loggedIn={loggedIn}
-              // savedMoviesToRender={savedMoviesToRender}
-              // savedMoviesIds={savedMoviesIds}
-
               handleLikeMovie={handleLikeMovie}
               handleDislikeMovie={handleDislikeMovie}
               handleSearch={handleSearch}

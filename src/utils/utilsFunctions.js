@@ -12,13 +12,12 @@ export function filterFunction(item) {
 }
 
 export function handleSearchedMoviesLocalStorage(res, removeItem) {
-  let oldEntries;
+  let oldEntries = JSON.parse(localStorage.getItem("savedMovies")) || [];
+
   if (!removeItem) {
-    oldEntries = JSON.parse(localStorage.getItem("savedMovies")) || [];
     oldEntries.push(res.movie);
     localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
   } else {
-    oldEntries = JSON.parse(localStorage.getItem("savedMovies")) || [];
     oldEntries.forEach((elem, index) => {
       if (res.data.movieData === oldEntries["_id"]) {
         oldEntries.splice(index, 1);

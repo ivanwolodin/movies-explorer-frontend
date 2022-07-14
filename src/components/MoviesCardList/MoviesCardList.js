@@ -2,7 +2,16 @@ import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 function MoviesCardList(props) {
-  const cardLikeExist = props.savedMovies ? false : true;
+  let cardLikeExist;
+
+  if (props.savedMovies){
+    cardLikeExist = false;
+  }
+  else{
+    cardLikeExist = true;
+  }
+
+  const searchedMovies = JSON.parse(localStorage.getItem("savedMovies")) || [];
 
   return (
     <div className="moviescardlist content_info">
@@ -14,6 +23,7 @@ function MoviesCardList(props) {
             cardLikeExist={cardLikeExist}
             handleLikeMovie={props.handleLikeMovie}
             handleDislikeMovie={props.handleDislikeMovie}
+            savedMovies={searchedMovies}
           />
         ))}
       </div>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./MoviesCard.css";
 
 function MoviesCard({
@@ -6,16 +6,26 @@ function MoviesCard({
   cardLikeExist,
   handleLikeMovie,
   handleDislikeMovie,
-}) {
-  const [isLiked, setLike] = React.useState(false);
+  savedMovies
+}) { 
+
+  const [classButtonLike, setClassButtonLike] = React.useState("moviescard__button_like");
+
+  useEffect(() => {
+    savedMovies.forEach((elem) => {
+      if (elem.movieId === item.id) {
+        setClassButtonLike("moviescard__button_liked");
+      }
+    });
+  }, []);
 
   function handleLike() {
-    setLike(!isLiked);
+    setClassButtonLike("moviescard__button_liked");
     handleLikeMovie(item);
   }
 
   function handleDislike() {
-    setLike(!isLiked);
+    setClassButtonLike("moviescard__button_like");
     handleDislikeMovie(item);
   }
 
@@ -33,9 +43,6 @@ function MoviesCard({
     url = item.image;
   }
 
-  const classButtonLike = !isLiked
-    ? "moviescard__button_like"
-    : "moviescard__button_liked";
   return (
     <div className="moviescard">
       <img className="moviescard__image" src={url} alt="превью фильма" />
