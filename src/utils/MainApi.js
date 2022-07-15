@@ -66,4 +66,22 @@ export class MainApi {
       }),
     }).then(this._checkResponse);
   }
+
+  getUserInfo() {
+    return fetch(`${this._url}/users/me`, {
+      method: "GET",
+      headers: this.headers,
+    }).then(this._checkResponse);
+  }
+
+  updateUserInfo(data) {
+    return fetch(`${this._url}/users/me`, {
+      method: "PATCH",
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+      }),
+      headers: this.headers,
+    }).then(this._checkResponse);
+  }
 }

@@ -123,6 +123,12 @@
   color: #3456f3;
 }
 
+.popup__button_disabled {
+  cursor: default;
+  background: gray;
+  color: gray;
+}
+
 @media screen and (max-width: 1017px) {
   .content_info {
     padding-left: 50px;

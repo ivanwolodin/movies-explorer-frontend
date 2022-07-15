@@ -5,10 +5,9 @@ import "./Register.css";
 import Logo from "../Logo/Logo";
 import { Link } from "react-router-dom";
 
-function Register(props) {
-  const emailRegEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-  const nameRegEx = /([A-Za-z]+(['|\-|\s]?[A-Za-z]+)*)+/g;
+// import { emailRegEx, nameRegEx } from "../../utils/constants";
 
+function Register(props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,15 +18,19 @@ function Register(props) {
 
   const [isDisabled, setDisabled] = useState(true);
   const [inactiveButtonClass, setInactiveButtonClass] = useState(
-    "register__button_disabled"
+    "popup__button_disabled"
   );
 
   const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
 
   function checkForm() {
+    const emailRegEx =
+      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    const nameRegEx = /([A-Za-zА-Яа-я]+(['|\-|\s]?[A-Za-zА-Яа-я]+)*)+/g;
+
     setErrorClassMessage("popup__errortext");
     setDisabled(true);
-    setInactiveButtonClass("register__button_disabled");
+    setInactiveButtonClass("popup__button_disabled");
 
     if (!emailRegEx.test(email)) {
       setErrorMsg("Email невалиден");

@@ -116,7 +116,6 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            console.log(res);
             history.push("/");
           }
         })
@@ -151,32 +150,19 @@ function App() {
           console.log("Cannot get liked movies");
           console.log(err);
         });
-      // request to movies to get saved movies and then sotre them in localStorage
 
-      // api
-      //   .getInitialCards()
-      //   .then((data) => {
-      //     setCards(data.cards);
-      //   })
-      //   .catch((err) => {
-      //     console.log("Cannot get data from server");
-      //     console.log(err);
-      //   });
-
-      // api
-      //   .getUserInfo()
-      //   .then((data) => {
-      //     setCurrentUser({
-      //       name: data.data.name,
-      //       about: data.data.about,
-      //       avatarUrl: data.data.avatar,
-      //       id: data.data._id,
-      //     });
-      //   })
-      //   .catch((err) => {
-      //     console.log("Cannot get data from server");
-      //     console.log(err);
-      // });
+      mainApi
+        .getUserInfo()
+        .then((data) => {
+          setCurrentUser({
+            name: data.name,
+            email: data.email,
+          });
+        })
+        .catch((err) => {
+          console.log("Cannot get user data from server");
+          console.log(err);
+        });
     }
   }, [loggedIn]);
 
@@ -291,6 +277,21 @@ function App() {
       .finally(setContentLoaded(true));
   }
 
+  function handleEditUser(data) {
+    mainApi
+      .updateUserInfo(data)
+      .then((res) => {
+        setCurrentUser({
+          name: res.user.name,
+          email: res.user.email,
+        });
+      })
+      .catch((err) => {
+        console.log("Cannot update user info");
+        console.log(err);
+      });
+  }
+
   return (
     <userContext.Provider value={currentUser}>
       <div className="app">
@@ -329,6 +330,9 @@ function App() {
               loggedIn={loggedIn}
               component={Profile}
               handleLogout={handleLogout}
+              userName={currentUser.name}
+              userEmail={currentUser.email}
+              handleEdit={handleEditUser}
             />
             <Route path="/" exact>
               <Main />
