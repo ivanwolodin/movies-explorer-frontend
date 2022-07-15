@@ -28,7 +28,6 @@ export function handleSearchedMoviesLocalStorage(res, removeItem) {
 }
 
 export function handleSearchedMoviesIdsLocalStorage(movieId, _id, removeItem) {
-  console.log(movieId, _id, removeItem);
   let oldEntries = JSON.parse(localStorage.getItem("savedMoviesIds")) || {};
 
   if (!removeItem) {

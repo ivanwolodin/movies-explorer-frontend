@@ -1,18 +1,50 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import "./Register.css";
 import Logo from "../Logo/Logo";
 import { Link } from "react-router-dom";
 
 function Register(props) {
+  const emailRegEx = /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+  const nameRegEx = /([A-Za-z]+(['|\-|\s]?[A-Za-z]+)*)+/g;
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const ErrorClass = props.rigisterError
-    ? "popup__errortext"
-    : "popup__errortext_hidden";
+  const [errorClassMessage, setErrorClassMessage] = useState(
+    props.rigisterError ? "popup__errortext" : "popup__errortext_hidden"
+  );
+
+  const [isDisabled, setDisabled] = useState(true);
+  const [inactiveButtonClass, setInactiveButtonClass] = useState(
+    "register__button_disabled"
+  );
+
+  const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
+
+  function checkForm() {
+    setErrorClassMessage("popup__errortext");
+    setDisabled(true);
+    setInactiveButtonClass("register__button_disabled");
+
+    if (!emailRegEx.test(email)) {
+      setErrorMsg("Email невалиден");
+      return;
+    } else if (!password) {
+      setErrorMsg("Пароль не может быть пустым");
+      return;
+    } else if (!nameRegEx.test(name)) {
+      setErrorMsg("Имя невалидно");
+      return;
+    } else {
+      setErrorClassMessage("popup__errortext_hidden");
+      setDisabled(false);
+      setInactiveButtonClass("");
+      return;
+    }
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -22,18 +54,25 @@ function Register(props) {
       name,
     });
   }
+
   function handleChangeEmail(e) {
     const email = e.target.value;
     setEmail(email);
   }
+
   function handleChangePassword(e) {
     const password = e.target.value;
     setPassword(password);
   }
+
   function handleChangeName(e) {
     const name = e.target.value;
     setName(name);
   }
+
+  useEffect(() => {
+    checkForm();
+  }, [name, email, password]);
 
   return (
     <div className="login popup">
@@ -75,8 +114,11 @@ function Register(props) {
             className="popup__input"
           />
         </label>
-        <p className={ErrorClass}>Что-то пошло не так</p>
-        <button className="popup__button register__button">
+        <p className={errorClassMessage}>{errorMsg}</p>
+        <button
+          className={`popup__button register__button ${inactiveButtonClass}`}
+          disabled={isDisabled}
+        >
           Зарегистрироваться
         </button>
       </form>

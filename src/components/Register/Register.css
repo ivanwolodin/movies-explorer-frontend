@@ -1,3 +1,7 @@
 .register__button {
   margin-top: 81px;
 }
+
+.register__button_disabled {
+  background: gray;
+}
