@@ -5,11 +5,12 @@ import MoviesCardList from "../MoviesCardList/MoviesCardList";
 import Preloader from "../Preloader/Preloader";
 
 function Movies(props) {
-  console.log(props.isContentLoaded);
   return (
     <div className="movies">
       <SearchForm onClick={props.handleSearch} />
-      {!props.isContentLoaded ? (
+      {props.isLoadingError ? (
+        <p style={{ textAlign: "center" }}>Ничего не найдено</p>
+      ) : !props.isContentLoaded ? (
         <Preloader />
       ) : (
         <MoviesCardList

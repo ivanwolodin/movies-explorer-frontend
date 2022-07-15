@@ -262,20 +262,23 @@ function App() {
 
   function handleSearch() {
     setContentLoaded(false);
+    setLoadingError(false);
     moviesApi
       .getAllMovies()
       .then((response) => {
         const res = response.filter(filterFunction);
         setSearchedMovies(res);
         localStorage.setItem("searchedMovies", JSON.stringify(res));
-        setLoadingError(false);
+        if (res.length === 0) {
+          setLoadingError(true);
+        }
       })
       .catch((err) => {
         console.log("Cannot get movies");
         console.log(err);
         setLoadingError(true);
       })
-      .finally(() => setContentLoaded(true))
+      .finally(() => setContentLoaded(true));
   }
 
   function handleEditUser(data) {
