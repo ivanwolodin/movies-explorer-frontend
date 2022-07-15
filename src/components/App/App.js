@@ -86,6 +86,10 @@ function App() {
       : []
   );
 
+  const [searchedThroughSavedMovies, setSearchedThroughSavedMovies] = useState(JSON.parse(localStorage.getItem("savedMovies"))
+  ? JSON.parse(localStorage.getItem("savedMovies"))
+  : []);
+
   const [isLoadingError, setLoadingError] = useState(false);
 
   const [savedMoviesIds, setSavedMoviesIds] = useState(
@@ -263,6 +267,7 @@ function App() {
   function handleSearch() {
     setContentLoaded(false);
     setLoadingError(false);
+    setSearchedThroughSavedMovies([]);
     moviesApi
       .getAllMovies()
       .then((response) => {
@@ -282,7 +287,16 @@ function App() {
   }
 
   function handleSearchThroughLikedMovies() {
-    
+    const query = localStorage.getItem("searchQuery").toLowerCase();
+    let response = [];
+    savedMovies.forEach((item) => {
+      if (item.nameRU.toLowerCase().includes(query)) {
+        response.push(item);
+      } else if (item.nameEN.toLowerCase().includes(query)) {
+        response.push(item);
+      }
+    });
+    setSearchedThroughSavedMovies(response);
   }
 
   function handleEditUser(data) {
@@ -328,11 +342,11 @@ function App() {
               component={SavedMovies}
               handleLikeMovie={handleLikeMovie}
               handleDislikeMovie={handleDislikeMovie}
-              handleSearch={handleSearch}
+              handleSearch={handleSearchThroughLikedMovies}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
               moviesToRender={savedMovies}
-              savedMovies={savedMovies}
+              savedMovies={searchedThroughSavedMovies}
               savedMoviesIds={savedMoviesIds}
             />
             <ProtectedRoute
