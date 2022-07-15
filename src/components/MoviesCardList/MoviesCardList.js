@@ -4,10 +4,9 @@ import MoviesCard from "../MoviesCard/MoviesCard";
 function MoviesCardList(props) {
   let cardLikeExist;
 
-  if (props.savedMoviesComponent){
+  if (props.savedMoviesComponent) {
     cardLikeExist = false;
-  }
-  else{
+  } else {
     cardLikeExist = true;
   }
 
@@ -22,6 +21,7 @@ function MoviesCardList(props) {
             handleLikeMovie={props.handleLikeMovie}
             handleDislikeMovie={props.handleDislikeMovie}
             savedMovies={props.savedMovies}
+            savedMoviesIds={props.savedMoviesIds}
           />
         ))}
       </div>

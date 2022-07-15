@@ -24,6 +24,7 @@ import { MoviesApi } from "../../utils/MoviesApi.js";
 import {
   filterFunction,
   handleSearchedMoviesLocalStorage,
+  handleSearchedMoviesIdsLocalStorage,
 } from "../../utils/utilsFunctions.js";
 
 const mainApi = new MainApi({
@@ -83,11 +84,11 @@ function App() {
 
   const [isLoadingError, setLoadingError] = useState(false);
 
-  // const [savedMoviesIds, setSavedMoviesIds] = useState(
-  //   JSON.parse(localStorage.getItem("savedMoviesIds"))
-  //     ? JSON.parse(localStorage.getItem("savedMoviesIds"))
-  //     : {}
-  // );
+  const [savedMoviesIds, setSavedMoviesIds] = useState(
+    JSON.parse(localStorage.getItem("savedMoviesIds"))
+      ? JSON.parse(localStorage.getItem("savedMoviesIds"))
+      : {}
+  );
   const [currentUser, setCurrentUser] = useState({
     name: "",
     email: "",
@@ -140,6 +141,7 @@ function App() {
               "savedMoviesIds",
               JSON.stringify(savedMoviesIds)
             );
+            setSavedMoviesIds(savedMoviesIds);
           }
         })
         .catch((err) => {
@@ -227,6 +229,12 @@ function App() {
       .then((res) => {
         const newEntries = handleSearchedMoviesLocalStorage(res, false);
         setSavedMovies(newEntries);
+        const newEntrieIds = handleSearchedMoviesIdsLocalStorage(
+          data.id,
+          res.movie._id,
+          false
+        );
+        setSavedMoviesIds(newEntrieIds);
       })
       .catch((err) => {
         console.log("Cannot like movie");
@@ -234,13 +242,18 @@ function App() {
       });
   }
 
-  function handleDislikeMovie(data) {
+  function handleDislikeMovie(movieId, _id) {
     mainApi
-      .dislikeMovie(data._id)
+      .dislikeMovie(_id)
       .then((res) => {
         const newEntries = handleSearchedMoviesLocalStorage(res, true);
-        console.log(newEntries);
         setSavedMovies(newEntries);
+        const newEntrieIds = handleSearchedMoviesIdsLocalStorage(
+          movieId,
+          _id,
+          true
+        );
+        setSavedMoviesIds(newEntrieIds);
       })
       .catch((err) => {
         console.log("Cannot dislike movie");
@@ -291,6 +304,7 @@ function App() {
               isContentLoaded={isContentLoaded}
               moviesToRender={searchedMovies}
               savedMovies={savedMovies}
+              savedMoviesIds={savedMoviesIds}
             />
             <ProtectedRoute
               path="/saved-movies"
@@ -303,6 +317,7 @@ function App() {
               isContentLoaded={isContentLoaded}
               moviesToRender={savedMovies}
               savedMovies={savedMovies}
+              savedMoviesIds={savedMoviesIds}
             />
             <ProtectedRoute
               path="/profile"

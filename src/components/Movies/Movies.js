@@ -11,6 +11,7 @@ function Movies(props) {
         savedMovies={props.savedMovies}
         handleLikeMovie={props.handleLikeMovie}
         handleDislikeMovie={props.handleDislikeMovie}
+        savedMoviesIds={props.savedMoviesIds}
       />
     </div>
   );

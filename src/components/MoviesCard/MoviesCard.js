@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import "./MoviesCard.css";
 
 function MoviesCard({
@@ -6,10 +6,12 @@ function MoviesCard({
   cardLikeExist,
   handleLikeMovie,
   handleDislikeMovie,
-  savedMovies
-}) { 
-
-  const [classButtonLike, setClassButtonLike] = React.useState("moviescard__button_like");
+  savedMovies,
+  savedMoviesIds,
+}) {
+  const [classButtonLike, setClassButtonLike] = React.useState(
+    "moviescard__button_like"
+  );
 
   useEffect(() => {
     savedMovies.forEach((elem) => {
@@ -26,7 +28,11 @@ function MoviesCard({
 
   function handleDislike() {
     setClassButtonLike("moviescard__button_like");
-    handleDislikeMovie(item);
+    if (cardLikeExist) {
+      handleDislikeMovie(item.id, savedMoviesIds[item["id"]]);
+    } else {
+      handleDislikeMovie(item.movieId, item._id);
+    }
   }
 
   function calcDuration() {
@@ -51,7 +57,11 @@ function MoviesCard({
         {cardLikeExist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
-            onClick={classButtonLike ==="moviescard__button_liked" ? handleDislike : handleLike}
+            onClick={
+              classButtonLike === "moviescard__button_liked"
+                ? handleDislike
+                : handleLike
+            }
           />
         ) : (
           <button

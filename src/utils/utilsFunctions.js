@@ -16,14 +16,26 @@ export function handleSearchedMoviesLocalStorage(res, removeItem) {
 
   if (!removeItem) {
     oldEntries.push(res.movie);
-    localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
   } else {
     oldEntries.forEach((elem, index) => {
       if (res.data["_id"] === elem["_id"]) {
         oldEntries.splice(index, 1);
-        localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
       }
     });
   }
+  localStorage.setItem("savedMovies", JSON.stringify(oldEntries));
+  return oldEntries;
+}
+
+export function handleSearchedMoviesIdsLocalStorage(movieId, _id, removeItem) {
+  console.log(movieId, _id, removeItem);
+  let oldEntries = JSON.parse(localStorage.getItem("savedMoviesIds")) || {};
+
+  if (!removeItem) {
+    oldEntries[movieId] = _id;
+  } else {
+    delete oldEntries[movieId];
+  }
+  localStorage.setItem("savedMoviesIds", JSON.stringify(oldEntries));
   return oldEntries;
 }
