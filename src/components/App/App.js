@@ -275,22 +275,24 @@ function App() {
         console.log(err);
         setLoadingError(true);
       })
-      .finally(setContentLoaded(true));
+      .finally(() => setContentLoaded(true))
   }
 
   function handleEditUser(data) {
-    mainApi.updateUserInfo(data).then((res) => {
-      setCurrentUser({
-        name: res.user.name,
-        email: res.user.email,
+    mainApi
+      .updateUserInfo(data)
+      .then((res) => {
+        setCurrentUser({
+          name: res.user.name,
+          email: res.user.email,
+        });
+        setEditError("");
+      })
+      .catch((err) => {
+        console.log("Cannot update user info");
+        console.log(err);
+        setEditError("Не удалось изменить данные..");
       });
-      setEditError("");
-    })
-    .catch((err) => {
-      console.log("Cannot update user info");
-      console.log(err);
-      setEditError("Не удалось изменить данные..");
-    });
   }
 
   return (

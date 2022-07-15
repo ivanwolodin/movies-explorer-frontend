@@ -60,9 +60,10 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     e.preventDefault();
     handleEdit({
       email,
-      name,})
-    console.log(editError)
-    if(editError){
+      name,
+    });
+    console.log(editError);
+    if (editError) {
       setErrorMsg(editError);
       setNotificationStatus("popup__errortext");
     }
