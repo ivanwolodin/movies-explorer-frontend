@@ -70,6 +70,7 @@ function App() {
 
   const [registerError, setRegisterError] = React.useState("");
   const [loginError, setLoginError] = React.useState("");
+  const [editError, setEditError] = React.useState("");
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
@@ -278,18 +279,18 @@ function App() {
   }
 
   function handleEditUser(data) {
-    mainApi
-      .updateUserInfo(data)
-      .then((res) => {
-        setCurrentUser({
-          name: res.user.name,
-          email: res.user.email,
-        });
-      })
-      .catch((err) => {
-        console.log("Cannot update user info");
-        console.log(err);
+    mainApi.updateUserInfo(data).then((res) => {
+      setCurrentUser({
+        name: res.user.name,
+        email: res.user.email,
       });
+      setEditError("");
+    })
+    .catch((err) => {
+      console.log("Cannot update user info");
+      console.log(err);
+      setEditError("Не удалось изменить данные..");
+    });
   }
 
   return (
@@ -333,6 +334,7 @@ function App() {
               userName={currentUser.name}
               userEmail={currentUser.email}
               handleEdit={handleEditUser}
+              editError={editError}
             />
             <Route path="/" exact>
               <Main />

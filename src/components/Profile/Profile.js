@@ -5,16 +5,14 @@ import "./Profile.css";
 
 // import { emailRegEx, nameRegEx } from "../../utils/constants";
 
-function Profile({ handleLogout, handleEdit, userName, userEmail }) {
-  const [greeting, setGreeting] = useState(userName);
-
+function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   const [email, setEmail] = useState(userEmail);
   const [name, setName] = useState(userName);
 
   const [isDisabled, setDisabled] = useState(true);
   const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
   const [notificationStatus, setNotificationStatus] = useState(
-    "popup__notification_hidden"
+    "popup__errortext_hidden"
   );
 
   const [inactiveButtonClass, setInactiveButtonClass] = useState(
@@ -62,8 +60,12 @@ function Profile({ handleLogout, handleEdit, userName, userEmail }) {
     e.preventDefault();
     handleEdit({
       email,
-      name,
-    });
+      name,})
+    console.log(editError)
+    if(editError){
+      setErrorMsg(editError);
+      setNotificationStatus("popup__errortext");
+    }
   }
 
   return (
@@ -89,6 +91,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail }) {
           />
         </div>
 
+        <label className={notificationStatus}>{errorMsg}</label>
         <button
           className={`profile__button profile__editbutton ${inactiveButtonClass}`}
           disabled={isDisabled}
