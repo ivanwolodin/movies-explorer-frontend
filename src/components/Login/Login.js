@@ -8,9 +8,8 @@ function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const ErrorClass = props.loginError
-    ? "popup__errortext"
-    : "popup__errortext_hidden";
+  const [errorClass, setErrorClass] = useState("popup__errortext_hidden");
+  const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,6 +17,10 @@ function Login(props) {
       email,
       password,
     });
+    if (props.loginError) {
+      setErrorClass("popup__errortext");
+      setErrorMsg(props.loginError);
+    }
   }
   function handleChangeEmail(e) {
     const email = e.target.value;
@@ -57,7 +60,7 @@ function Login(props) {
             className="popup__input"
           />
         </label>
-        <p className={ErrorClass}>Что-то пошло не так</p>
+        <p className={errorClass}>{errorMsg}</p>
 
         <button className="popup__button">Войти</button>
       </form>

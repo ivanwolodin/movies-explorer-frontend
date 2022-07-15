@@ -53,6 +53,10 @@ function Register(props) {
       password,
       name,
     });
+    if (props.registerError) {
+      setErrorClassMessage("popup__errortext");
+      setErrorMsg(props.registerError);
+    }
   }
 
   function handleChangeEmail(e) {

@@ -68,6 +68,9 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
 
+  const [registerError, setRegisterError] = React.useState("");
+  const [loginError, setLoginError] = React.useState("");
+
   const [isContentLoaded, setContentLoaded] = useState(true);
 
   const [searchedMovies, setSearchedMovies] = useState(
@@ -185,6 +188,7 @@ function App() {
           setLoggedIn(true);
           history.push("/movies");
         } else {
+          setLoginError("Не получилось авторизоваться..");
         }
       })
       .catch((err) => {
@@ -199,6 +203,7 @@ function App() {
         if (res.status !== 400 && res.status !== 401 && res.status !== 409) {
           history.push("/login");
         } else {
+          setRegisterError("Не удалось зарегистрироваться..");
         }
       })
       .catch((err) => {
@@ -329,10 +334,13 @@ function App() {
               <Main />
             </Route>
             <Route path="/login" exact>
-              <Login handleLogin={handleLogin} />
+              <Login handleLogin={handleLogin} loginError={loginError} />
             </Route>
             <Route path="/register" exact>
-              <Register handleRegister={handleRegistration} />
+              <Register
+                handleRegister={handleRegistration}
+                registerError={registerError}
+              />
             </Route>
             <Route path="*">
               <NotFound />
