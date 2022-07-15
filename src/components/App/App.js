@@ -74,6 +74,8 @@ function App() {
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
+  const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(false);
+
   const [searchedMovies, setSearchedMovies] = useState(
     JSON.parse(localStorage.getItem("searchedMovies"))
       ? JSON.parse(localStorage.getItem("searchedMovies"))
@@ -86,9 +88,6 @@ function App() {
       : []
   );
 
-  const [searchedThroughSavedMovies, setSearchedThroughSavedMovies] = useState(JSON.parse(localStorage.getItem("savedMovies"))
-  ? JSON.parse(localStorage.getItem("savedMovies"))
-  : []);
 
   const [isLoadingError, setLoadingError] = useState(false);
 
@@ -206,17 +205,53 @@ function App() {
       });
   }
 
+  function handleCheckbox() {
+    setShortMoviesCheckbox(!isShortMoviesCheckboxSet);
+  }
+
+  useEffect(() => {
+    if (isShortMoviesCheckboxSet) {
+      let newEntries = [];
+      savedMovies.forEach((elem) => {
+        if (elem.duration <= 40) {
+          newEntries.push(elem);
+        }
+      });
+      setSavedMovies(newEntries);
+
+      newEntries = [];
+      searchedMovies.forEach((elem) => {
+        if (elem.duration <= 40) {
+          newEntries.push(elem);
+        }
+      });
+      setSearchedMovies(newEntries);
+
+    } else {
+      setSavedMovies(
+        JSON.parse(localStorage.getItem("savedMovies"))
+      ? JSON.parse(localStorage.getItem("savedMovies"))
+      : []
+      );
+      setSearchedMovies(
+        JSON.parse(localStorage.getItem("searchedMovies"))
+          ? JSON.parse(localStorage.getItem("searchedMovies"))
+          : []
+      );
+    }
+  }, [isShortMoviesCheckboxSet]);
+
   function handleLikeMovie(data) {
     const dd = {
-      country: data.country,
-      director: data.director,
-      duration: data.duration,
-      year: data.year,
-      description: data.description,
+      country: data.country || "nodata",
+      director: data.director || "nodata",
+      duration: data.duration || "nodata",
+      year: data.year || "nodata",
+      description: data.description || "nodata",
       image: `https://api.nomoreparties.co/${data.image.url}`,
       trailerLink: data.trailerLink,
-      nameRU: data.nameRU,
-      nameEN: data.nameEN,
+      nameRU: data.nameRU || "nodata",
+      nameEN: data.nameEN || "nodata",
       thumbnail: `https://api.nomoreparties.co/${data.image.url}`,
       movieId: data.id,
     };
@@ -267,7 +302,7 @@ function App() {
   function handleSearch() {
     setContentLoaded(false);
     setLoadingError(false);
-    setSearchedThroughSavedMovies([]);
+
     moviesApi
       .getAllMovies()
       .then((response) => {
@@ -296,7 +331,7 @@ function App() {
         response.push(item);
       }
     });
-    setSearchedThroughSavedMovies(response);
+
   }
 
   function handleEditUser(data) {
@@ -335,6 +370,8 @@ function App() {
               moviesToRender={searchedMovies}
               savedMovies={savedMovies}
               savedMoviesIds={savedMoviesIds}
+              isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
+              handleCheckbox={handleCheckbox}
             />
             <ProtectedRoute
               path="/saved-movies"
@@ -346,8 +383,10 @@ function App() {
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
               moviesToRender={savedMovies}
-              savedMovies={searchedThroughSavedMovies}
+              savedMovies={savedMovies}
               savedMoviesIds={savedMoviesIds}
+              isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
+              handleCheckbox={handleCheckbox}
             />
             <ProtectedRoute
               path="/profile"

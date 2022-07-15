@@ -7,7 +7,11 @@ import Preloader from "../Preloader/Preloader";
 function Movies(props) {
   return (
     <div className="movies">
-      <SearchForm onClick={props.handleSearch} />
+      <SearchForm
+        onClick={props.handleSearch}
+        isShortMoviesCheckboxSet={props.isShortMoviesCheckboxSet}
+        handleCheckbox={props.handleCheckbox}
+      />
       {props.isLoadingError ? (
         <p style={{ textAlign: "center" }}>Ничего не найдено</p>
       ) : !props.isContentLoaded ? (

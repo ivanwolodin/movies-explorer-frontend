@@ -3,14 +3,13 @@ import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
 
 function SavedMovies(props) {
-
-  function handleSearchThrough(){
-    props.handleSearch();
-  }
-
   return (
     <div className="savedmovies">
-      <SearchForm onClick={handleSearchThrough} />
+      <SearchForm
+        onClick={props.handleSearch}
+        isShortMoviesCheckboxSet={props.isShortMoviesCheckboxSet}
+        handleCheckbox={props.handleCheckbox}
+      />
       <MoviesCardList
         savedMoviesComponent={true}
         savedMovies={props.savedMovies}
