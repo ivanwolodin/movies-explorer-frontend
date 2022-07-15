@@ -23,6 +23,7 @@ function Movies(props) {
           handleLikeMovie={props.handleLikeMovie}
           handleDislikeMovie={props.handleDislikeMovie}
           savedMoviesIds={props.savedMoviesIds}
+          showMoreHandler={props.showMoreHandler}
         />
       )}
     </div>

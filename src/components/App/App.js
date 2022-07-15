@@ -76,6 +76,12 @@ function App() {
 
   const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(false);
 
+  const [width, height] = useWindowDimension();
+  const [cardsNumberToShow, setCardsNumberTOShow] = useState({
+    numberToShow: 0,
+    numberToUpload: 0,
+  });
+
   const [searchedMovies, setSearchedMovies] = useState(
     JSON.parse(localStorage.getItem("searchedMovies"))
       ? JSON.parse(localStorage.getItem("searchedMovies"))
@@ -100,6 +106,25 @@ function App() {
     name: "",
     email: "",
   });
+
+  function adjustCardsNumberToWindowSize() {
+    if (width > 1278) {
+      setCardsNumberTOShow({ numberToShow: 4, numberToUpload: 4 });
+    } else if (width <= 1278 && width > 968) {
+      setCardsNumberTOShow({ numberToShow: 9, numberToUpload: 3 });
+    } else if (width <= 968 && width > 613) {
+      setCardsNumberTOShow({ numberToShow: 8, numberToUpload: 2 });
+    } else if (width <= 613) {
+      setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
+    }
+  }
+
+  useEffect(() => {
+    adjustCardsNumberToWindowSize();
+    setSearchedMovies(
+      searchedMovies.slice(0, cardsNumberToShow["numberToShow"])
+    );
+  }, [width]);
 
   function handlePopupNav() {
     setPopupNavOpen(true);
@@ -351,6 +376,17 @@ function App() {
       });
   }
 
+  function showMoreHandler() {
+    
+    setSearchedMovies([
+      ...searchedMovies,
+      ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
+        searchedMovies.length,
+        searchedMovies.length + cardsNumberToShow["numberToUpload"]
+      ),
+    ]);
+  }
+
   return (
     <userContext.Provider value={currentUser}>
       <div className="app">
@@ -372,6 +408,7 @@ function App() {
               savedMoviesIds={savedMoviesIds}
               isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
               handleCheckbox={handleCheckbox}
+              showMoreHandler={showMoreHandler}
             />
             <ProtectedRoute
               path="/saved-movies"

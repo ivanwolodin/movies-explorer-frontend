@@ -62,10 +62,14 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
       email,
       name,
     });
-    console.log(editError);
+
+    setNotificationStatus("popup__errortext");
     if (editError) {
       setErrorMsg(editError);
-      setNotificationStatus("popup__errortext");
+      
+    }
+    else{
+      setErrorMsg("Данные изменены"); 
     }
   }
 
