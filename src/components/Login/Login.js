@@ -63,7 +63,6 @@ function Login(props) {
 
   useEffect(() => {
     checkForm();
-    console.log(email, password);
   }, [email, password]);
 
   return (

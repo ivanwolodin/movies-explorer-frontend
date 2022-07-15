@@ -25,7 +25,7 @@ function MoviesCardList(props) {
           />
         ))}
       </div>
-      {props.savedMovies ? (
+      {!cardLikeExist ? (
         <button className="moviescardlist__button moviescardlist__button_hidden">
           Еще
         </button>

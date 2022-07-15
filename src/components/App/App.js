@@ -281,6 +281,10 @@ function App() {
       .finally(() => setContentLoaded(true));
   }
 
+  function handleSearchThroughLikedMovies() {
+    
+  }
+
   function handleEditUser(data) {
     mainApi
       .updateUserInfo(data)
