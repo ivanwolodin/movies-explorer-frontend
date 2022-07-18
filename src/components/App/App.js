@@ -367,6 +367,7 @@ function App() {
         response.push(item);
       }
     });
+    setSavedMovies(response);
   }
 
   function handleEditUser(data) {
