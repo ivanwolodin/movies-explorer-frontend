@@ -24,6 +24,7 @@ function Movies(props) {
           handleDislikeMovie={props.handleDislikeMovie}
           savedMoviesIds={props.savedMoviesIds}
           showMoreHandler={props.showMoreHandler}
+          searchedMovies={props.searchedMovies}
         />
       )}
     </div>
