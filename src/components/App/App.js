@@ -230,7 +230,11 @@ function App() {
     register(data.email, data.password, data.name)
       .then((res) => {
         if (res.status !== 400 && res.status !== 401 && res.status !== 409) {
-          history.push("/login");
+          handleLogin({
+            "email": data.email,
+            "password": data.password
+          });
+          history.push("/movies");
         } else {
           setRegisterError("Не удалось зарегистрироваться..");
         }
