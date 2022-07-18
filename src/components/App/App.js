@@ -231,8 +231,8 @@ function App() {
       .then((res) => {
         if (res.status !== 400 && res.status !== 401 && res.status !== 409) {
           handleLogin({
-            "email": data.email,
-            "password": data.password
+            email: data.email,
+            password: data.password,
           });
           history.push("/movies");
         } else {

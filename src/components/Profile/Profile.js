@@ -81,6 +81,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
             className="profile__input"
             type="text"
             placeholder={name}
+            value={name}
             onChange={handleChangeName}
           />
         </div>
@@ -90,6 +91,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
             className="profile__input"
             type="text"
             placeholder={email}
+            value={email}
             onChange={handleChangeEmail}
           />
         </div>
