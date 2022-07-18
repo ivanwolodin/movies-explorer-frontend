@@ -346,7 +346,16 @@ function App() {
   function handleLogout() {
     localStorage.removeItem("token");
     localStorage.clear();
+
+    setLoginError("");
+    setEditError("");
+    setRegisterError("");
     setLoggedIn(false);
+    setSearchedMovies([]);
+    setSavedMovies([]);
+    setSavedRenderMovies([]);
+    setSavedMoviesIds({});
+
     history.push("/register");
   }
 
