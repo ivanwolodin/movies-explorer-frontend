@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import "./SavedMovies.css";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
@@ -13,7 +15,7 @@ function SavedMovies(props) {
       <MoviesCardList
         savedMoviesComponent={true}
         savedMovies={props.savedMovies}
-        moviesToRender={props.savedMovies}
+        moviesToRender={props.moviesToRender}
         handleLikeMovie={props.handleLikeMovie}
         handleDislikeMovie={props.handleDislikeMovie}
         savedMoviesIds={props.savedMoviesIds}

@@ -99,6 +99,12 @@ function App() {
       : []
   );
 
+  const [savedRenderMovies, setSavedRenderMovies] = useState(
+    JSON.parse(localStorage.getItem("savedMovies"))
+      ? JSON.parse(localStorage.getItem("savedMovies"))
+      : []
+  );
+
   const [isLoadingError, setLoadingError] = useState(false);
 
   const [savedMoviesIds, setSavedMoviesIds] = useState(
@@ -249,12 +255,12 @@ function App() {
   useEffect(() => {
     if (isShortMoviesCheckboxSet) {
       let newEntries = [];
-      savedMovies.forEach((elem) => {
+      savedRenderMovies.forEach((elem) => {
         if (elem.duration <= 40) {
           newEntries.push(elem);
         }
       });
-      setSavedMovies(newEntries);
+      setSavedRenderMovies(newEntries);
 
       newEntries = [];
       searchedMovies.forEach((elem) => {
@@ -264,7 +270,7 @@ function App() {
       });
       setSearchedMovies(newEntries);
     } else {
-      setSavedMovies(
+      setSavedRenderMovies(
         JSON.parse(localStorage.getItem("savedMovies"))
           ? JSON.parse(localStorage.getItem("savedMovies"))
           : []
@@ -314,7 +320,16 @@ function App() {
       .dislikeMovie(_id)
       .then((res) => {
         const newEntries = handleSearchedMoviesLocalStorage(res, true);
+
+        let newSavedRenderMovies = [];
+        savedRenderMovies.forEach((elem, index) => {
+          if (res.data["_id"] !== elem["_id"]) {
+            newSavedRenderMovies.push(elem);
+          }
+        });
         setSavedMovies(newEntries);
+        setSavedRenderMovies(newSavedRenderMovies);
+        // delete item from SavedRenderMovies
         const newEntrieIds = handleSearchedMoviesIdsLocalStorage(
           movieId,
           _id,
@@ -367,7 +382,7 @@ function App() {
         response.push(item);
       }
     });
-    setSavedMovies(response);
+    setSavedRenderMovies(response);
   }
 
   function handleEditUser(data) {
@@ -429,7 +444,7 @@ function App() {
               handleSearch={handleSearchThroughLikedMovies}
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
-              moviesToRender={savedMovies}
+              moviesToRender={savedRenderMovies}
               savedMovies={savedMovies}
               savedMoviesIds={savedMoviesIds}
               isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
