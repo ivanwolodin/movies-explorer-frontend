@@ -33,6 +33,7 @@ const mainApi = new MainApi({
 const moviesApi = new MoviesApi({
   url: "https://api.nomoreparties.co/beatfilm-movies",
 });
+
 // taken from web
 export function useWindowDimension() {
   const [dimension, setDimension] = useState([
@@ -74,7 +75,11 @@ function App() {
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
-  const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(false);
+  const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(
+    JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
+      ? JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
+      : false
+  );
 
   const [width, height] = useWindowDimension();
   const [cardsNumberToShow, setCardsNumberTOShow] = useState({
@@ -93,7 +98,6 @@ function App() {
       ? JSON.parse(localStorage.getItem("savedMovies"))
       : []
   );
-
 
   const [isLoadingError, setLoadingError] = useState(false);
 
@@ -163,6 +167,10 @@ function App() {
         .then((res) => {
           if (res) {
             localStorage.setItem("savedMovies", JSON.stringify(res.movies));
+            localStorage.setItem(
+              "isShortMoviesCheckboxSet",
+              JSON.stringify(isShortMoviesCheckboxSet)
+            );
 
             let savedMoviesIds = {};
             res.movies.forEach((movie) => {
@@ -232,6 +240,10 @@ function App() {
 
   function handleCheckbox() {
     setShortMoviesCheckbox(!isShortMoviesCheckboxSet);
+    localStorage.setItem(
+      "isShortMoviesCheckboxSet",
+      JSON.stringify(!isShortMoviesCheckboxSet)
+    );
   }
 
   useEffect(() => {
@@ -251,12 +263,11 @@ function App() {
         }
       });
       setSearchedMovies(newEntries);
-
     } else {
       setSavedMovies(
         JSON.parse(localStorage.getItem("savedMovies"))
-      ? JSON.parse(localStorage.getItem("savedMovies"))
-      : []
+          ? JSON.parse(localStorage.getItem("savedMovies"))
+          : []
       );
       setSearchedMovies(
         JSON.parse(localStorage.getItem("searchedMovies"))
@@ -356,7 +367,6 @@ function App() {
         response.push(item);
       }
     });
-
   }
 
   function handleEditUser(data) {
@@ -377,7 +387,6 @@ function App() {
   }
 
   function showMoreHandler() {
-    
     setSearchedMovies([
       ...searchedMovies,
       ...JSON.parse(localStorage.getItem("searchedMovies")).slice(

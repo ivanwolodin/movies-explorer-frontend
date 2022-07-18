@@ -26,11 +26,16 @@ function MoviesCardList(props) {
         ))}
       </div>
       {!cardLikeExist ? (
-        <button className="moviescardlist__button moviescardlist__button_hidden"> 
+        <button className="moviescardlist__button moviescardlist__button_hidden">
           Еще
         </button>
       ) : (
-        <button className="moviescardlist__button" onClick={props.showMoreHandler}>Еще</button>
+        <button
+          className="moviescardlist__button"
+          onClick={props.showMoreHandler}
+        >
+          Еще
+        </button>
       )}
     </div>
   );

@@ -66,10 +66,8 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     setNotificationStatus("popup__errortext");
     if (editError) {
       setErrorMsg(editError);
-      
-    }
-    else{
-      setErrorMsg("Данные изменены"); 
+    } else {
+      setErrorMsg("Данные изменены");
     }
   }
 
