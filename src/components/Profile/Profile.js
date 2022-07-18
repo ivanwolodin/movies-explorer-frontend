@@ -16,7 +16,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   );
 
   const [inactiveButtonClass, setInactiveButtonClass] = useState(
-    "popup__button_disabled"
+    "popup__button_disabled profile__button_disabled"
   );
 
   function handleExit() {
@@ -38,7 +38,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     const nameRegEx = /([A-Za-zА-яая]+(['|\-|\s]?[A-Za-zА-яая]+)*)+/g;
 
     setDisabled(true);
-    setInactiveButtonClass("popup__button_disabled");
+    setInactiveButtonClass("popup__button_disabled profile__button_disabled");
 
     if (!emailRegEx.test(email)) {
       return;
@@ -68,6 +68,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
       setErrorMsg(editError);
     } else {
       setErrorMsg("Данные изменены");
+      setInactiveButtonClass("popup__button_disabled profile__button_disabled");
     }
   }
 
