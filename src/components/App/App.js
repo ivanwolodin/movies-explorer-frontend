@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Route, Switch } from "react-router-dom";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 
 import Main from "../Main/Main";
 import "./App.css";
@@ -128,6 +128,7 @@ function App() {
       setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
     }
   }
+  
 
   useEffect(() => {
     adjustCardsNumberToWindowSize();
@@ -143,10 +144,12 @@ function App() {
   function closeAllPopups() {
     setPopupNavOpen(false);
   }
-
+  
   useEffect(() => {
     tokenCheck();
   }, [history]);
+
+  
 
   function tokenCheck() {
     const token = localStorage.getItem("token");
@@ -155,7 +158,7 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            history.push("/");
+            // history.push("/movies");
           }
         })
         .catch((err) => {
@@ -424,6 +427,11 @@ function App() {
       ),
     ]);
   }
+
+  const location = useLocation()
+  useEffect(() => {
+    history.push(location.pathname);
+  }, []);
 
   return (
     <userContext.Provider value={currentUser}>
