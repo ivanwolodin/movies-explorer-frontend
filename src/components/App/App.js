@@ -232,6 +232,7 @@ function App() {
         }
       })
       .catch((err) => {
+        alert("Не получилось авторизоваться")
         console.log("Cannot authorize user");
         console.log(err);
       });
@@ -251,6 +252,7 @@ function App() {
         }
       })
       .catch((err) => {
+        alert("Не получилось зарегистрироваться")
         console.log("Cannot register user");
         console.log(err);
       })
@@ -325,6 +327,7 @@ function App() {
         setSavedMoviesIds(newEntrieIds);
       })
       .catch((err) => {
+        alert("Не получилось поставить лайк")
         console.log("Cannot like movie");
         console.log(err);
       });
@@ -353,6 +356,7 @@ function App() {
         setSavedMoviesIds(newEntrieIds);
       })
       .catch((err) => {
+        alert("Не получилось убрать лайк")
         console.log("Cannot dislike movie");
         console.log(err);
       });
