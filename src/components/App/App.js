@@ -27,6 +27,8 @@ import {
   handleSearchedMoviesIdsLocalStorage,
 } from "../../utils/utilsFunctions.js";
 
+import {thresholdShortMovieDuration} from "../../utils/constants";
+
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
 });
@@ -273,7 +275,7 @@ function App() {
     if (isShortMoviesCheckboxSet) {
       let newEntries = [];
       savedRenderMovies.forEach((elem) => {
-        if (elem.duration <= 40) {
+        if (elem.duration <= thresholdShortMovieDuration) {
           newEntries.push(elem);
         }
       });
@@ -281,7 +283,7 @@ function App() {
 
       newEntries = [];
       searchedMovies.forEach((elem) => {
-        if (elem.duration <= 40) {
+        if (elem.duration <= thresholdShortMovieDuration) {
           newEntries.push(elem);
         }
       });
