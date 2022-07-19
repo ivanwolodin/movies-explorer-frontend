@@ -75,6 +75,8 @@ function App() {
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
+  const [allMovies, setAllMovies] = useState([]);
+
   const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(
     JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
       ? JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
@@ -128,7 +130,6 @@ function App() {
       setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
     }
   }
-  
 
   useEffect(() => {
     adjustCardsNumberToWindowSize();
@@ -144,12 +145,10 @@ function App() {
   function closeAllPopups() {
     setPopupNavOpen(false);
   }
-  
+
   useEffect(() => {
     tokenCheck();
   }, [history]);
-
-  
 
   function tokenCheck() {
     const token = localStorage.getItem("token");
@@ -158,7 +157,16 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            // history.push("/movies");
+            moviesApi
+              .getAllMovies()
+              .then((response) => {
+                setAllMovies(response);
+              })
+              .catch((err) => {
+                console.log("Cannot get movies");
+                console.log(err);
+                setLoadingError(true);
+              });
           }
         })
         .catch((err) => {
@@ -362,7 +370,7 @@ function App() {
     setSavedMovies([]);
     setSavedRenderMovies([]);
     setSavedMoviesIds({});
-
+    setCurrentUser({});
     history.push("/register");
   }
 
@@ -370,22 +378,18 @@ function App() {
     setContentLoaded(false);
     setLoadingError(false);
 
-    moviesApi
-      .getAllMovies()
-      .then((response) => {
-        const res = response.filter(filterFunction);
-        setSearchedMovies(res);
-        localStorage.setItem("searchedMovies", JSON.stringify(res));
-        if (res.length === 0) {
-          setLoadingError(true);
-        }
-      })
-      .catch((err) => {
-        console.log("Cannot get movies");
-        console.log(err);
+    try {
+      const res = allMovies.filter(filterFunction);
+      setSearchedMovies(res);
+      localStorage.setItem("searchedMovies", JSON.stringify(res));
+      if (res.length === 0) {
         setLoadingError(true);
-      })
-      .finally(() => setContentLoaded(true));
+        setContentLoaded(true);
+      }
+    } catch {
+      setLoadingError(true);
+      setContentLoaded(true);
+    }
   }
 
   function handleSearchThroughLikedMovies() {
@@ -428,10 +432,18 @@ function App() {
     ]);
   }
 
-  const location = useLocation()
+  const location = useLocation();
   useEffect(() => {
     history.push(location.pathname);
   }, []);
+
+  useEffect(() => {
+    let timer1 = setTimeout(() => setContentLoaded(true), 0.3 * 1000);
+    // this will clear Timeout
+    return () => {
+      clearTimeout(timer1);
+    };
+  }, [searchedMovies]);
 
   return (
     <userContext.Provider value={currentUser}>
