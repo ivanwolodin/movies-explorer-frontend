@@ -327,6 +327,8 @@ function App() {
           false
         );
         setSavedMoviesIds(newEntrieIds);
+        setSavedRenderMovies([...savedRenderMovies, res.movie]);
+
       })
       .catch((err) => {
         alert("Не получилось поставить лайк")
@@ -349,7 +351,6 @@ function App() {
         });
         setSavedMovies(newEntries);
         setSavedRenderMovies(newSavedRenderMovies);
-        // delete item from SavedRenderMovies
         const newEntrieIds = handleSearchedMoviesIdsLocalStorage(
           movieId,
           _id,

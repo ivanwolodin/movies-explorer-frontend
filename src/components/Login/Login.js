@@ -19,6 +19,8 @@ function Login(props) {
   const [isDisabled, setDisabled] = useState(true);
 
   function checkForm() {
+    const emailRegEx =
+      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
 
     setErrorClass("popup__errortext");
     setDisabled(true);

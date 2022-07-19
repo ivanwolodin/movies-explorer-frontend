@@ -25,6 +25,10 @@ function Register(props) {
 
   function checkForm() {
 
+    const emailRegEx =
+      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+    const nameRegEx = /([A-Za-zА-Яа-я]+(['|\-|\s]?[A-Za-zА-Яа-я]+)*)+/g;
+
     setErrorClassMessage("popup__errortext");
     setDisabled(true);
     setInactiveButtonClass("popup__button_disabled");

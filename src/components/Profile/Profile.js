@@ -6,6 +6,9 @@ import "./Profile.css";
 import { emailRegEx, nameRegEx } from "../../utils/constants";
 
 function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
+  const emailRegEx =
+    /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
+  const nameRegEx = /([A-Za-zА-Яа-я]+(['|\-|\s]?[A-Za-zА-Яа-я]+)*)+/g;
   const [email, setEmail] = useState(userEmail);
   const [name, setName] = useState(userName);
 
