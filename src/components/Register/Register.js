@@ -12,6 +12,8 @@ function Register(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [valueChanged, setValueChanged] = useState(false);
+
   const [errorClassMessage, setErrorClassMessage] = useState(
     props.rigisterError ? "popup__errortext" : "popup__errortext_hidden"
   );
@@ -60,6 +62,7 @@ function Register(props) {
       setErrorClassMessage("popup__errortext");
       setErrorMsg(props.registerError);
     }
+    setValueChanged(!valueChanged);
   }
 
   function handleChangeEmail(e) {
@@ -80,6 +83,16 @@ function Register(props) {
   useEffect(() => {
     checkForm();
   }, [name, email, password]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+      setErrorClassMessage("popup__errortext_hidden");
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valueChanged]);
 
   return (
     <div className="login popup">

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Route, Switch } from "react-router-dom";
-import { useHistory } from "react-router";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { useHistory, useLocation } from "react-router";
 
 import Main from "../Main/Main";
 import "./App.css";
@@ -68,8 +68,12 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
 
-  const [registerError, setRegisterError] = React.useState("");
-  const [loginError, setLoginError] = React.useState("");
+  const [registerError, setRegisterError] = React.useState(
+    "Не получилось зарегистрироваться"
+  );
+  const [loginError, setLoginError] = React.useState(
+    "Не получилось авторизоваться"
+  );
   const [editError, setEditError] = React.useState("");
 
   const [isContentLoaded, setContentLoaded] = useState(true);
@@ -93,7 +97,6 @@ function App() {
       ? JSON.parse(localStorage.getItem("savedMovies"))
       : []
   );
-
 
   const [isLoadingError, setLoadingError] = useState(false);
 
@@ -134,8 +137,10 @@ function App() {
     setPopupNavOpen(false);
   }
 
+  const location = useLocation();
   useEffect(() => {
     tokenCheck();
+    history.push(location.pathname);
   }, [history]);
 
   function tokenCheck() {
@@ -145,7 +150,6 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            history.push("/");
           }
         })
         .catch((err) => {
@@ -203,11 +207,12 @@ function App() {
           setLoggedIn(true);
           history.push("/movies");
         } else {
-          setLoginError("Не получилось авторизоваться..");
+          setLoginError(res.message);
         }
       })
       .catch((err) => {
         console.log("Cannot authorize user");
+        setLoginError("Не получилось авторизоваться..");
         console.log(err);
       });
   }
@@ -216,7 +221,11 @@ function App() {
     register(data.email, data.password, data.name)
       .then((res) => {
         if (res.status !== 400 && res.status !== 401 && res.status !== 409) {
-          history.push("/login");
+          handleLogin({
+            email: data.email,
+            password: data.password,
+          });
+          history.push("/movies");
         } else {
           setRegisterError("Не удалось зарегистрироваться..");
         }
@@ -251,12 +260,11 @@ function App() {
         }
       });
       setSearchedMovies(newEntries);
-
     } else {
       setSavedMovies(
         JSON.parse(localStorage.getItem("savedMovies"))
-      ? JSON.parse(localStorage.getItem("savedMovies"))
-      : []
+          ? JSON.parse(localStorage.getItem("savedMovies"))
+          : []
       );
       setSearchedMovies(
         JSON.parse(localStorage.getItem("searchedMovies"))
@@ -356,7 +364,6 @@ function App() {
         response.push(item);
       }
     });
-
   }
 
   function handleEditUser(data) {
@@ -377,7 +384,6 @@ function App() {
   }
 
   function showMoreHandler() {
-    
     setSearchedMovies([
       ...searchedMovies,
       ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
@@ -386,6 +392,13 @@ function App() {
       ),
     ]);
   }
+
+  useEffect(() => {
+    let timer1 = setTimeout(() => setContentLoaded(true), 0.3 * 1000);
+    return () => {
+      clearTimeout(timer1);
+    };
+  }, [searchedMovies]);
 
   return (
     <userContext.Provider value={currentUser}>
@@ -439,13 +452,21 @@ function App() {
               <Main />
             </Route>
             <Route path="/login" exact>
-              <Login handleLogin={handleLogin} loginError={loginError} />
+              {loggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
+                <Login handleLogin={handleLogin} loginError={loginError} />
+              )}
             </Route>
             <Route path="/register" exact>
-              <Register
-                handleRegister={handleRegistration}
-                registerError={registerError}
-              />
+              {loggedIn ? (
+                <Redirect to="/movies" />
+              ) : (
+                <Register
+                  handleRegister={handleRegistration}
+                  registerError={registerError}
+                />
+              )}
             </Route>
             <Route path="*">
               <NotFound />

@@ -9,6 +9,11 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   const [email, setEmail] = useState(userEmail);
   const [name, setName] = useState(userName);
 
+  localStorage.setItem("userEmail", userEmail);
+  localStorage.setItem("userName", userName);
+
+  const [valueChanged, setValueChanged] = useState(false);
+
   const [isDisabled, setDisabled] = useState(true);
   const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
   const [notificationStatus, setNotificationStatus] = useState(
@@ -16,7 +21,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   );
 
   const [inactiveButtonClass, setInactiveButtonClass] = useState(
-    "popup__button_disabled"
+    "popup__button_disabled profile__button_disabled"
   );
 
   function handleExit() {
@@ -38,7 +43,14 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     const nameRegEx = /([A-Za-zА-яая]+(['|\-|\s]?[A-Za-zА-яая]+)*)+/g;
 
     setDisabled(true);
-    setInactiveButtonClass("popup__button_disabled");
+    setInactiveButtonClass("popup__button_disabled profile__button_disabled");
+    if (email === "") {
+      setEmail(localStorage.getItem("userEmail"));
+    }
+
+    if (name === "") {
+      setName(localStorage.getItem("userName"));
+    }
 
     if (!emailRegEx.test(email)) {
       return;
@@ -64,14 +76,26 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     });
 
     setNotificationStatus("popup__errortext");
-    if (editError) {
-      setErrorMsg(editError);
-      
+    if (editError !== "") {
+      setErrorMsg("Что-то пошло не так");
+    } else {
+      localStorage.setItem("userEmail", userEmail);
+      localStorage.setItem("userName", userName);
+      setErrorMsg("Данные изменены");
+      setInactiveButtonClass("popup__button_disabled profile__button_disabled");
     }
-    else{
-      setErrorMsg("Данные изменены"); 
-    }
+    setValueChanged(!valueChanged);
   }
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+      setNotificationStatus("popup__errortext_hidden");
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valueChanged]);
 
   return (
     <div className="profile popup profile__popup">
@@ -82,7 +106,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
           <input
             className="profile__input"
             type="text"
-            placeholder={name}
+            value={name || localStorage.getItem("userName")}
             onChange={handleChangeName}
           />
         </div>
@@ -91,7 +115,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
           <input
             className="profile__input"
             type="text"
-            placeholder={email}
+            value={email || localStorage.getItem("userEmail")}
             onChange={handleChangeEmail}
           />
         </div>

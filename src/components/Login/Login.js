@@ -17,6 +17,7 @@ function Login(props) {
     "popup__button_disabled"
   );
   const [isDisabled, setDisabled] = useState(true);
+  const [valueChanged, setValueChanged] = useState(false);
 
   function checkForm() {
     const emailRegEx =
@@ -51,11 +52,14 @@ function Login(props) {
       setErrorClass("popup__errortext");
       setErrorMsg(props.loginError);
     }
+    setValueChanged(!valueChanged);
   }
+
   function handleChangeEmail(e) {
     const email = e.target.value;
     setEmail(email);
   }
+
   function handleChangePassword(e) {
     const password = e.target.value;
     setPassword(password);
@@ -64,6 +68,16 @@ function Login(props) {
   useEffect(() => {
     checkForm();
   }, [email, password]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+      setErrorClass("popup__errortext_hidden");
+    }, 2000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valueChanged]);
 
   return (
     <div className="login popup">
