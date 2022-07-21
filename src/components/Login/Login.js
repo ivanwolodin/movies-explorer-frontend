@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 
 import "./Login.css";
 import Logo from "../Logo/Logo";
-import { useState, useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import { emailRegEx } from "../../utils/constants";
 
 function Login(props) {
@@ -20,9 +19,6 @@ function Login(props) {
   const [valueChanged, setValueChanged] = useState(false);
 
   function checkForm() {
-    const emailRegEx =
-      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-
     setErrorClass("popup__errortext");
     setDisabled(true);
     setInactiveButtonClass("popup__button_disabled");

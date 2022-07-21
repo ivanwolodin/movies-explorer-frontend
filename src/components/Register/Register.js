@@ -5,7 +5,7 @@ import "./Register.css";
 import Logo from "../Logo/Logo";
 import { Link } from "react-router-dom";
 
-// import { emailRegEx, nameRegEx } from "../../utils/constants";
+import { emailRegEx, nameRegEx } from "../../utils/constants";
 
 function Register(props) {
   const [name, setName] = useState("");
@@ -26,9 +26,6 @@ function Register(props) {
   const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
 
   function checkForm() {
-    const emailRegEx =
-      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    const nameRegEx = /([A-Za-zА-Яа-я]+(['|\-|\s]?[A-Za-zА-Яа-я]+)*)+/g;
 
     setErrorClassMessage("popup__errortext");
     setDisabled(true);

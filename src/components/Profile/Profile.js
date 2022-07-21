@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./Profile.css";
 
-// import { emailRegEx, nameRegEx } from "../../utils/constants";
+import { emailRegEx, nameRegEx } from "../../utils/constants";
 
 function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   const [email, setEmail] = useState(userEmail);
@@ -38,10 +38,6 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   }
 
   function checkForm() {
-    const emailRegEx =
-      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    const nameRegEx = /([A-Za-zА-яая]+(['|\-|\s]?[A-Za-zА-яая]+)*)+/g;
-
     setDisabled(true);
     setInactiveButtonClass("popup__button_disabled profile__button_disabled");
     if (email === "") {
@@ -82,6 +78,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
       localStorage.setItem("userEmail", userEmail);
       localStorage.setItem("userName", userName);
       setErrorMsg("Данные изменены");
+      setDisabled(true);
       setInactiveButtonClass("popup__button_disabled profile__button_disabled");
     }
     setValueChanged(!valueChanged);
