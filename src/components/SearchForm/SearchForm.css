@@ -6,11 +6,12 @@
 
 .searchform__controller {
   display: inline;
+  position: relative;
 }
 
 .searchform__text_input {
   background: transparent;
-  opacity: 0.2;
+  opacity: 0.8;
   border: 1.5px solid #aaaaaa;
   border-radius: 50px;
   width: 932px;
@@ -20,8 +21,10 @@
   font-weight: 400;
   font-size: 14px;
   line-height: 18px;
-  color: #a0a0a0;
+  /*color: #a0a0a0;*/
+  color: black;
   padding-left: 22px;
+  position: relative;
 }
 
 .searchform__button {
@@ -34,6 +37,8 @@
   align-self: center;
   justify-content: center;
   border: none;
+  cursor: pointer;
+  position: relative;
 }
 
 .searchform__filter {
