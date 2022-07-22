@@ -71,6 +71,8 @@ function App() {
   const [registerError, setRegisterError] = React.useState(
     "Не получилось зарегистрироваться"
   );
+  const [isRegistered, setIsRegistered] = React.useState(false);
+
   const [loginError, setLoginError] = React.useState(
     "Не получилось авторизоваться"
   );
@@ -160,7 +162,19 @@ function App() {
   }
 
   useEffect(() => {
+    if (isRegistered) {
+     setRegisterError("");
+    }
+    else{
+      setRegisterError("Не удалось зарегистрироваться");
+    }
+  }, [isRegistered]);
+
+  useEffect(() => {
     if (loggedIn) {
+      setLoginError("");
+      setRegisterError("");
+      history.push("/movies");
       mainApi.setAuthHeaders();
       mainApi
         .getSavedMovies()
@@ -205,7 +219,6 @@ function App() {
         if (res.token) {
           localStorage.setItem("token", res.token);
           setLoggedIn(true);
-          history.push("/movies");
         } else {
           setLoginError(res.message);
         }
@@ -225,6 +238,8 @@ function App() {
             email: data.email,
             password: data.password,
           });
+          setRegisterError("");
+          setIsRegistered(true);
           history.push("/movies");
         } else {
           setRegisterError("Не удалось зарегистрироваться..");

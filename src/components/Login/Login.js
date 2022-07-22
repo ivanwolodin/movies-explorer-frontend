@@ -25,15 +25,12 @@ function Login(props) {
 
     if (!emailRegEx.test(email)) {
       setErrorMsg("Email невалиден");
-      return;
     } else if (!password) {
       setErrorMsg("Пароль не может быть пустым");
-      return;
     } else {
       setErrorClass("popup__errortext_hidden");
       setDisabled(false);
       setInactiveButtonClass("");
-      return;
     }
   }
 
