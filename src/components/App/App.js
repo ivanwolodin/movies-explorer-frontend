@@ -163,16 +163,6 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
-            moviesApi
-              .getAllMovies()
-              .then((response) => {
-                setAllMovies(response);
-              })
-              .catch((err) => {
-                console.log("Cannot get movies");
-                console.log(err);
-                setLoadingError(true);
-              });
           }
         })
         .catch((err) => {
@@ -201,7 +191,7 @@ function App() {
         .then((res) => {
           if (res) {
             localStorage.setItem("savedMovies", JSON.stringify(res.movies));
-
+            setSavedMovies(res.movies);
             let savedMoviesIds = {};
             res.movies.forEach((movie) => {
               savedMoviesIds[movie.movieId] = movie._id;
@@ -231,6 +221,17 @@ function App() {
         .catch((err) => {
           console.log("Cannot get user data from server");
           console.log(err);
+        });
+
+      moviesApi
+        .getAllMovies()
+        .then((response) => {
+          setAllMovies(response);
+        })
+        .catch((err) => {
+          console.log("Cannot get movies");
+          console.log(err);
+          setLoadingError(true);
         });
     }
   }, [loggedIn]);
