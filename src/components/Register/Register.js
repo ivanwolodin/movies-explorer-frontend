@@ -85,7 +85,7 @@ function Register(props) {
     const timer = setTimeout(() => {
       setErrorMsg("");
       setErrorClassMessage("popup__errortext_hidden");
-    }, 2000);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };

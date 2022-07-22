@@ -6,11 +6,8 @@ import "./Profile.css";
 import { emailRegEx, nameRegEx } from "../../utils/constants";
 
 function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
-  const [email, setEmail] = useState(userEmail);
-  const [name, setName] = useState(userName);
-
-  localStorage.setItem("userEmail", userEmail);
-  localStorage.setItem("userName", userName);
+  const [email, setEmail] = useState(localStorage.getItem("userEmail"));
+  const [name, setName] = useState(localStorage.getItem("userName"));
 
   const [valueChanged, setValueChanged] = useState(false);
 
@@ -30,10 +27,12 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
 
   function handleChangeEmail(e) {
     const email = e.target.value;
+    localStorage.setItem("userEmail", email);
     setEmail(email);
   }
   function handleChangeName(e) {
     const name = e.target.value;
+    localStorage.setItem("userName", name);
     setName(name);
   }
 
@@ -72,15 +71,15 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     });
 
     setNotificationStatus("popup__errortext");
+
     if (editError !== "") {
       setErrorMsg("Что-то пошло не так");
     } else {
-      localStorage.setItem("userEmail", userEmail);
-      localStorage.setItem("userName", userName);
       setErrorMsg("Данные изменены");
-      setDisabled(true);
-      setInactiveButtonClass("popup__button_disabled profile__button_disabled");
     }
+
+    setDisabled(true);
+    setInactiveButtonClass("popup__button_disabled profile__button_disabled");
     setValueChanged(!valueChanged);
   }
 
@@ -88,7 +87,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     const timer = setTimeout(() => {
       setErrorMsg("");
       setNotificationStatus("popup__errortext_hidden");
-    }, 2000);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };

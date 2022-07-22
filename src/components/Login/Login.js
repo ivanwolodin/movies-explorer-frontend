@@ -66,7 +66,7 @@ function Login(props) {
     const timer = setTimeout(() => {
       setErrorMsg("");
       setErrorClass("popup__errortext_hidden");
-    }, 2000);
+    }, 1000);
     return () => {
       clearTimeout(timer);
     };

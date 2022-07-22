@@ -77,6 +77,7 @@ function App() {
     "Не получилось авторизоваться"
   );
   const [editError, setEditError] = React.useState("");
+  const [isPopupError, setPopupError] = React.useState(false);
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
@@ -174,7 +175,6 @@ function App() {
     if (loggedIn) {
       setLoginError("");
       setRegisterError("");
-      history.push("/movies");
       mainApi.setAuthHeaders();
       mainApi
         .getSavedMovies()
@@ -205,6 +205,8 @@ function App() {
             name: data.name,
             email: data.email,
           });
+          localStorage.setItem("userEmail", data.email);
+          localStorage.setItem("userName", data.name);
         })
         .catch((err) => {
           console.log("Cannot get user data from server");
@@ -390,13 +392,24 @@ function App() {
           email: res.user.email,
         });
         setEditError("");
+        setPopupError(false);
       })
       .catch((err) => {
         console.log("Cannot update user info");
         console.log(err);
+        setPopupError(true);
         setEditError("Не удалось изменить данные..");
       });
   }
+
+  useEffect(() => {
+    if (isPopupError){
+      setEditError("Не удалось изменить данные..");
+    }
+    else{
+      setEditError("");
+    }
+  }, [isPopupError]);
 
   function showMoreHandler() {
     setSearchedMovies([
