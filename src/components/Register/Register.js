@@ -26,7 +26,6 @@ function Register(props) {
   const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
 
   function checkForm() {
-
     setErrorClassMessage("popup__errortext");
     setDisabled(true);
     setInactiveButtonClass("popup__button_disabled");

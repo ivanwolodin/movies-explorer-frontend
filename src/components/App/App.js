@@ -27,6 +27,14 @@ import {
   handleSearchedMoviesIdsLocalStorage,
 } from "../../utils/utilsFunctions.js";
 
+import {
+  bigScreenMoviesNumber,
+  hugeScreenMoviesNumber,
+  mediumScreenMoviesNumber,
+  shortMovieDurationThreshold,
+  smallScreenMoviesNumber,
+} from "../../utils/constants";
+
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
 });
@@ -115,13 +123,13 @@ function App() {
 
   function adjustCardsNumberToWindowSize() {
     if (width > 1278) {
-      setCardsNumberTOShow({ numberToShow: 4, numberToUpload: 4 });
+      setCardsNumberTOShow(hugeScreenMoviesNumber);
     } else if (width <= 1278 && width > 968) {
-      setCardsNumberTOShow({ numberToShow: 9, numberToUpload: 3 });
+      setCardsNumberTOShow(bigScreenMoviesNumber);
     } else if (width <= 968 && width > 613) {
-      setCardsNumberTOShow({ numberToShow: 8, numberToUpload: 2 });
+      setCardsNumberTOShow(mediumScreenMoviesNumber);
     } else if (width <= 613) {
-      setCardsNumberTOShow({ numberToShow: 5, numberToUpload: 2 });
+      setCardsNumberTOShow(smallScreenMoviesNumber);
     }
   }
 
@@ -164,9 +172,8 @@ function App() {
 
   useEffect(() => {
     if (isRegistered) {
-     setRegisterError("");
-    }
-    else{
+      setRegisterError("");
+    } else {
       setRegisterError("Не удалось зарегистрироваться");
     }
   }, [isRegistered]);
@@ -264,7 +271,7 @@ function App() {
     if (isShortMoviesCheckboxSet) {
       let newEntries = [];
       savedMovies.forEach((elem) => {
-        if (elem.duration <= 40) {
+        if (elem.duration <= shortMovieDurationThreshold) {
           newEntries.push(elem);
         }
       });
@@ -272,7 +279,7 @@ function App() {
 
       newEntries = [];
       searchedMovies.forEach((elem) => {
-        if (elem.duration <= 40) {
+        if (elem.duration <= shortMovieDurationThreshold) {
           newEntries.push(elem);
         }
       });
@@ -403,10 +410,9 @@ function App() {
   }
 
   useEffect(() => {
-    if (isPopupError){
+    if (isPopupError) {
       setEditError("Не удалось изменить данные..");
-    }
-    else{
+    } else {
       setEditError("");
     }
   }, [isPopupError]);

@@ -92,7 +92,6 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     return () => {
       clearTimeout(timer);
     };
-
   }, [valueChanged]);
 
   return (
