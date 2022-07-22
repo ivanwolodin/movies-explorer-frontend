@@ -398,7 +398,7 @@ function App() {
         console.log("Cannot update user info");
         console.log(err);
         setPopupError(true);
-        setEditError("Не удалось изменить данные..");
+        setEditError(err);
       });
   }
 

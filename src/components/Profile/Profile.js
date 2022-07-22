@@ -12,7 +12,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
   const [valueChanged, setValueChanged] = useState(false);
 
   const [isDisabled, setDisabled] = useState(true);
-  const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
+  const [errorMsg, setErrorMsg] = useState(editError);
   const [notificationStatus, setNotificationStatus] = useState(
     "popup__errortext_hidden"
   );
@@ -71,17 +71,18 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     });
 
     setNotificationStatus("popup__errortext");
+    setDisabled(true);
+    setInactiveButtonClass("popup__button_disabled profile__button_disabled");
+    setValueChanged(!valueChanged);
+  }
 
+  useEffect(() => {
     if (editError !== "") {
       setErrorMsg("Что-то пошло не так");
     } else {
       setErrorMsg("Данные изменены");
     }
-
-    setDisabled(true);
-    setInactiveButtonClass("popup__button_disabled profile__button_disabled");
-    setValueChanged(!valueChanged);
-  }
+  }, [editError]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -91,6 +92,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     return () => {
       clearTimeout(timer);
     };
+
   }, [valueChanged]);
 
   return (
