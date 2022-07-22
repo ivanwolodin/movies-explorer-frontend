@@ -192,6 +192,7 @@ function App() {
 
   useEffect(() => {
     if (loggedIn) {
+      adjustCardsNumberToWindowSize();
       setLoginError("");
       setRegisterError("");
       mainApi.setAuthHeaders();
@@ -376,16 +377,23 @@ function App() {
   }
 
   function handleSearch() {
+    adjustCardsNumberToWindowSize();
     setContentLoaded(false);
     setLoadingError(false);
 
     try {
       const res = allMovies.filter(filterFunction);
-      setSearchedMovies(res);
       localStorage.setItem("searchedMovies", JSON.stringify(res));
       if (res.length === 0) {
         setLoadingError(true);
         setContentLoaded(true);
+      } else {
+        setSearchedMovies(
+          JSON.parse(localStorage.getItem("searchedMovies")).slice(
+            0,
+            cardsNumberToShow["numberToUpload"]
+          )
+        );
       }
     } catch {
       setLoadingError(true);

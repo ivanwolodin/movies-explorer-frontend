@@ -28,7 +28,7 @@ function MoviesCardList(props) {
       {!cardLikeExist ||
       props.moviesToRender.length === 0 ||
       props.moviesToRender.length ===
-      JSON.parse(localStorage.getItem("searchedMovies")).length ? (
+        JSON.parse(localStorage.getItem("searchedMovies")).length ? (
         <button className="moviescardlist__button moviescardlist__button_hidden">
           Еще
         </button>
