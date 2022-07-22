@@ -76,6 +76,8 @@ function App() {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isPopupNavOpened, setPopupNavOpen] = React.useState(false);
 
+  const [allMovies, setAllMovies] = useState([]);
+
   const [registerError, setRegisterError] = React.useState(
     "Не получилось зарегистрироваться"
   );
@@ -161,6 +163,16 @@ function App() {
         .then((res) => {
           if (res) {
             setLoggedIn(true);
+            moviesApi
+              .getAllMovies()
+              .then((response) => {
+                setAllMovies(response);
+              })
+              .catch((err) => {
+                console.log("Cannot get movies");
+                console.log(err);
+                setLoadingError(true);
+              });
           }
         })
         .catch((err) => {
@@ -360,22 +372,18 @@ function App() {
     setContentLoaded(false);
     setLoadingError(false);
 
-    moviesApi
-      .getAllMovies()
-      .then((response) => {
-        const res = response.filter(filterFunction);
-        setSearchedMovies(res);
-        localStorage.setItem("searchedMovies", JSON.stringify(res));
-        if (res.length === 0) {
-          setLoadingError(true);
-        }
-      })
-      .catch((err) => {
-        console.log("Cannot get movies");
-        console.log(err);
+    try {
+      const res = allMovies.filter(filterFunction);
+      setSearchedMovies(res);
+      localStorage.setItem("searchedMovies", JSON.stringify(res));
+      if (res.length === 0) {
         setLoadingError(true);
-      })
-      .finally(() => setContentLoaded(true));
+        setContentLoaded(true);
+      }
+    } catch {
+      setLoadingError(true);
+      setContentLoaded(true);
+    }
   }
 
   function handleSearchThroughLikedMovies() {
