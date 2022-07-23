@@ -31,7 +31,6 @@ import {
   bigScreenMoviesNumber,
   hugeScreenMoviesNumber,
   mediumScreenMoviesNumber,
-  shortMovieDurationThreshold,
   smallScreenMoviesNumber,
 } from "../../utils/constants";
 
@@ -175,6 +174,9 @@ function App() {
     setSearchedMovies(
       searchedMovies.slice(0, cardsNumberToShow["numberToShow"])
     );
+    setSavedMovies(
+      savedMovies.slice(0, cardsNumberToShow["numberToShow"])
+    )
   }, [width]);
 
   useEffect(() => {
@@ -209,27 +211,6 @@ function App() {
   }, [isRegistered]);
 
   useEffect(() => {
-    console.log("[]");
-    if (isShortMoviesCheckboxSet) {
-      const newEntries = selectShortMovies(
-        getValueFromLocalStorage("searchedMovies", [])
-      );
-
-      // setSearchedMovies(newEntries);
-      setSearchedMovies(
-        newEntries.slice(0, parseInt(localStorage.getItem("numberToUpload")))
-      );
-    } else {
-      setSearchedMovies(
-        getValueFromLocalStorage("searchedMovies", []).slice(
-          0,
-          parseInt(getValueFromLocalStorage("numberToUpload", 0))
-        )
-      );
-    }
-  }, []);
-
-  useEffect(() => {
     if (loggedIn) {
       adjustCardsNumberToWindowSize();
       setLoginError("");
@@ -250,6 +231,7 @@ function App() {
               JSON.stringify(savedMoviesIds)
             );
             setSavedMoviesIds(savedMoviesIds);
+            handleMoviesRendering();
           }
         })
         .catch((err) => {
@@ -284,6 +266,32 @@ function App() {
         });
     }
   }, [loggedIn]);
+
+  useEffect(() => {
+    handleMoviesRendering()
+  }, []);
+
+  function handleMoviesRendering(){
+    if (isShortMoviesCheckboxSet) {
+      setSearchedMovies(
+        selectShortMovies(getValueFromLocalStorage("searchedMovies", [])).slice(
+          0,
+          parseInt(getValueFromLocalStorage("numberToUpload", 0))
+        )
+      );
+      console.log(selectShortMovies(savedMovies))
+      setSavedMovies(selectShortMovies(savedMovies));
+    } else {
+
+      setSearchedMovies(
+        getValueFromLocalStorage("searchedMovies", []).slice(
+          0,
+          parseInt(getValueFromLocalStorage("numberToUpload", 0))
+        )
+      );
+
+    }
+  }
 
   function handlePopupNav() {
     setPopupNavOpen(true);
@@ -434,6 +442,7 @@ function App() {
         "numberToUpload",
         cardsNumberToShow["numberToUpload"]
       );
+
     } catch {
       setLoadingError(true);
       setContentLoaded(true);
@@ -442,8 +451,7 @@ function App() {
 
   function handleSearchThroughLikedMovies() {
     setContentLoaded(false);
-
-    const query = getValueFromLocalStorage("searchQuery", "").toLowerCase();
+    const query = localStorage.getItem("searchQuery");
 
     if (query === "") {
       setSavedMovies(getValueFromLocalStorage("savedMovies", []));
