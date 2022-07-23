@@ -454,7 +454,7 @@ function App() {
 
   function handleSearchThroughLikedMovies() {
     setContentLoaded(false);
-    const query = localStorage.getItem("searchQuery");
+    const query = localStorage.getItem("searchQuery") || " ";
 
     if (query === "") {
       if (isShortMoviesCheckboxSet) {

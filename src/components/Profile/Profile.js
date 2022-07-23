@@ -82,7 +82,7 @@ function Profile({ handleLogout, handleEdit, userName, userEmail, editError }) {
     } else {
       setErrorMsg("Данные изменены");
     }
-  }, [editError]);
+  }, [editError, valueChanged]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
