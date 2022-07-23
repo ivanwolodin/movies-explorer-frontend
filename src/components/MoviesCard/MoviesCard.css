@@ -12,7 +12,12 @@
 }
 
 .moviescard__image {
-  /*height: 151px;*/
+  height: 151px;
+}
+
+.moviescard__trailerlink {
+  cursor: pointer;
+  text-decoration: none;
 }
 
 .moviescard__name {
@@ -66,6 +71,9 @@
 @media screen and (max-width: 656px) {
   .moviescard {
     width: 511px;
+  }
+  .moviescard__image {
+    height: auto;
   }
 }
 

@@ -2,11 +2,75 @@ import { Link } from "react-router-dom";
 
 import "./Login.css";
 import Logo from "../Logo/Logo";
+import { useEffect, useState } from "react";
+import { emailRegEx } from "../../utils/constants";
 
-function Login({ handleLogin }) {
-  function handleClick() {
-    handleLogin();
+function Login(props) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [errorClass, setErrorClass] = useState("popup__errortext_hidden");
+  const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
+
+  const [inactiveButtonClass, setInactiveButtonClass] = useState(
+    "popup__button_disabled"
+  );
+  const [isDisabled, setDisabled] = useState(true);
+  const [valueChanged, setValueChanged] = useState(false);
+
+  function checkForm() {
+    setErrorClass("popup__errortext");
+    setDisabled(true);
+    setInactiveButtonClass("popup__button_disabled");
+
+    if (!emailRegEx.test(email)) {
+      setErrorMsg("Email невалиден");
+    } else if (!password) {
+      setErrorMsg("Пароль не может быть пустым");
+    } else {
+      setErrorClass("popup__errortext_hidden");
+      setDisabled(false);
+      setInactiveButtonClass("");
+    }
   }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.handleLogin({
+      email,
+      password,
+    });
+
+    if (props.loginError) {
+      setErrorClass("popup__errortext");
+      setErrorMsg(props.loginError);
+    }
+    setValueChanged(!valueChanged);
+  }
+
+  function handleChangeEmail(e) {
+    const email = e.target.value;
+    setEmail(email);
+  }
+
+  function handleChangePassword(e) {
+    const password = e.target.value;
+    setPassword(password);
+  }
+
+  useEffect(() => {
+    checkForm();
+  }, [email, password]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+      setErrorClass("popup__errortext_hidden");
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valueChanged]);
 
   return (
     <div className="login popup">
@@ -14,20 +78,37 @@ function Login({ handleLogin }) {
         <Logo />
         <h2 className="login__title popup__title">Рады видеть!</h2>
       </div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label className="popup__textbox">
           Email
-          <input className="popup__input" />
+          <input
+            required
+            type="text"
+            minLength="2"
+            maxLength="40"
+            onChange={handleChangeEmail}
+            className="popup__input"
+          />
         </label>
         <label className="popup__textbox">
           Пароль
-          <input className="popup__input" />
+          <input
+            type="password"
+            required
+            minLength="2"
+            maxLength="200"
+            onChange={handleChangePassword}
+            className="popup__input"
+          />
         </label>
-        <Link className="link" to="/movies">
-          <button className="popup__button" onClick={handleClick}>
-            Войти
-          </button>
-        </Link>
+        <p className={errorClass}>{errorMsg}</p>
+
+        <button
+          className={`popup__button ${inactiveButtonClass}`}
+          disabled={isDisabled}
+        >
+          Войти
+        </button>
       </form>
       <p className="popup__text">
         <p>Еще не зарегистрированы?</p>

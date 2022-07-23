@@ -1,43 +1,76 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./MoviesCard.css";
-import movie_image from "../../images/sample_movie.svg";
-import like_button from "../../images/like_button.svg";
-import liked_button from "../../images/like_button_liked.svg";
-import delete_button from "../../images/delete_movie_button.svg";
 
-function MoviesCard({ title, cardLikeexist }) {
-  const [isLiked, setLike] = React.useState(false);
+function MoviesCard({
+  item,
+  cardLikeExist,
+  handleLikeMovie,
+  handleDislikeMovie,
+  savedMovies,
+  savedMoviesIds,
+}) {
+  const [classButtonLike, setClassButtonLike] = React.useState(
+    "moviescard__button_like"
+  );
+
+  useEffect(() => {
+    savedMovies.forEach((elem) => {
+      if (elem.movieId === item.id) {
+        setClassButtonLike("moviescard__button_liked");
+      }
+    });
+  }, []);
+
   function handleLike() {
-    setLike(!isLiked);
+    setClassButtonLike("moviescard__button_liked");
+    handleLikeMovie(item);
   }
-  const classButtonLike = !isLiked
-    ? "moviescard__button_like"
-    : "moviescard__button_liked";
+
+  function handleDislike() {
+    setClassButtonLike("moviescard__button_like");
+    if (cardLikeExist) {
+      handleDislikeMovie(item.id, savedMoviesIds[item["id"]]);
+    } else {
+      handleDislikeMovie(item.movieId, item._id);
+    }
+  }
+
+  function calcDuration() {
+    const hour = Math.floor(item.duration / 60);
+    const minutes = item.duration - hour * 60;
+
+    return `${hour}ч${minutes}м`;
+  }
+
+  let url;
+  if (item.image.url) {
+    url = item.image ? `https://api.nomoreparties.co/${item.image.url}` : "";
+  } else {
+    url = item.image;
+  }
+
   return (
     <div className="moviescard">
-      <img
-        className="moviescard__image"
-        src={movie_image}
-        alt="превью фильма"
-      />
+      <img className="moviescard__image" src={url} alt="превью фильма" />
       <div className="moviescard__info">
-        <p className="moviescard__name">{title}</p>
-        {cardLikeexist ? (
+        <p className="moviescard__name">{item.nameRU}</p>
+        {cardLikeExist ? (
           <button
             className={`moviescard__button ${classButtonLike} `}
-            // src={isLiked ? liked_button : like_button}
-            // alt="кнопка лайка"
-            onClick={handleLike}
+            onClick={
+              classButtonLike === "moviescard__button_liked"
+                ? handleDislike
+                : handleLike
+            }
           />
         ) : (
           <button
             className="moviescard__button moviescard__button_delete"
-            // src={delete_button}
-            // alt="кнопка удаления"
+            onClick={handleDislike}
           />
         )}
       </div>
-      <p className="moviescard__duration">1ч42м</p>
+      <p className="moviescard__duration">{calcDuration()}</p>
     </div>
   );
 }

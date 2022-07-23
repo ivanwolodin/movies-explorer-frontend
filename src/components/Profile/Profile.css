@@ -84,6 +84,12 @@
   color: #ee3465;
 }
 
+.profile__button_disabled {
+  color: red;
+  cursor: not-allowed;
+  /* background-color: gray; */
+}
+
 .profile__link {
   align-content: center;
   align-self: center;
