@@ -9,6 +9,7 @@ function SavedMovies(props) {
         onClick={props.handleSearch}
         isShortMoviesCheckboxSet={props.isShortMoviesCheckboxSet}
         handleCheckbox={props.handleCheckbox}
+        clearSearch={true}
       />
       <MoviesCardList
         savedMoviesComponent={true}

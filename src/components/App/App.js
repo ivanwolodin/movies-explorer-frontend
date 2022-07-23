@@ -91,7 +91,11 @@ function App() {
 
   const [isContentLoaded, setContentLoaded] = useState(true);
 
-  const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(false);
+  const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(
+    JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
+      ? JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
+      : false
+  );
 
   const [width, height] = useWindowDimension();
   const [cardsNumberToShow, setCardsNumberTOShow] = useState({
@@ -104,7 +108,6 @@ function App() {
       ? JSON.parse(localStorage.getItem("searchedMovies"))
       : []
   );
-
   const [savedMovies, setSavedMovies] = useState(
     JSON.parse(localStorage.getItem("savedMovies"))
       ? JSON.parse(localStorage.getItem("savedMovies"))
@@ -123,6 +126,8 @@ function App() {
     email: "",
   });
 
+  const location = useLocation();
+
   function adjustCardsNumberToWindowSize() {
     if (width > 1278) {
       setCardsNumberTOShow(hugeScreenMoviesNumber);
@@ -136,21 +141,58 @@ function App() {
   }
 
   useEffect(() => {
+    if (isPopupError) {
+      setEditError("Не удалось изменить данные..");
+    } else {
+      setEditError("");
+    }
+  }, [isPopupError]);
+
+  useEffect(() => {
+    if (isShortMoviesCheckboxSet) {
+      let newEntries = [];
+      savedMovies.forEach((elem) => {
+        if (elem.duration <= shortMovieDurationThreshold) {
+          newEntries.push(elem);
+        }
+      });
+      setSavedMovies(newEntries);
+
+      newEntries = [];
+      searchedMovies.forEach((elem) => {
+        if (elem.duration <= shortMovieDurationThreshold) {
+          newEntries.push(elem);
+        }
+      });
+      // setSearchedMovies(newEntries);
+      setSearchedMovies(
+        newEntries.slice(0, parseInt(localStorage.getItem("numberToUpload")))
+      );
+    } else {
+      setSavedMovies(
+        JSON.parse(localStorage.getItem("savedMovies"))
+          ? JSON.parse(localStorage.getItem("savedMovies"))
+          : []
+      );
+
+      setSearchedMovies(
+        JSON.parse(localStorage.getItem("searchedMovies"))
+          ? JSON.parse(localStorage.getItem("searchedMovies")).slice(
+              0,
+              parseInt(localStorage.getItem("numberToUpload"))
+            )
+          : []
+      );
+    }
+  }, [isShortMoviesCheckboxSet]);
+
+  useEffect(() => {
     adjustCardsNumberToWindowSize();
     setSearchedMovies(
       searchedMovies.slice(0, cardsNumberToShow["numberToShow"])
     );
   }, [width]);
 
-  function handlePopupNav() {
-    setPopupNavOpen(true);
-  }
-
-  function closeAllPopups() {
-    setPopupNavOpen(false);
-  }
-
-  const location = useLocation();
   useEffect(() => {
     tokenCheck();
     history.push(location.pathname);
@@ -179,6 +221,28 @@ function App() {
       setRegisterError("Не удалось зарегистрироваться");
     }
   }, [isRegistered]);
+
+  useEffect(() => {
+    if (isShortMoviesCheckboxSet) {
+      let newEntries = [];
+      JSON.parse(localStorage.getItem("searchedMovies")).forEach((elem) => {
+        if (elem.duration <= shortMovieDurationThreshold) {
+          newEntries.push(elem);
+        }
+      });
+      // setSearchedMovies(newEntries);
+      setSearchedMovies(
+        newEntries.slice(0, parseInt(localStorage.getItem("numberToUpload")))
+      );
+    } else {
+      setSearchedMovies(
+        JSON.parse(localStorage.getItem("searchedMovies")).slice(
+          0,
+          parseInt(localStorage.getItem("numberToUpload"))
+        )
+      );
+    }
+  }, []);
 
   useEffect(() => {
     if (loggedIn) {
@@ -236,6 +300,14 @@ function App() {
     }
   }, [loggedIn]);
 
+  function handlePopupNav() {
+    setPopupNavOpen(true);
+  }
+
+  function closeAllPopups() {
+    setPopupNavOpen(false);
+  }
+
   function handleLogin(data) {
     authorize(data.email, data.password)
       .then((res) => {
@@ -279,38 +351,11 @@ function App() {
 
   function handleCheckbox() {
     setShortMoviesCheckbox(!isShortMoviesCheckboxSet);
+    localStorage.setItem(
+      "isShortMoviesCheckboxSet",
+      JSON.stringify(!isShortMoviesCheckboxSet)
+    );
   }
-
-  useEffect(() => {
-    if (isShortMoviesCheckboxSet) {
-      let newEntries = [];
-      savedMovies.forEach((elem) => {
-        if (elem.duration <= shortMovieDurationThreshold) {
-          newEntries.push(elem);
-        }
-      });
-      setSavedMovies(newEntries);
-
-      newEntries = [];
-      searchedMovies.forEach((elem) => {
-        if (elem.duration <= shortMovieDurationThreshold) {
-          newEntries.push(elem);
-        }
-      });
-      setSearchedMovies(newEntries);
-    } else {
-      setSavedMovies(
-        JSON.parse(localStorage.getItem("savedMovies"))
-          ? JSON.parse(localStorage.getItem("savedMovies"))
-          : []
-      );
-      setSearchedMovies(
-        JSON.parse(localStorage.getItem("searchedMovies"))
-          ? JSON.parse(localStorage.getItem("searchedMovies"))
-          : []
-      );
-    }
-  }, [isShortMoviesCheckboxSet]);
 
   function handleLikeMovie(data) {
     const dd = {
@@ -389,11 +434,33 @@ function App() {
         setLoadingError(true);
         setContentLoaded(true);
       } else {
-        setSearchedMovies(
-          JSON.parse(localStorage.getItem("searchedMovies")).slice(
-            0,
-            cardsNumberToShow["numberToUpload"]
-          )
+        let newEntries = [];
+        if (isShortMoviesCheckboxSet) {
+          res.forEach((elem) => {
+            if (elem.duration <= shortMovieDurationThreshold) {
+              newEntries.push(elem);
+            }
+          });
+          setSearchedMovies(
+            JSON.parse(localStorage.getItem("searchedMovies")).slice(
+              0,
+              cardsNumberToShow["numberToUpload"]
+            )
+          );
+        }
+        else{
+          setSearchedMovies(
+            JSON.parse(localStorage.getItem("searchedMovies")).slice(
+              0,
+              cardsNumberToShow["numberToUpload"]
+            )
+          );
+        }
+
+
+        localStorage.setItem(
+          "numberToUpload",
+          cardsNumberToShow["numberToUpload"]
         );
       }
     } catch {
@@ -403,15 +470,25 @@ function App() {
   }
 
   function handleSearchThroughLikedMovies() {
+    console.log("sethliked")
     const query = localStorage.getItem("searchQuery").toLowerCase();
+    console.log(query)
+    if (query === "") {
+      setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
+      return;
+    }
     let response = [];
-    savedMovies.forEach((item) => {
+    JSON.parse(localStorage.getItem("savedMovies")).forEach((item) =>{
       if (item.nameRU.toLowerCase().includes(query)) {
         response.push(item);
       } else if (item.nameEN.toLowerCase().includes(query)) {
         response.push(item);
       }
     });
+    console.log(response)
+    setSavedMovies(response);
+    console.log("response")
+    console.log(savedMovies)
   }
 
   function handleEditUser(data) {
@@ -433,14 +510,6 @@ function App() {
       });
   }
 
-  useEffect(() => {
-    if (isPopupError) {
-      setEditError("Не удалось изменить данные..");
-    } else {
-      setEditError("");
-    }
-  }, [isPopupError]);
-
   function showMoreHandler() {
     setSearchedMovies([
       ...searchedMovies,
@@ -449,6 +518,10 @@ function App() {
         searchedMovies.length + cardsNumberToShow["numberToUpload"]
       ),
     ]);
+    localStorage.setItem(
+      "numberToUpload",
+      searchedMovies.length + cardsNumberToShow["numberToUpload"]
+    );
   }
 
   useEffect(() => {
@@ -475,7 +548,7 @@ function App() {
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
               moviesToRender={searchedMovies}
-              savedMovies={savedMovies}
+              savedMovies={JSON.parse(localStorage.getItem("savedMovies"))}
               savedMoviesIds={savedMoviesIds}
               isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
               handleCheckbox={handleCheckbox}
@@ -491,7 +564,7 @@ function App() {
               isLoadingError={isLoadingError}
               isContentLoaded={isContentLoaded}
               moviesToRender={savedMovies}
-              savedMovies={savedMovies}
+              savedMovies={JSON.parse(localStorage.getItem("savedMovies"))}
               savedMoviesIds={savedMoviesIds}
               isShortMoviesCheckboxSet={isShortMoviesCheckboxSet}
               handleCheckbox={handleCheckbox}

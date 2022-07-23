@@ -8,15 +8,18 @@ function SearchForm(props) {
   // const regex = /^[A-Za-z0-9 -]*$/;
   const regex = "[A-Za-z0-9 -]+";
 
-  const [moviesNameToSeacrh, setMoviesNameToSeacrh] = useState("");
+  const [moviesNameToSeacrh, setMoviesNameToSeacrh] = useState(
+    !props.clearSearch ? localStorage.getItem("searchQuery") : ""
+  );
 
   function handleChangeInputText(e) {
     setMoviesNameToSeacrh(e.target.value);
+    localStorage.setItem("searchQuery", e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    localStorage.setItem("searchQuery", moviesNameToSeacrh);
+
     props.onClick();
   }
 
@@ -34,6 +37,7 @@ function SearchForm(props) {
           className="searchform__text_input"
           placeholder="Фильм"
           onChange={handleChangeInputText}
+          value={moviesNameToSeacrh}
         />
         <button
           type="submit"
