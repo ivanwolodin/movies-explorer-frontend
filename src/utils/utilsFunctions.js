@@ -1,3 +1,5 @@
+import { shortMovieDurationThreshold } from "./constants";
+
 const regex_pattern = /[\wа-я]+/gi;
 
 export function filterFunction(item) {
@@ -43,4 +45,15 @@ export function getValueFromLocalStorage(key, defaultValue) {
   return JSON.parse(localStorage.getItem(key))
     ? JSON.parse(localStorage.getItem(key))
     : defaultValue;
+}
+
+export function selectShortMovies(arr) {
+  let newEntries = [];
+  arr.forEach((elem) => {
+    if (elem.duration <= shortMovieDurationThreshold) {
+      newEntries.push(elem);
+    }
+  });
+
+  return newEntries;
 }

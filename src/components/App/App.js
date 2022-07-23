@@ -35,7 +35,10 @@ import {
   smallScreenMoviesNumber,
 } from "../../utils/constants";
 
-import { getValueFromLocalStorage } from "../../utils/utilsFunctions.js";
+import {
+  getValueFromLocalStorage,
+  selectShortMovies,
+} from "../../utils/utilsFunctions.js";
 
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
@@ -147,23 +150,12 @@ function App() {
   useEffect(() => {
     console.log("isShortMoviesCheckboxSet");
     if (isShortMoviesCheckboxSet) {
-      let newEntries = [];
-      savedMovies.forEach((elem) => {
-        if (elem.duration <= shortMovieDurationThreshold) {
-          newEntries.push(elem);
-        }
-      });
-      setSavedMovies(newEntries);
-
-      newEntries = [];
-      searchedMovies.forEach((elem) => {
-        if (elem.duration <= shortMovieDurationThreshold) {
-          newEntries.push(elem);
-        }
-      });
-      // setSearchedMovies(newEntries);
+      setSavedMovies(selectShortMovies(savedMovies));
       setSearchedMovies(
-        newEntries.slice(0, parseInt(localStorage.getItem("numberToUpload")))
+        selectShortMovies(searchedMovies).slice(
+          0,
+          parseInt(localStorage.getItem("numberToUpload"))
+        )
       );
     } else {
       setSavedMovies(getValueFromLocalStorage("savedMovies", []));
@@ -219,12 +211,10 @@ function App() {
   useEffect(() => {
     console.log("[]");
     if (isShortMoviesCheckboxSet) {
-      let newEntries = [];
-      JSON.parse(localStorage.getItem("searchedMovies")).forEach((elem) => {
-        if (elem.duration <= shortMovieDurationThreshold) {
-          newEntries.push(elem);
-        }
-      });
+      const newEntries = selectShortMovies(
+        getValueFromLocalStorage("searchedMovies", [])
+      );
+
       // setSearchedMovies(newEntries);
       setSearchedMovies(
         newEntries.slice(0, parseInt(localStorage.getItem("numberToUpload")))
@@ -428,27 +418,22 @@ function App() {
       if (res.length === 0) {
         setLoadingError(true);
         setContentLoaded(true);
-      } else {
-        if (isShortMoviesCheckboxSet) {
-          let newEntries = [];
-          res.forEach((elem) => {
-            if (elem.duration <= shortMovieDurationThreshold) {
-              newEntries.push(elem);
-            }
-          });
-
-          setSearchedMovies(
-            newEntries.slice(0, cardsNumberToShow["numberToUpload"])
-          );
-        } else {
-          setSearchedMovies(res.slice(0, cardsNumberToShow["numberToUpload"]));
-        }
-
-        localStorage.setItem(
-          "numberToUpload",
-          cardsNumberToShow["numberToUpload"]
-        );
+        return;
       }
+
+      if (isShortMoviesCheckboxSet) {
+        const newEntries = selectShortMovies(res);
+        setSearchedMovies(
+          newEntries.slice(0, cardsNumberToShow["numberToUpload"])
+        );
+      } else {
+        setSearchedMovies(res.slice(0, cardsNumberToShow["numberToUpload"]));
+      }
+
+      localStorage.setItem(
+        "numberToUpload",
+        cardsNumberToShow["numberToUpload"]
+      );
     } catch {
       setLoadingError(true);
       setContentLoaded(true);
@@ -457,15 +442,17 @@ function App() {
 
   function handleSearchThroughLikedMovies() {
     setContentLoaded(false);
-    const query = localStorage.getItem("searchQuery").toLowerCase();
+
+    const query = getValueFromLocalStorage("searchQuery", "").toLowerCase();
 
     if (query === "") {
-      setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
+      setSavedMovies(getValueFromLocalStorage("savedMovies", []));
       return;
     }
 
     let response = [];
-    JSON.parse(localStorage.getItem("savedMovies")).forEach((item) => {
+
+    getValueFromLocalStorage("savedMovies", []).forEach((item) => {
       if (item.nameRU.toLowerCase().includes(query)) {
         response.push(item);
       } else if (item.nameEN.toLowerCase().includes(query)) {

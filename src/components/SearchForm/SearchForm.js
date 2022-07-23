@@ -19,7 +19,6 @@ function SearchForm(props) {
 
   function handleSubmit(e) {
     e.preventDefault();
-
     props.onClick();
   }
 
