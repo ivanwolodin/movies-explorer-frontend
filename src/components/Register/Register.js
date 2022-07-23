@@ -12,6 +12,8 @@ function Register(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const [valueChanged, setValueChanged] = useState(false);
+
   const [errorClassMessage, setErrorClassMessage] = useState(
     props.rigisterError ? "popup__errortext" : "popup__errortext_hidden"
   );
@@ -24,11 +26,6 @@ function Register(props) {
   const [errorMsg, setErrorMsg] = useState("Что-то пошло не так");
 
   function checkForm() {
-
-    const emailRegEx =
-      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-    const nameRegEx = /([A-Za-zА-Яа-я]+(['|\-|\s]?[A-Za-zА-Яа-я]+)*)+/g;
-
     setErrorClassMessage("popup__errortext");
     setDisabled(true);
     setInactiveButtonClass("popup__button_disabled");
@@ -61,6 +58,7 @@ function Register(props) {
       setErrorClassMessage("popup__errortext");
       setErrorMsg(props.registerError);
     }
+    setValueChanged(!valueChanged);
   }
 
   function handleChangeEmail(e) {
@@ -81,6 +79,16 @@ function Register(props) {
   useEffect(() => {
     checkForm();
   }, [name, email, password]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+      setErrorClassMessage("popup__errortext_hidden");
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valueChanged]);
 
   return (
     <div className="login popup">

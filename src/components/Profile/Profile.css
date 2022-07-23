@@ -75,12 +75,6 @@
   cursor: pointer;
 }
 
-.profile__button_disabled {
-  color: red;
-  cursor: not-allowed;
-  /* background-color: gray; */
-}
-
 .profile__editbutton {
   margin-top: 203px;
 }
@@ -88,6 +82,12 @@
 .profile__exitbutton {
   margin-top: 16px;
   color: #ee3465;
+}
+
+.profile__button_disabled {
+  color: red;
+  cursor: not-allowed;
+  /* background-color: gray; */
 }
 
 .profile__link {

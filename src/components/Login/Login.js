@@ -2,8 +2,7 @@ import { Link } from "react-router-dom";
 
 import "./Login.css";
 import Logo from "../Logo/Logo";
-import { useState, useEffect } from "react";
-
+import { useEffect, useState } from "react";
 import { emailRegEx } from "../../utils/constants";
 
 function Login(props) {
@@ -17,26 +16,21 @@ function Login(props) {
     "popup__button_disabled"
   );
   const [isDisabled, setDisabled] = useState(true);
+  const [valueChanged, setValueChanged] = useState(false);
 
   function checkForm() {
-    const emailRegEx =
-      /[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}(.[a-z{2,8}])?/g;
-
     setErrorClass("popup__errortext");
     setDisabled(true);
     setInactiveButtonClass("popup__button_disabled");
 
     if (!emailRegEx.test(email)) {
       setErrorMsg("Email невалиден");
-      return;
     } else if (!password) {
       setErrorMsg("Пароль не может быть пустым");
-      return;
     } else {
       setErrorClass("popup__errortext_hidden");
       setDisabled(false);
       setInactiveButtonClass("");
-      return;
     }
   }
 
@@ -51,11 +45,14 @@ function Login(props) {
       setErrorClass("popup__errortext");
       setErrorMsg(props.loginError);
     }
+    setValueChanged(!valueChanged);
   }
+
   function handleChangeEmail(e) {
     const email = e.target.value;
     setEmail(email);
   }
+
   function handleChangePassword(e) {
     const password = e.target.value;
     setPassword(password);
@@ -64,6 +61,16 @@ function Login(props) {
   useEffect(() => {
     checkForm();
   }, [email, password]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setErrorMsg("");
+      setErrorClass("popup__errortext_hidden");
+    }, 1000);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [valueChanged]);
 
   return (
     <div className="login popup">
