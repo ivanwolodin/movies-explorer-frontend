@@ -35,12 +35,15 @@ import {
   smallScreenMoviesNumber,
 } from "../../utils/constants";
 
+import { getValueFromLocalStorage } from "../../utils/utilsFunctions.js";
+
 const mainApi = new MainApi({
   url: "https://api.diploma.iwol.nomoredomains.xyz/",
 });
 const moviesApi = new MoviesApi({
   url: "https://api.nomoreparties.co/beatfilm-movies",
 });
+
 // taken from web
 export function useWindowDimension() {
   const [dimension, setDimension] = useState([
@@ -92,9 +95,7 @@ function App() {
   const [isContentLoaded, setContentLoaded] = useState(true);
 
   const [isShortMoviesCheckboxSet, setShortMoviesCheckbox] = useState(
-    JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
-      ? JSON.parse(localStorage.getItem("isShortMoviesCheckboxSet"))
-      : false
+    getValueFromLocalStorage("isShortMoviesCheckboxSet", false)
   );
 
   const [width, height] = useWindowDimension();
@@ -104,22 +105,16 @@ function App() {
   });
 
   const [searchedMovies, setSearchedMovies] = useState(
-    JSON.parse(localStorage.getItem("searchedMovies"))
-      ? JSON.parse(localStorage.getItem("searchedMovies"))
-      : []
+    getValueFromLocalStorage("searchedMovies", [])
   );
   const [savedMovies, setSavedMovies] = useState(
-    JSON.parse(localStorage.getItem("savedMovies"))
-      ? JSON.parse(localStorage.getItem("savedMovies"))
-      : []
+    getValueFromLocalStorage("savedMovies", [])
   );
 
   const [isLoadingError, setLoadingError] = useState(false);
 
   const [savedMoviesIds, setSavedMoviesIds] = useState(
-    JSON.parse(localStorage.getItem("savedMoviesIds"))
-      ? JSON.parse(localStorage.getItem("savedMoviesIds"))
-      : {}
+    getValueFromLocalStorage("savedMoviesIds", {})
   );
   const [currentUser, setCurrentUser] = useState({
     name: "",
@@ -141,6 +136,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log("isPopupError");
     if (isPopupError) {
       setEditError("Не удалось изменить данные..");
     } else {
@@ -149,6 +145,7 @@ function App() {
   }, [isPopupError]);
 
   useEffect(() => {
+    console.log("isShortMoviesCheckboxSet");
     if (isShortMoviesCheckboxSet) {
       let newEntries = [];
       savedMovies.forEach((elem) => {
@@ -169,24 +166,19 @@ function App() {
         newEntries.slice(0, parseInt(localStorage.getItem("numberToUpload")))
       );
     } else {
-      setSavedMovies(
-        JSON.parse(localStorage.getItem("savedMovies"))
-          ? JSON.parse(localStorage.getItem("savedMovies"))
-          : []
-      );
+      setSavedMovies(getValueFromLocalStorage("savedMovies", []));
 
       setSearchedMovies(
-        JSON.parse(localStorage.getItem("searchedMovies"))
-          ? JSON.parse(localStorage.getItem("searchedMovies")).slice(
-              0,
-              parseInt(localStorage.getItem("numberToUpload"))
-            )
-          : []
+        getValueFromLocalStorage("searchedMovies", []).slice(
+          0,
+          parseInt(getValueFromLocalStorage("numberToUpload", 0))
+        )
       );
     }
   }, [isShortMoviesCheckboxSet]);
 
   useEffect(() => {
+    console.log("widht");
     adjustCardsNumberToWindowSize();
     setSearchedMovies(
       searchedMovies.slice(0, cardsNumberToShow["numberToShow"])
@@ -194,6 +186,7 @@ function App() {
   }, [width]);
 
   useEffect(() => {
+    console.log("history");
     tokenCheck();
     history.push(location.pathname);
   }, [history]);
@@ -215,6 +208,7 @@ function App() {
   }
 
   useEffect(() => {
+    console.log("isRegistered");
     if (isRegistered) {
       setRegisterError("");
     } else {
@@ -223,6 +217,7 @@ function App() {
   }, [isRegistered]);
 
   useEffect(() => {
+    console.log("[]");
     if (isShortMoviesCheckboxSet) {
       let newEntries = [];
       JSON.parse(localStorage.getItem("searchedMovies")).forEach((elem) => {
@@ -236,9 +231,9 @@ function App() {
       );
     } else {
       setSearchedMovies(
-        JSON.parse(localStorage.getItem("searchedMovies")).slice(
+        getValueFromLocalStorage("searchedMovies", []).slice(
           0,
-          parseInt(localStorage.getItem("numberToUpload"))
+          parseInt(getValueFromLocalStorage("numberToUpload", 0))
         )
       );
     }
@@ -434,29 +429,20 @@ function App() {
         setLoadingError(true);
         setContentLoaded(true);
       } else {
-        let newEntries = [];
         if (isShortMoviesCheckboxSet) {
+          let newEntries = [];
           res.forEach((elem) => {
             if (elem.duration <= shortMovieDurationThreshold) {
               newEntries.push(elem);
             }
           });
-          setSearchedMovies(
-            JSON.parse(localStorage.getItem("searchedMovies")).slice(
-              0,
-              cardsNumberToShow["numberToUpload"]
-            )
-          );
-        }
-        else{
-          setSearchedMovies(
-            JSON.parse(localStorage.getItem("searchedMovies")).slice(
-              0,
-              cardsNumberToShow["numberToUpload"]
-            )
-          );
-        }
 
+          setSearchedMovies(
+            newEntries.slice(0, cardsNumberToShow["numberToUpload"])
+          );
+        } else {
+          setSearchedMovies(res.slice(0, cardsNumberToShow["numberToUpload"]));
+        }
 
         localStorage.setItem(
           "numberToUpload",
@@ -470,25 +456,32 @@ function App() {
   }
 
   function handleSearchThroughLikedMovies() {
-    console.log("sethliked")
+    setContentLoaded(false);
     const query = localStorage.getItem("searchQuery").toLowerCase();
-    console.log(query)
+
     if (query === "") {
       setSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
       return;
     }
+
     let response = [];
-    JSON.parse(localStorage.getItem("savedMovies")).forEach((item) =>{
+    JSON.parse(localStorage.getItem("savedMovies")).forEach((item) => {
       if (item.nameRU.toLowerCase().includes(query)) {
         response.push(item);
       } else if (item.nameEN.toLowerCase().includes(query)) {
         response.push(item);
       }
     });
-    console.log(response)
+
+    if (response.length === 0) {
+      setLoadingError(true);
+      setContentLoaded(true);
+    } else {
+      setLoadingError(false);
+      setContentLoaded(false);
+    }
+
     setSavedMovies(response);
-    console.log("response")
-    console.log(savedMovies)
   }
 
   function handleEditUser(data) {
@@ -529,7 +522,7 @@ function App() {
     return () => {
       clearTimeout(timer1);
     };
-  }, [searchedMovies]);
+  }, [searchedMovies, savedMovies]);
 
   return (
     <userContext.Provider value={currentUser}>

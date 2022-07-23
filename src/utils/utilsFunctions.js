@@ -38,3 +38,9 @@ export function handleSearchedMoviesIdsLocalStorage(movieId, _id, removeItem) {
   localStorage.setItem("savedMoviesIds", JSON.stringify(oldEntries));
   return oldEntries;
 }
+
+export function getValueFromLocalStorage(key, defaultValue) {
+  return JSON.parse(localStorage.getItem(key))
+    ? JSON.parse(localStorage.getItem(key))
+    : defaultValue;
+}
