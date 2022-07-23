@@ -1,6 +1,8 @@
 import "./MoviesCardList.css";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
+import { selectShortMovies } from "../../utils/utilsFunctions";
+
 function MoviesCardList(props) {
   let cardLikeExist;
 
@@ -28,7 +30,11 @@ function MoviesCardList(props) {
       {!cardLikeExist ||
       props.moviesToRender.length === 0 ||
       props.moviesToRender.length ===
-        JSON.parse(localStorage.getItem("searchedMovies")).length ? (
+        JSON.parse(localStorage.getItem("searchedMovies")).length ||
+      (props.isShortMoviesCheckboxSet &&
+        props.moviesToRender.length ===
+          selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies")))
+            .length) ? (
         <button className="moviescardlist__button moviescardlist__button_hidden">
           Еще
         </button>

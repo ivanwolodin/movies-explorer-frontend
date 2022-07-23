@@ -24,6 +24,7 @@ function SavedMovies(props) {
           handleLikeMovie={props.handleLikeMovie}
           handleDislikeMovie={props.handleDislikeMovie}
           savedMoviesIds={props.savedMoviesIds}
+          isShortMoviesCheckboxSet={props.isShortMoviesCheckboxSet}
         />
       )}
     </div>

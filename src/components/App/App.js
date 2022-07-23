@@ -374,7 +374,7 @@ function App() {
       .catch((err) => {
         console.log("Cannot like movie");
         console.log(err);
-        alert("Не получилось поставить лайк")
+        alert("Не получилось поставить лайк");
       });
   }
 
@@ -398,7 +398,7 @@ function App() {
       .catch((err) => {
         console.log("Cannot dislike movie");
         console.log(err);
-        alert("Не получилось убрать лайк")
+        alert("Не получилось убрать лайк");
       });
   }
 
@@ -432,7 +432,7 @@ function App() {
 
       if (isShortMoviesCheckboxSet) {
         const newEntries = selectShortMovies(res);
-        if (newEntries.length === 0){
+        if (newEntries.length === 0) {
           setLoadingError(true);
         }
         setSearchedMovies(
@@ -487,8 +487,8 @@ function App() {
     }
 
     if (isShortMoviesCheckboxSet) {
-      const shortMovies = selectShortMovies(response)
-      if (shortMovies.length === 0){
+      const shortMovies = selectShortMovies(response);
+      if (shortMovies.length === 0) {
         setLoadingError(true);
       }
       setSavedMovies(shortMovies);
@@ -517,14 +517,16 @@ function App() {
   }
 
   function showMoreHandler() {
-    if (isShortMoviesCheckboxSet){
-      setSearchedMovies(selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies"))));
+    if (isShortMoviesCheckboxSet) {
+      setSearchedMovies(
+        selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies")))
+      );
       localStorage.setItem(
         "numberToUpload",
-        selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies"))).length
+        selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies")))
+          .length
       );
-    }
-    else{
+    } else {
       setSearchedMovies([
         ...searchedMovies,
         ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
@@ -537,8 +539,6 @@ function App() {
         searchedMovies.length + cardsNumberToShow["numberToUpload"]
       );
     }
-
-
   }
 
   useEffect(() => {
