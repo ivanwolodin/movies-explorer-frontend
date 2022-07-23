@@ -138,7 +138,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("isPopupError");
     if (isPopupError) {
       setEditError("Не удалось изменить данные..");
     } else {
@@ -147,7 +146,6 @@ function App() {
   }, [isPopupError]);
 
   useEffect(() => {
-    console.log("isShortMoviesCheckboxSet");
     if (isShortMoviesCheckboxSet) {
       setSavedMovies(selectShortMovies(savedMovies));
       setSearchedMovies(
@@ -169,7 +167,6 @@ function App() {
   }, [isShortMoviesCheckboxSet]);
 
   useEffect(() => {
-    console.log("widht");
     adjustCardsNumberToWindowSize();
     setSearchedMovies(
       searchedMovies.slice(0, cardsNumberToShow["numberToShow"])
@@ -178,7 +175,6 @@ function App() {
   }, [width]);
 
   useEffect(() => {
-    console.log("history");
     tokenCheck();
     history.push(location.pathname);
   }, [history]);
@@ -200,7 +196,6 @@ function App() {
   }
 
   useEffect(() => {
-    console.log("isRegistered");
     if (isRegistered) {
       setRegisterError("");
     } else {
@@ -277,7 +272,6 @@ function App() {
           parseInt(getValueFromLocalStorage("numberToUpload", 0))
         )
       );
-      console.log(selectShortMovies(savedMovies));
       setSavedMovies(selectShortMovies(savedMovies));
     } else {
       setSearchedMovies(
@@ -436,6 +430,9 @@ function App() {
 
       if (isShortMoviesCheckboxSet) {
         const newEntries = selectShortMovies(res);
+        if (newEntries.length === 0){
+          setLoadingError(true);
+        }
         setSearchedMovies(
           newEntries.slice(0, cardsNumberToShow["numberToUpload"])
         );
@@ -488,7 +485,11 @@ function App() {
     }
 
     if (isShortMoviesCheckboxSet) {
-      setSavedMovies(selectShortMovies(response));
+      const shortMovies = selectShortMovies(response)
+      if (shortMovies.length === 0){
+        setLoadingError(true);
+      }
+      setSavedMovies(shortMovies);
     } else {
       setSavedMovies(response);
     }
@@ -514,17 +515,28 @@ function App() {
   }
 
   function showMoreHandler() {
-    setSearchedMovies([
-      ...searchedMovies,
-      ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
-        searchedMovies.length,
+    if (isShortMoviesCheckboxSet){
+      setSearchedMovies(selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies"))));
+      localStorage.setItem(
+        "numberToUpload",
+        selectShortMovies(JSON.parse(localStorage.getItem("searchedMovies"))).length
+      );
+    }
+    else{
+      setSearchedMovies([
+        ...searchedMovies,
+        ...JSON.parse(localStorage.getItem("searchedMovies")).slice(
+          searchedMovies.length,
+          searchedMovies.length + cardsNumberToShow["numberToUpload"]
+        ),
+      ]);
+      localStorage.setItem(
+        "numberToUpload",
         searchedMovies.length + cardsNumberToShow["numberToUpload"]
-      ),
-    ]);
-    localStorage.setItem(
-      "numberToUpload",
-      searchedMovies.length + cardsNumberToShow["numberToUpload"]
-    );
+      );
+    }
+
+
   }
 
   useEffect(() => {
