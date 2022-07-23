@@ -174,9 +174,7 @@ function App() {
     setSearchedMovies(
       searchedMovies.slice(0, cardsNumberToShow["numberToShow"])
     );
-    setSavedMovies(
-      savedMovies.slice(0, cardsNumberToShow["numberToShow"])
-    )
+    setSavedMovies(savedMovies.slice(0, cardsNumberToShow["numberToShow"]));
   }, [width]);
 
   useEffect(() => {
@@ -268,10 +266,10 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    handleMoviesRendering()
+    handleMoviesRendering();
   }, []);
 
-  function handleMoviesRendering(){
+  function handleMoviesRendering() {
     if (isShortMoviesCheckboxSet) {
       setSearchedMovies(
         selectShortMovies(getValueFromLocalStorage("searchedMovies", [])).slice(
@@ -279,17 +277,15 @@ function App() {
           parseInt(getValueFromLocalStorage("numberToUpload", 0))
         )
       );
-      console.log(selectShortMovies(savedMovies))
+      console.log(selectShortMovies(savedMovies));
       setSavedMovies(selectShortMovies(savedMovies));
     } else {
-
       setSearchedMovies(
         getValueFromLocalStorage("searchedMovies", []).slice(
           0,
           parseInt(getValueFromLocalStorage("numberToUpload", 0))
         )
       );
-
     }
   }
 
@@ -358,7 +354,7 @@ function App() {
       year: data.year || "nodata",
       description: data.description || "nodata",
       image: `https://api.nomoreparties.co/${data.image.url}`,
-      trailerLink: data.trailerLink,
+      trailerLink: data.trailerLink || "www.google.com",
       nameRU: data.nameRU || "nodata",
       nameEN: data.nameEN || "nodata",
       thumbnail: `https://api.nomoreparties.co/${data.image.url}`,
@@ -368,7 +364,12 @@ function App() {
       .likeMovie(dd)
       .then((res) => {
         const newEntries = handleSearchedMoviesLocalStorage(res, false);
-        setSavedMovies(newEntries);
+        if (isShortMoviesCheckboxSet) {
+          setSavedMovies(selectShortMovies(newEntries));
+        } else {
+          setSavedMovies(newEntries);
+        }
+
         const newEntrieIds = handleSearchedMoviesIdsLocalStorage(
           data.id,
           res.movie._id,
@@ -387,7 +388,11 @@ function App() {
       .dislikeMovie(_id)
       .then((res) => {
         const newEntries = handleSearchedMoviesLocalStorage(res, true);
-        setSavedMovies(newEntries);
+        if (isShortMoviesCheckboxSet) {
+          setSavedMovies(selectShortMovies(newEntries));
+        } else {
+          setSavedMovies(newEntries);
+        }
         const newEntrieIds = handleSearchedMoviesIdsLocalStorage(
           movieId,
           _id,
@@ -442,7 +447,6 @@ function App() {
         "numberToUpload",
         cardsNumberToShow["numberToUpload"]
       );
-
     } catch {
       setLoadingError(true);
       setContentLoaded(true);
@@ -454,7 +458,14 @@ function App() {
     const query = localStorage.getItem("searchQuery");
 
     if (query === "") {
-      setSavedMovies(getValueFromLocalStorage("savedMovies", []));
+      if (isShortMoviesCheckboxSet) {
+        setSavedMovies(
+          selectShortMovies(getValueFromLocalStorage("savedMovies", []))
+        );
+      } else {
+        setSavedMovies(getValueFromLocalStorage("savedMovies", []));
+      }
+
       return;
     }
 
@@ -476,7 +487,11 @@ function App() {
       setContentLoaded(false);
     }
 
-    setSavedMovies(response);
+    if (isShortMoviesCheckboxSet) {
+      setSavedMovies(selectShortMovies(response));
+    } else {
+      setSavedMovies(response);
+    }
   }
 
   function handleEditUser(data) {
