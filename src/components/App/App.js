@@ -374,6 +374,7 @@ function App() {
       .catch((err) => {
         console.log("Cannot like movie");
         console.log(err);
+        alert("Не получилось поставить лайк")
       });
   }
 
@@ -397,6 +398,7 @@ function App() {
       .catch((err) => {
         console.log("Cannot dislike movie");
         console.log(err);
+        alert("Не получилось убрать лайк")
       });
   }
 
